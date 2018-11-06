@@ -1,0 +1,47 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+Mes0                                                                              0x0160      11
+MinVol                                                                            0x016B       2
+current_bar_pixel                                                                 0x016D       1
+current_cell_load                                                                 0x016E       1
+_seed                                                                             0x016F       4
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+NewState                                                                          R5           1
+OldState                                                                          R4           1
+upState                                                                           R7           1
+downState                                                                         R6           1
+OldVol                                                                            R8,R9        2
+Vol                                                                               R10,R11      2
+MaxVol                                                                            R12,R13      2
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+timer0_ovf_isr                                                                    0x00059     30
+EncoderScan                                                                       0x00077     71
+main                                                                              0x000BE     70
+lcd_10us_delay_G001                                                               0x00104     19
+lcd_strobe_G001                                                                   0x00117      8
+lcd_high_G001                                                                     0x0011F     26
+lcd_low_G001                                                                      0x00139     26
+lcd_write_G001                                                                    0x00153      6
+lcd_config_G001                                                                   0x00159     12
+lcd_return                                                                        0x00168      9
+cursor_shift                                                                      0x00171     16
+lcd_goto                                                                          0x00181     43
+lcd_setmode                                                                       0x001AC      4
+lcd_putc                                                                          0x001B0     10
+lcd_puts                                                                          0x001BA     46
+lcd_itos                                                                          0x001E8     52
+lcd_initbar_G001                                                                  0x0021C     39
+lcd_drawbar                                                                       0x00243     75
+lcd_clrbar                                                                        0x0028E     25
+lcd_init                                                                          0x002A7      9
