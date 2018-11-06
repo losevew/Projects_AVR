@@ -1,0 +1,6 @@
+VERSION:3 SOURCE_TIMESTAMP:4C55A031
+NODE:I LEVEL:0 LINE:9 "D:\Projects AVR\MAX7219_PIN_matrix\scroll_demo.h"
+NODE:I LEVEL:0 LINE:10 "D:\cvavr\inc\delay.h"
+NODE:I LEVEL:0 LINE:11 "D:\Projects AVR\MAX7219_PIN_matrix\max7219\max7219.h"
+NODE:I LEVEL:0 LINE:12 "D:\Projects AVR\MAX7219_PIN_matrix\max7219\ledmatrix.h"
+NODE:F LEVEL:0 LINE:18 "demo_ScrollBuff(unsigned char * pBuff,unsigned int ScrollLines,unsigned char RightToLeft)"
