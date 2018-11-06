@@ -1,0 +1,13 @@
+VERSION:3 SOURCE_TIMESTAMP:4D296618
+NODE:I LEVEL:0 LINE:24 "D:\cvavr\inc\mega8.h"
+NODE:I LEVEL:0 LINE:25 "D:\cvavr\inc\delay.h"
+NODE:V LEVEL:0 LINE:29 "x_G000 -> RAM:????"
+NODE:V LEVEL:0 LINE:30 "TimerValue -> R5"
+NODE:V LEVEL:0 LINE:31 "StepState -> R4"
+NODE:V LEVEL:0 LINE:31 "DirState -> R7"
+NODE:V LEVEL:0 LINE:31 "SpeedState -> R6"
+NODE:C LEVEL:0 LINE:33 "mstepsA32 -> FLASH"
+NODE:C LEVEL:0 LINE:71 "mstepsB32 -> FLASH"
+NODE:F LEVEL:0 LINE:111 "timer0_ovf_isr(void)"
+NODE:F LEVEL:0 LINE:130 "Step(unsigned char Dir)"
+NODE:F LEVEL:0 LINE:146 "main(void)"
