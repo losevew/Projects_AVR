@@ -1,0 +1,154 @@
+;#include "encoder.h"
+;PCODE: $00000000 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000001 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000002 VOL: 0
+	.EQU __se_bit=0x80
+;PCODE: $00000003 VOL: 0
+	.EQU __sm_mask=0x70
+;PCODE: $00000004 VOL: 0
+	.EQU __sm_powerdown=0x20
+;PCODE: $00000005 VOL: 0
+	.EQU __sm_powersave=0x30
+;PCODE: $00000006 VOL: 0
+	.EQU __sm_standby=0x60
+;PCODE: $00000007 VOL: 0
+	.EQU __sm_ext_standby=0x70
+;PCODE: $00000008 VOL: 0
+	.EQU __sm_adc_noise_red=0x10
+;PCODE: $00000009 VOL: 0
+	.SET power_ctrl_reg=mcucr
+;PCODE: $0000000A VOL: 0
+	#endif
+;PCODE: $0000000B VOL: 0
+;PCODE: $0000000C VOL: 0
+;
+;#define SBR(port, bit) port|= (1<<bit)
+;#define CBR(port, bit) port&= ~(1<<bit)
+;
+;//это дл€ нагл€дности кода
+;#define b00000011 3
+;#define b11010010 210
+;#define b11100001 225
+;
+;volatile unsigned char bufEnc = 0; //буфер энкодера
+;
+;//функци€ инициализации
+;//__________________________________________
+;void ENC_InitEncoder(void)
+; 0001 0010 {
+
+	.CSEG
+;PCODE: $0000000D VOL: 0
+;PCODE: $0000000E VOL: 0
+; 0001 0011   CBR(DDR_Enc, Pin1_Enc); //вход
+;PCODE: $0000000F VOL: 0
+;PCODE: $00000010 VOL: 0
+; 0001 0012   CBR(DDR_Enc, Pin2_Enc);
+;PCODE: $00000011 VOL: 0
+;PCODE: $00000012 VOL: 0
+; 0001 0013   SBR(PORT_Enc, Pin1_Enc);//вкл подт€гивающий резистор
+;PCODE: $00000013 VOL: 0
+;PCODE: $00000014 VOL: 0
+; 0001 0014   SBR(PORT_Enc, Pin2_Enc);
+;PCODE: $00000015 VOL: 0
+;PCODE: $00000016 VOL: 0
+; 0001 0015 }
+;PCODE: $00000017 VOL: 0
+;PCODE: $00000018 VOL: 0
+;
+;//функци€ опроса энкодера
+;//___________________________________________
+;void ENC_PollEncoder(void)
+; 0001 001A {
+;PCODE: $00000019 VOL: 0
+;PCODE: $0000001A VOL: 0
+; 0001 001B static unsigned char stateEnc; 	//хранит последовательность состо€ний энкодера
+; 0001 001C unsigned char tmp;
+; 0001 001D unsigned char currentState = 0;
+; 0001 001E 
+; 0001 001F //провер€ем состо€ние выводов микроконтроллера
+; 0001 0020 if ((PIN_Enc & (1<<Pin1_Enc))!= 0) {SBR(currentState,0);}
+;PCODE: $0000001B VOL: 0
+;	tmp -> R17
+;	currentState -> R16
+;PCODE: $0000001C VOL: 0
+;PCODE: $0000001D VOL: 0
+;PCODE: $0000001E VOL: 0
+;PCODE: $0000001F VOL: 0
+;PCODE: $00000020 VOL: 0
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+; 0001 0021 if ((PIN_Enc & (1<<Pin2_Enc))!= 0) {SBR(currentState,1);}
+;PCODE: $00000023 VOL: 0
+;PCODE: $00000024 VOL: 0
+;PCODE: $00000025 VOL: 0
+;PCODE: $00000026 VOL: 0
+;PCODE: $00000027 VOL: 0
+;PCODE: $00000028 VOL: 0
+; 0001 0022 
+; 0001 0023 //если равно предыдущему, то выходим
+; 0001 0024 tmp = stateEnc;
+;PCODE: $00000029 VOL: 0
+;PCODE: $0000002A VOL: 0
+;PCODE: $0000002B VOL: 0
+; 0001 0025 if (currentState == (tmp & b00000011)) return;
+;PCODE: $0000002C VOL: 0
+;PCODE: $0000002D VOL: 0
+;PCODE: $0000002E VOL: 0
+;PCODE: $0000002F VOL: 0
+;PCODE: $00000030 VOL: 0
+;PCODE: $00000031 VOL: 0
+; 0001 0026 
+; 0001 0027 //если не равно, то сдвигаем и сохран€ем в озу
+; 0001 0028 stateEnc = (tmp<<2)|currentState;
+;PCODE: $00000032 VOL: 0
+;PCODE: $00000033 VOL: 0
+;PCODE: $00000034 VOL: 0
+;PCODE: $00000035 VOL: 0
+;PCODE: $00000036 VOL: 0
+; 0001 0029 
+; 0001 002A //сравниваем получившуюс€ последовательность
+; 0001 002B if (tmp == b11100001) bufEnc = LEFT_SPIN;
+;PCODE: $00000037 VOL: 0
+;PCODE: $00000038 VOL: 0
+;PCODE: $00000039 VOL: 0
+;PCODE: $0000003A VOL: 0
+;PCODE: $0000003B VOL: 1
+; 0001 002C if (tmp == b11010010) bufEnc = RIGHT_SPIN;
+;PCODE: $0000003C VOL: 0
+;PCODE: $0000003D VOL: 0
+;PCODE: $0000003E VOL: 0
+;PCODE: $0000003F VOL: 0
+;PCODE: $00000040 VOL: 0
+;PCODE: $00000041 VOL: 1
+; 0001 002D return;
+;PCODE: $00000042 VOL: 0
+;PCODE: $00000043 VOL: 0
+;PCODE: $00000044 VOL: 0
+; 0001 002E }
+;PCODE: $00000045 VOL: 0
+;
+;//функци€ возвращающа€ значение буфера энкодера
+;//_____________________________________________
+;unsigned char ENC_GetStateEncoder(void)
+; 0001 0033 {
+;PCODE: $00000046 VOL: 0
+;PCODE: $00000047 VOL: 0
+; 0001 0034   unsigned char tmp = bufEnc;
+; 0001 0035   bufEnc = 0;
+;PCODE: $00000048 VOL: 0
+;	tmp -> R17
+;PCODE: $00000049 VOL: 0
+;PCODE: $0000004A VOL: 0
+;PCODE: $0000004B VOL: 0
+;PCODE: $0000004C VOL: 1
+; 0001 0036   return tmp;
+;PCODE: $0000004D VOL: 0
+;PCODE: $0000004E VOL: 0
+;PCODE: $0000004F VOL: 0
+; 0001 0037 }
+;PCODE: $00000050 VOL: 0
+;
+;
