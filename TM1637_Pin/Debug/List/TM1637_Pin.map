@@ -1,0 +1,35 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+TubeTab                                                                           0x0160      18
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+Cmd_SetAddr                                                                       R5           1
+Cmd_DispCtrl                                                                      R4           1
+_PointFlag                                                                        R7           1
+_DispType                                                                         R6           1
+DecPoint                                                                          R9           1
+BlankingFlag                                                                      R8           1
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+TM1637_writeByte                                                                  0x0004E     35
+TM1637_start                                                                      0x00071      4
+TM1637_stop                                                                       0x00075      8
+TM1637_coding_all                                                                 0x0007D     56
+TM1637_coding                                                                     0x000B5     19
+TM1637_display_all                                                                0x000C8     47
+TM1637_display                                                                    0x000F7     20
+TM1637_display_int_decimal                                                        0x0010B     71
+TM1637_display_float_decimal                                                      0x00152     88
+TM1637_clearDisplay                                                               0x001AA      9
+TM1637_init                                                                       0x001B3     17
+TM1637_set                                                                        0x001C4      8
+main                                                                              0x001CC     65
