@@ -1,0 +1,9 @@
+VERSION:3 SOURCE_TIMESTAMP:44F1B1A3
+NODE:I LEVEL:0 LINE:23 "C:\cvavr2\inc\tiny2313.h"
+NODE:I LEVEL:0 LINE:24 "C:\cvavr2\inc\delay.h"
+NODE:I LEVEL:0 LINE:25 "C:\cvavr2\inc\bcd.h"
+NODE:V LEVEL:0 LINE:29 "key -> R3"
+NODE:V LEVEL:0 LINE:30 "flstart -> R2"
+NODE:V LEVEL:0 LINE:31 "ind -> R5"
+NODE:F LEVEL:0 LINE:35 "ext_int0_isr(void)"
+NODE:F LEVEL:0 LINE:49 "main(void)"
