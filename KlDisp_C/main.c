@@ -1,0 +1,62 @@
+//***************************************************************************
+//
+//  Author(s)...:    
+//
+//  Target(s)...: ATtyny2313
+//
+//  Compiler....: CodeVision
+//
+//  Description.: Опрос матричной клавиатуры. Использование конечного автомата.
+//
+//  Data........:  
+//
+//***************************************************************************
+#include <tiny2313.h>
+#include "keyboard.h"
+
+#define SDO PORTB.1
+#define SCK PORTB.0
+
+//прерывание таймера Т0 - опрос клавиатуры
+interrupt [TIM0_OVF] void Timer0Ovf(void)
+{
+   TCNT0 = 0x83;
+   ScanKeyboard();   
+}
+
+void spi_write ( unsigned char datum )
+{
+    int k;
+    for (k=0; k<4; k++)
+    {
+        if((datum & 0x08)) { SDO = 1;}
+        else {SDO = 0;}
+        datum = datum <<1;
+        SCK = 1;
+        SCK = 0;   
+    }
+    SDO = 0;
+}
+
+void main( void )
+{
+  unsigned char key;
+  
+    
+  //инициализация таймера Т0
+  TIMSK = (1<<TOIE0); //разрешение прерывания по переполнению
+  TCCR0 = (1<<CS02)|(0<<CS01)|(0<<CS00); //предделитель 256
+  TCNT0 = 0x83; //прерывания каждые 8 мс  при тактовой частоте 4 МГц
+  
+  //инициализация портов и переменных 
+  InitKeyboard();
+  #asm("sei");
+  
+  while(1){
+    //если зафиксировано нажатие, 
+    //отправить код кнопки в терминал
+    key = GetKey();
+    if (key)
+      spi_write(key);
+  }
+}

@@ -1,0 +1,400 @@
+;#include "keyboard.h"
+;PCODE: $00000000 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000001 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000002 VOL: 0
+	.EQU __se_bit=0x20
+;PCODE: $00000003 VOL: 0
+	.EQU __sm_mask=0x50
+;PCODE: $00000004 VOL: 0
+	.EQU __sm_powerdown=0x10
+;PCODE: $00000005 VOL: 0
+	.EQU __sm_standby=0x40
+;PCODE: $00000006 VOL: 0
+	.SET power_ctrl_reg=mcucr
+;PCODE: $00000007 VOL: 0
+	#endif
+;PCODE: $00000008 VOL: 0
+;PCODE: $00000009 VOL: 0
+;#include "delay.h"
+;//хранит текущее состояние автомата
+;unsigned char keyState;
+;//хранит код нажатой кнопки
+;unsigned char keyCode;
+;//хранит символьное значение нажатой кнопки
+;unsigned char keyValue;
+;//флаговая переменная - устанавливается, если кнопка удерживается
+;unsigned char keyDown;
+;//флаговая переменная -  устанавливается, когда нажата новая кнопка
+;unsigned char keyNew;
+;
+;//таблица перекодировки
+;__flash unsigned char keyTable[][2] = {
+;{ 0x11, '1'},
+;{ 0x12, '2'},
+;{ 0x14, '3'},
+;{ 0x21, '4'},
+;{ 0x22, '5'},
+;{ 0x24, '6'},
+;{ 0x41, '7'},
+;{ 0x42, '8'},
+;{ 0x44, '9'},
+;{ 0x81, '*'},
+;{ 0x82, '0'},
+;{ 0x84, '#'}
+;};
+;
+;//прототипы функций используемых автоматом
+;unsigned char AnyKey(void);
+;unsigned char SameKey(void);
+;void ScanKey(void);
+;unsigned char FindKey(void);
+;void ClearKey(void);
+;
+;//инициализация портов, обнуление переменных
+;void InitKeyboard(void)
+; 0001 0027 {
+
+	.CSEG
+;PCODE: $0000000A VOL: 0
+;PCODE: $0000000B VOL: 0
+; 0001 0028   DDRB = 0xff;
+;PCODE: $0000000C VOL: 0
+;PCODE: $0000000D VOL: 0
+; 0001 0029   PORTB = 0x00;
+;PCODE: $0000000E VOL: 0
+;PCODE: $0000000F VOL: 0
+; 0001 002A   DDRD = 0x00;
+;PCODE: $00000010 VOL: 0
+;PCODE: $00000011 VOL: 0
+; 0001 002B   PORTD = 0xf8;
+;PCODE: $00000012 VOL: 0
+;PCODE: $00000013 VOL: 0
+; 0001 002C 
+; 0001 002D   keyState = 0;
+;PCODE: $00000014 VOL: 0
+; 0001 002E   keyCode = 0;
+;PCODE: $00000015 VOL: 0
+; 0001 002F   keyValue = 0;
+;PCODE: $00000016 VOL: 0
+; 0001 0030   keyDown = 0;
+;PCODE: $00000017 VOL: 0
+; 0001 0031   keyNew = 0;
+;PCODE: $00000018 VOL: 0
+; 0001 0032 }
+;PCODE: $00000019 VOL: 0
+;PCODE: $0000001A VOL: 0
+;
+;//автомат реализующий опрос клавиатуры, защиту от дребезга
+;// и распознование нажатой кнопки
+;void ScanKeyboard(void)
+; 0001 0037 {
+;PCODE: $0000001B VOL: 0
+;PCODE: $0000001C VOL: 0
+; 0001 0038    switch (keyState){
+;PCODE: $0000001D VOL: 0
+;PCODE: $0000001E VOL: 0
+; 0001 0039      case 0:
+;PCODE: $0000001F VOL: 0
+;PCODE: $00000020 VOL: 0
+; 0001 003A        if (AnyKey()) {
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+;PCODE: $00000023 VOL: 0
+; 0001 003B          ScanKey();
+;PCODE: $00000024 VOL: 0
+; 0001 003C          keyState = 1;
+;PCODE: $00000025 VOL: 0
+;PCODE: $00000026 VOL: 0
+; 0001 003D        }
+; 0001 003E        break;
+;PCODE: $00000027 VOL: 0
+;PCODE: $00000028 VOL: 0
+; 0001 003F 
+; 0001 0040      case 1:
+;PCODE: $00000029 VOL: 0
+;PCODE: $0000002A VOL: 0
+;PCODE: $0000002B VOL: 0
+; 0001 0041        if (SameKey()) {
+;PCODE: $0000002C VOL: 0
+;PCODE: $0000002D VOL: 0
+;PCODE: $0000002E VOL: 0
+; 0001 0042            FindKey();
+;PCODE: $0000002F VOL: 0
+; 0001 0043            keyState = 2;
+;PCODE: $00000030 VOL: 0
+;PCODE: $00000031 VOL: 0
+; 0001 0044        }
+; 0001 0045        else keyState = 0;
+;PCODE: $00000032 VOL: 0
+;PCODE: $00000033 VOL: 0
+;PCODE: $00000034 VOL: 0
+; 0001 0046        break;
+;PCODE: $00000035 VOL: 0
+;PCODE: $00000036 VOL: 0
+; 0001 0047 
+; 0001 0048      case 2:
+;PCODE: $00000037 VOL: 0
+;PCODE: $00000038 VOL: 0
+;PCODE: $00000039 VOL: 0
+; 0001 0049         if (SameKey()){}
+;PCODE: $0000003A VOL: 0
+;PCODE: $0000003B VOL: 0
+;PCODE: $0000003C VOL: 0
+; 0001 004A         else keyState = 3;
+;PCODE: $0000003D VOL: 0
+;PCODE: $0000003E VOL: 0
+;PCODE: $0000003F VOL: 0
+;PCODE: $00000040 VOL: 0
+; 0001 004B         break;
+;PCODE: $00000041 VOL: 0
+;PCODE: $00000042 VOL: 0
+; 0001 004C 
+; 0001 004D      case 3:
+;PCODE: $00000043 VOL: 0
+;PCODE: $00000044 VOL: 0
+;PCODE: $00000045 VOL: 0
+; 0001 004E        if (SameKey()) {
+;PCODE: $00000046 VOL: 0
+;PCODE: $00000047 VOL: 0
+;PCODE: $00000048 VOL: 0
+; 0001 004F          keyState = 2;
+;PCODE: $00000049 VOL: 0
+;PCODE: $0000004A VOL: 0
+; 0001 0050        }
+; 0001 0051        else {
+;PCODE: $0000004B VOL: 0
+;PCODE: $0000004C VOL: 0
+; 0001 0052          ClearKey();
+;PCODE: $0000004D VOL: 0
+; 0001 0053          keyState = 0;
+;PCODE: $0000004E VOL: 0
+; 0001 0054        }
+;PCODE: $0000004F VOL: 0
+; 0001 0055        break;
+;PCODE: $00000050 VOL: 0
+; 0001 0056 
+; 0001 0057      default:
+;PCODE: $00000051 VOL: 0
+; 0001 0058         break;
+;PCODE: $00000052 VOL: 0
+; 0001 0059    }
+;PCODE: $00000053 VOL: 0
+; 0001 005A 
+; 0001 005B }
+;PCODE: $00000054 VOL: 0
+;PCODE: $00000055 VOL: 0
+;
+;//возвращает true если какая-нибудь кнопка нажата
+;unsigned char AnyKey(void)
+; 0001 005F {
+;PCODE: $00000056 VOL: 0
+;PCODE: $00000057 VOL: 0
+; 0001 0060   unsigned char temp;
+; 0001 0061   PORTB |= 0xf0;
+;PCODE: $00000058 VOL: 0
+;	temp -> R17
+;PCODE: $00000059 VOL: 0
+;PCODE: $0000005A VOL: 0
+;PCODE: $0000005B VOL: 0
+; 0001 0062   delay_us(5);
+;PCODE: $0000005C VOL: 0
+; 0001 0063   temp = (PIND & 0x07);
+;PCODE: $0000005D VOL: 0
+;PCODE: $0000005E VOL: 0
+;PCODE: $0000005F VOL: 0
+; 0001 0064   PORTB &= 0x0f;
+;PCODE: $00000060 VOL: 0
+;PCODE: $00000061 VOL: 0
+;PCODE: $00000062 VOL: 0
+; 0001 0065   return temp;
+;PCODE: $00000063 VOL: 0
+;PCODE: $00000064 VOL: 0
+;PCODE: $00000065 VOL: 0
+; 0001 0066 }
+;PCODE: $00000066 VOL: 0
+;
+;
+;//Генерирует нужные сигналы на линиях
+;//считывает код нажатой кнопки
+;void ScanKey(void)
+; 0001 006C {
+;PCODE: $00000067 VOL: 0
+;PCODE: $00000068 VOL: 0
+; 0001 006D   unsigned char activeRow = (1<<4);
+; 0001 006E   while (activeRow) {
+;PCODE: $00000069 VOL: 0
+;	activeRow -> R17
+;PCODE: $0000006A VOL: 0
+;PCODE: $0000006B VOL: 0
+;PCODE: $0000006C VOL: 0
+;PCODE: $0000006D VOL: 0
+;PCODE: $0000006E VOL: 0
+; 0001 006F     PORTB = (PINB & 0x0f)|activeRow;
+;PCODE: $0000006F VOL: 0
+;PCODE: $00000070 VOL: 0
+;PCODE: $00000071 VOL: 0
+;PCODE: $00000072 VOL: 0
+; 0001 0070     delay_us(5);
+;PCODE: $00000073 VOL: 0
+; 0001 0071     if (PIND & 0x07) {
+;PCODE: $00000074 VOL: 0
+;PCODE: $00000075 VOL: 0
+;PCODE: $00000076 VOL: 0
+; 0001 0072       keyCode = (PIND & 0x07);
+;PCODE: $00000077 VOL: 0
+;PCODE: $00000078 VOL: 0
+;PCODE: $00000079 VOL: 0
+; 0001 0073       keyCode |= (PINB & 0xf0);
+;PCODE: $0000007A VOL: 0
+;PCODE: $0000007B VOL: 0
+;PCODE: $0000007C VOL: 0
+;PCODE: $0000007D VOL: 0
+; 0001 0074     }
+; 0001 0075     activeRow <<= 1;
+;PCODE: $0000007E VOL: 0
+;PCODE: $0000007F VOL: 0
+; 0001 0076   }
+;PCODE: $00000080 VOL: 0
+;PCODE: $00000081 VOL: 0
+; 0001 0077   PORTB &= 0x0f;
+;PCODE: $00000082 VOL: 0
+;PCODE: $00000083 VOL: 0
+;PCODE: $00000084 VOL: 0
+; 0001 0078 }
+;PCODE: $00000085 VOL: 0
+;PCODE: $00000086 VOL: 0
+;PCODE: $00000087 VOL: 0
+;
+;// возвращает true если удерживается та же кнопка
+;//что и в предыдущем цикле опроса
+;unsigned char SameKey(void)
+; 0001 007D {
+;PCODE: $00000088 VOL: 0
+;PCODE: $00000089 VOL: 0
+; 0001 007E   unsigned char temp;
+; 0001 007F   PORTB = (PINB & 0x0f) | ( keyCode & 0xf0);
+;PCODE: $0000008A VOL: 0
+;	temp -> R17
+;PCODE: $0000008B VOL: 0
+;PCODE: $0000008C VOL: 0
+;PCODE: $0000008D VOL: 0
+;PCODE: $0000008E VOL: 0
+;PCODE: $0000008F VOL: 0
+;PCODE: $00000090 VOL: 0
+;PCODE: $00000091 VOL: 0
+; 0001 0080   delay_us(5);
+;PCODE: $00000092 VOL: 0
+; 0001 0081   temp = ((PIND & keyCode) & 0x07);
+;PCODE: $00000093 VOL: 0
+;PCODE: $00000094 VOL: 0
+;PCODE: $00000095 VOL: 0
+;PCODE: $00000096 VOL: 0
+; 0001 0082   PORTB &= 0x0f;
+;PCODE: $00000097 VOL: 0
+;PCODE: $00000098 VOL: 0
+;PCODE: $00000099 VOL: 0
+; 0001 0083   return temp;
+;PCODE: $0000009A VOL: 0
+;PCODE: $0000009B VOL: 0
+;PCODE: $0000009C VOL: 0
+; 0001 0084 }
+;PCODE: $0000009D VOL: 0
+;
+;// преобразует код кнопки в соответствующий символ
+;// устанавивает флаги
+;unsigned char FindKey(void)
+; 0001 0089 {
+;PCODE: $0000009E VOL: 0
+;PCODE: $0000009F VOL: 0
+; 0001 008A   unsigned char index;
+; 0001 008B   for (index = 0; index < 12; index++) {
+;PCODE: $000000A0 VOL: 0
+;	index -> R17
+;PCODE: $000000A1 VOL: 0
+;PCODE: $000000A2 VOL: 0
+;PCODE: $000000A3 VOL: 0
+;PCODE: $000000A4 VOL: 0
+;PCODE: $000000A5 VOL: 0
+;PCODE: $000000A6 VOL: 0
+;PCODE: $000000A7 VOL: 0
+;PCODE: $000000A8 VOL: 0
+;PCODE: $000000A9 VOL: 0
+; 0001 008C     if (keyTable [index][0] == keyCode) {
+;PCODE: $000000AA VOL: 0
+;PCODE: $000000AB VOL: 0
+;PCODE: $000000AC VOL: 0
+;PCODE: $000000AD VOL: 0
+;PCODE: $000000AE VOL: 0
+;PCODE: $000000AF VOL: 0
+;PCODE: $000000B0 VOL: 0
+;PCODE: $000000B1 VOL: 0
+; 0001 008D       keyValue = keyTable [index][1];
+;PCODE: $000000B2 VOL: 0
+;PCODE: $000000B3 VOL: 0
+;PCODE: $000000B4 VOL: 0
+;PCODE: $000000B5 VOL: 0
+;PCODE: $000000B6 VOL: 0
+;PCODE: $000000B7 VOL: 0
+;PCODE: $000000B8 VOL: 0
+; 0001 008E       keyDown = 1;
+;PCODE: $000000B9 VOL: 0
+;PCODE: $000000BA VOL: 0
+; 0001 008F       keyNew = 1;
+;PCODE: $000000BB VOL: 0
+;PCODE: $000000BC VOL: 0
+; 0001 0090       return 1;
+;PCODE: $000000BD VOL: 0
+;PCODE: $000000BE VOL: 0
+;PCODE: $000000BF VOL: 0
+; 0001 0091     }
+; 0001 0092   }
+;PCODE: $000000C0 VOL: 0
+;PCODE: $000000C1 VOL: 0
+;PCODE: $000000C2 VOL: 0
+;PCODE: $000000C3 VOL: 0
+;PCODE: $000000C4 VOL: 0
+;PCODE: $000000C5 VOL: 0
+; 0001 0093   return 0;
+;PCODE: $000000C6 VOL: 0
+;PCODE: $000000C7 VOL: 0
+;PCODE: $000000C8 VOL: 0
+; 0001 0094 }
+;PCODE: $000000C9 VOL: 0
+;
+;//сбрасывает флаг
+;void ClearKey(void)
+; 0001 0098 {
+;PCODE: $000000CA VOL: 0
+;PCODE: $000000CB VOL: 0
+; 0001 0099   keyDown = 0;
+;PCODE: $000000CC VOL: 0
+; 0001 009A }
+;PCODE: $000000CD VOL: 0
+;PCODE: $000000CE VOL: 0
+;
+;//если зафиксировано нажатие кнопки
+;//возвращает ее код
+;unsigned char GetKey(void)
+; 0001 009F {
+;PCODE: $000000CF VOL: 0
+;PCODE: $000000D0 VOL: 0
+; 0001 00A0   if (keyNew){
+;PCODE: $000000D1 VOL: 0
+;PCODE: $000000D2 VOL: 0
+; 0001 00A1     keyNew = 0;
+;PCODE: $000000D3 VOL: 0
+; 0001 00A2     return keyValue;
+;PCODE: $000000D4 VOL: 0
+;PCODE: $000000D5 VOL: 0
+; 0001 00A3   }
+; 0001 00A4   else
+;PCODE: $000000D6 VOL: 0
+; 0001 00A5     return 0;
+;PCODE: $000000D7 VOL: 0
+;PCODE: $000000D8 VOL: 0
+; 0001 00A6 }
+;PCODE: $000000D9 VOL: 0
+;PCODE: $000000DA VOL: 0
+;PCODE: $000000DB VOL: 0

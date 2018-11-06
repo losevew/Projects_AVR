@@ -1,0 +1,16 @@
+RAM Allocation
+Variable                                                          Address   Size
+--------------------------------------------------------------------------------
+
+EEPROM Allocation
+Variable                                                          Address   Size
+--------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                          Register  Size
+--------------------------------------------------------------------------------
+keyState                                                          R3           1
+keyCode                                                           R2           1
+keyValue                                                          R5           1
+keyDown                                                           R4           1
+keyNew                                                            R7           1
