@@ -1,0 +1,43 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+Duty                                                                              0x0179       1
+_seed                                                                             0x017A       4
+_base_y                                                                           0x017E       4
+_lcd_maxx                                                                         0x0182       1
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+NewState                                                                          R5           1
+OldState                                                                          R4           1
+OldVol                                                                            R7           1
+upState                                                                           R6           1
+downState                                                                         R9           1
+OldBtnW                                                                           R8           1
+OldBtnR                                                                           R11          1
+Vol                                                                               R10          1
+_lcd_x                                                                            R13          1
+_lcd_y                                                                            R12          1
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+timer0_ovf_isr                                                                    0x0006B     30
+EncoderScan                                                                       0x00089     71
+LcdOut                                                                            0x000D0      6
+write_eep                                                                         0x000E3      7
+main                                                                              0x000EA    105
+itoa                                                                              0x00153     46
+_lcd_write_nibble_G101                                                            0x00181     31
+_lcd_write_data                                                                   0x001A0     12
+lcd_gotoxy                                                                        0x001AC     13
+lcd_clear                                                                         0x001B9     10
+lcd_putchar                                                                       0x001C3     23
+lcd_puts                                                                          0x001DA     15
+lcd_putsf                                                                         0x001E9     19
+lcd_init                                                                          0x001FC     44
