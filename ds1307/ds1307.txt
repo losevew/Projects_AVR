@@ -1,0 +1,24 @@
+//          if((PINC.0==0))
+//          {  
+//          rtc_set_time(hour+1,0,0);
+//          }                 
+//          switch(menu)
+//          { 
+//            case 0: 
+              if(time_flag==1)
+              {
+              show_time();              
+//            }
+//            break;
+//            case 1:
+//            lcd_gotoxy(0,0);
+//            lcd_puts("Set time");
+//            break; 
+//            case 2:
+//            lcd_gotoxy(0,0);
+//            lcd_puts("Set date");
+//            break;
+//            case 3:
+//            lcd_gotoxy(0,0);
+//            lcd_puts("Set alarm");
+//            break;

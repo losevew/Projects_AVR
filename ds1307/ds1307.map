@@ -1,0 +1,24 @@
+RAM Allocation
+Variable                                                          Address   Size
+--------------------------------------------------------------------------------
+_base_y                                                           0x0160       4
+_lcd_maxx                                                         0x0164       1
+
+EEPROM Allocation
+Variable                                                          Address   Size
+--------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                          Register  Size
+--------------------------------------------------------------------------------
+hour                                                              R5           1
+min                                                               R4           1
+sek                                                               R7           1
+day                                                               R6           1
+month                                                             R9           1
+year                                                              R8           1
+week_day                                                          R11          1
+time_flag                                                         R2.0      1bit
+menu                                                              R10          1
+_lcd_x                                                            R13          1
+_lcd_y                                                            R12          1
