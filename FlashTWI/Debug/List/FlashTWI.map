@@ -1,0 +1,62 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+twi_tx_index                                                                      0x0179       1
+twi_rx_index                                                                      0x017A       1
+twi_result                                                                        0x017B       1
+Duty                                                                              0x017C       1
+twi_eeprom                                                                        0x017D       3
+_seed                                                                             0x0180       4
+slave_address                                                                     0x0184       1
+twi_tx_buffer                                                                     0x0185       2
+bytes_to_tx                                                                       0x0187       1
+twi_rx_buffer                                                                     0x0188       2
+bytes_to_rx                                                                       0x018A       1
+twi_rx_buffer_size                                                                0x018B       1
+twi_slave_rx_handler                                                              0x018C       2
+twi_slave_tx_handler                                                              0x018E       2
+_base_y                                                                           0x0190       4
+_lcd_y                                                                            0x0194       1
+_lcd_maxx                                                                         0x0195       1
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+NewState                                                                          R5           1
+OldState                                                                          R4           1
+OldVol                                                                            R7           1
+upState                                                                           R6           1
+downState                                                                         R9           1
+OldBtnW                                                                           R8           1
+OldBtnR                                                                           R11          1
+Vol                                                                               R10          1
+eeprom_rd_data                                                                    R13          1
+twi_flag                                                                          R2.0      1bit
+twi_ready                                                                         R2.1      1bit
+_lcd_x                                                                            R12          1
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+timer0_ovf_isr                                                                    0x00072     30
+EncoderScan                                                                       0x00090     71
+LcdOut                                                                            0x000D7      6
+read_eep                                                                          0x000DD     19
+write_eep                                                                         0x000F0     22
+main                                                                              0x00106    106
+itoa                                                                              0x00170     45
+twi_master_init                                                                   0x0019D     37
+twi_master_trans                                                                  0x001C2    102
+twi_int_handler                                                                   0x00228    355
+_lcd_write_nibble_G102                                                            0x0038B     31
+_lcd_write_data                                                                   0x003AA     12
+lcd_gotoxy                                                                        0x003B6     15
+lcd_clear                                                                         0x003C5     11
+lcd_putchar                                                                       0x003D0     26
+lcd_puts                                                                          0x003EA     14
+lcd_putsf                                                                         0x003F8     18
+lcd_init                                                                          0x0040A     44
