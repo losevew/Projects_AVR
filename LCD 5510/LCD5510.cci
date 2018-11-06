@@ -1,0 +1,5 @@
+VERSION:3 SOURCE_TIMESTAMP:4990A454
+NODE:I LEVEL:0 LINE:24 "D:\cvavr\inc\mega8.h"
+NODE:I LEVEL:0 LINE:27 "D:\cvavr\inc\glcd.h"
+NODE:I LEVEL:0 LINE:32 "D:\Projects AVR\LCD 5510\font5x7ru.h"
+NODE:F LEVEL:0 LINE:36 "main(void)"
