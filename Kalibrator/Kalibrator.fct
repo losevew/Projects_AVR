@@ -1,0 +1,3 @@
+main DSTACK_USAGE:0 DSTACK_LEVEL:0 FILE:"Kalibrator.c" LINE:67
+ext_int0_isr DSTACK_USAGE:12 DSTACK_LEVEL:12 FILE:"Kalibrator.c" LINE:35
+bin2bcd DSTACK_USAGE:1 DSTACK_LEVEL:13 FILE:"C:\cvavr2\lib\bcd.lib" LINE:28
