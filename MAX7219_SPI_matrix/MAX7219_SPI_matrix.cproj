@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>6.1</ProjectVersion>
+    <ToolchainName>com.HPInfoTech.CodeVisionAVR.C</ToolchainName>
+    <ProjectGuid>{40488643-423D-497C-A76A-A46C3F34E8A0}</ProjectGuid>
+    <avrdevice>ATmega8A</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>C</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.cof</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>MAX7219_SPI_matrix</AssemblyName>
+    <Name>MAX7219_SPI_matrix</Name>
+    <RootNamespace>MAX7219_SPI_matrix</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <OverrideVtorValue />
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <CV>
+        <CVProjectPath>"MAX7219_SPI_matrix.prj"</CVProjectPath>
+      </CV>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <CV>
+        <CVProjectPath>"MAX7219_SPI_matrix.prj"</CVProjectPath>
+      </CV>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="scroll_demo.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Folder Include="max7219\" />
+    <Compile Include="max7219\ledmatrix.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="max7219\max7219.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Folder Include="max7219\fonts\" />
+    <Compile Include="max7219\fonts\f6x8m.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="max7219\fonts\font.c">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\vs\\CV.targets" />
+</Project>

@@ -1,0 +1,41 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+ledmatrix_screenbuff                                                              0x0178      32
+ScrollBuff                                                                        0x0198     140
+f6x8_charbuff                                                                     0x0224      10
+_seed                                                                             0x022E       4
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+FontID                                                                            R5           1
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+main                                                                              0x00566     70
+demo_ScrollBuff                                                                   0x005AC     59
+ledmatrix_init                                                                    0x005E7     17
+ledmatrix_testmatrix                                                              0x005F8      5
+ledmatrix_fill_screenbuff                                                         0x005FD     14
+ledmatrix_ScrollLeft                                                              0x0060B     21
+ledmatrix_ScrollRight                                                             0x00620     20
+ledmatrix_update_from_buff                                                        0x00634     67
+max7219_init                                                                      0x00677      4
+max7219_send                                                                      0x0067B     48
+max7219_sendarray                                                                 0x006AB     19
+max7219_send16bit                                                                 0x006BE      9
+max7219_set_decodemode                                                            0x006C7      5
+max7219_set_intensity                                                             0x006CC     10
+max7219_set_scan_limit                                                            0x006D6     10
+max7219_set_run_onoff                                                             0x006E0     10
+max7219_set_testmode_onoff                                                        0x006EA     10
+font_GetCharWidth                                                                 0x00712     16
+font_DrawChar                                                                     0x00722     76
+font_DrawString                                                                   0x0076E     61
+spi                                                                               0x007AB      8

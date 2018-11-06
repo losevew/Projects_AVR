@@ -1,0 +1,6 @@
+VERSION:3 SOURCE_TIMESTAMP:4C556516
+NODE:I LEVEL:0 LINE:9 "D:\Projects AVR\MAX7219_SPI_matrix\max7219\fonts\font.h"
+NODE:I LEVEL:0 LINE:10 "D:\Projects AVR\MAX7219_SPI_matrix\max7219\fonts\f6x8m.h"
+NODE:C LEVEL:0 LINE:15 "f6x8_table -> FLASH"
+NODE:V LEVEL:0 LINE:3099 "f6x8_charbuff -> RAM:????"
+NODE:F LEVEL:0 LINE:3104 "f6x8_GetCharTable(unsigned char Char)"
