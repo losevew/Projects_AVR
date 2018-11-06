@@ -1,0 +1,23 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+max7219_init_port                                                                 0x0002D      3
+max7219_out_word                                                                  0x00030     14
+max7219_test                                                                      0x0003E     10
+max7219_init                                                                      0x00048     63
+max7219_data_out                                                                  0x00087     36
+max7219_clear                                                                     0x000AB     13
+main                                                                              0x000B8     55
+spi                                                                               0x000EF      8
