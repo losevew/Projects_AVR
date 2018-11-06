@@ -1,0 +1,27 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+TM1638_SendCommand_G000                                                           0x00035      7
+TM1638_SendData                                                                   0x0003C     13
+TM1638_SendByte_G000                                                              0x00049     21
+TM1638_ReceiveByte_G000                                                           0x0005E     19
+TM1638_Init                                                                       0x00071     26
+TM1638_SetLED                                                                     0x0008B      9
+TM1638_SetDigit                                                                   0x00094     16
+TM1638_SetDisplayDigit                                                            0x000A4     15
+TM1638_ClearDisplayDigit                                                          0x000B3      9
+TM1638_GetKeys                                                                    0x000BC     31
+main                                                                              0x000DB     81
+custom_delay_G001                                                                 0x0012C     19
