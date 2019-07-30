@@ -1,0 +1,892 @@
+;/*******************************************************
+;This program was created by the
+;CodeWizardAVR V3.12 Advanced
+;Automatic Program Generator
+;© Copyright 1998-2014 Pavel Haiduc, HP InfoTech s.r.l.
+;http://www.hpinfotech.com
+;
+;Project : Подключение бесколлекторного двигателя к AVR(без датчиков)
+;Version :
+;Date    : 28.07.2019
+;Author  :
+;Company :
+;Comments:
+;
+;
+;Chip type               : ATmega8A
+;Program type            : Application
+;AVR Core Clock frequency: 16,000000 MHz
+;Memory model            : Small
+;External RAM size       : 0
+;Data Stack size         : 256
+;*******************************************************/
+;
+;
+;
+;#include <mega8.h>
+;PCODE: $00000000 VOL: 0
+	#ifndef __SLEEP_DEFINED__
+;PCODE: $00000001 VOL: 0
+	#define __SLEEP_DEFINED__
+;PCODE: $00000002 VOL: 0
+	.EQU __se_bit=0x80
+;PCODE: $00000003 VOL: 0
+	.EQU __sm_mask=0x70
+;PCODE: $00000004 VOL: 0
+	.EQU __sm_powerdown=0x20
+;PCODE: $00000005 VOL: 0
+	.EQU __sm_powersave=0x30
+;PCODE: $00000006 VOL: 0
+	.EQU __sm_standby=0x60
+;PCODE: $00000007 VOL: 0
+	.EQU __sm_ext_standby=0x70
+;PCODE: $00000008 VOL: 0
+	.EQU __sm_adc_noise_red=0x10
+;PCODE: $00000009 VOL: 0
+	.SET power_ctrl_reg=mcucr
+;PCODE: $0000000A VOL: 0
+	#endif
+;PCODE: $0000000B VOL: 0
+;PCODE: $0000000C VOL: 0
+;#include <delay.h>
+;
+;// Фаза U(Верхнее плечо)
+;#define UH_ON    TCCR1A |= (1 << COM1A1);
+;#define UH_OFF    TCCR1A &= ~(1 << COM1A1);
+;
+;// Фаза U(Нижнее плечо)
+;#define UL_ON    PORTB |= (1 << PORTB5);
+;#define UL_OFF    PORTB &= ~(1 << PORTB5);
+;
+;// Фаза V(Верхнее плечо)
+;#define VH_ON    TCCR2 |= (1 << COM21);
+;#define VH_OFF    TCCR2 &= ~(1 << COM21);
+;
+;// Фаза V(Нижнее плечо)
+;#define VL_ON    PORTB |= (1 << PORTB0);
+;#define VL_OFF    PORTB &= ~(1 << PORTB0);
+;
+;// Фаза W(Верхнее плечо)
+;#define WH_ON    TCCR1A |= (1 << COM1B1);
+;#define WH_OFF    TCCR1A &= ~(1 << COM1B1);
+;
+;// Фаза W(Нижнее плечо)
+;#define WL_ON    PORTB |= (1 << PORTB4);
+;#define WL_OFF    PORTB &= ~(1 << PORTB4);
+;
+;#define PHASE_ALL_OFF	UH_OFF;UL_OFF;VH_OFF;VL_OFF;WH_OFF;WL_OFF;
+;
+;#define SENSE_U		ADMUX = 0; // Вход обратной ЭДС фазы U
+;#define SENSE_V		ADMUX = 1; // Вход обратной ЭДС фазы V
+;#define SENSE_W		ADMUX = 2; // Вход обратной ЭДС фазы W
+;
+;#define SENSE_UVW	(ACSR&(1 << ACO)) // Выход компаратора
+;
+;#define START_PWM   10 // Минимальный ШИМ при запуске
+;#define WORK_PWM   100 // Максимальный уровень ШИМ при запуске
+;
+;
+;// Declare your global variables here
+;
+;unsigned char start = 0, start_stop = 0, start_pwm;
+;unsigned char direction = 1; // 0 - против часовой, 1 - по часовой
+;volatile unsigned char motor_pwm = WORK_PWM;
+
+	.DSEG
+;volatile unsigned char commutation_step = 0;
+;volatile unsigned char rotor_run = 0; // Счетчик импульсов обратной ЭДС
+;
+;// Функция переключения обмоток двигателя
+;void commutation(unsigned char startup)
+; 0000 004B {
+
+	.CSEG
+;PCODE: $0000000D VOL: 0
+;PCODE: $0000000E VOL: 0
+; 0000 004C 	switch (commutation_step)
+;PCODE: $0000000F VOL: 0
+;	startup -> Y+0
+;PCODE: $00000010 VOL: 1
+;PCODE: $00000011 VOL: 0
+; 0000 004D 	{
+; 0000 004E 		case (0):
+;PCODE: $00000012 VOL: 0
+;PCODE: $00000013 VOL: 0
+; 0000 004F 			if(!SENSE_UVW || startup)
+;PCODE: $00000014 VOL: 0
+;PCODE: $00000015 VOL: 0
+;PCODE: $00000016 VOL: 0
+;PCODE: $00000017 VOL: 0
+;PCODE: $00000018 VOL: 0
+;PCODE: $00000019 VOL: 0
+;PCODE: $0000001A VOL: 0
+;PCODE: $0000001B VOL: 0
+; 0000 0050 			{
+; 0000 0051 				if(direction)
+;PCODE: $0000001C VOL: 0
+;PCODE: $0000001D VOL: 0
+; 0000 0052 				{
+; 0000 0053 				UH_ON; WH_OFF; SENSE_W;
+;PCODE: $0000001E VOL: 0
+;PCODE: $0000001F VOL: 0
+;PCODE: $00000020 VOL: 0
+;PCODE: $00000021 VOL: 0
+;PCODE: $00000022 VOL: 0
+;PCODE: $00000023 VOL: 0
+;PCODE: $00000024 VOL: 0
+;PCODE: $00000025 VOL: 0
+; 0000 0054 				}
+; 0000 0055 				else
+;PCODE: $00000026 VOL: 0
+;PCODE: $00000027 VOL: 0
+; 0000 0056 				{
+; 0000 0057 				UH_OFF; WH_ON; SENSE_U;
+;PCODE: $00000028 VOL: 0
+;PCODE: $00000029 VOL: 0
+;PCODE: $0000002A VOL: 0
+;PCODE: $0000002B VOL: 0
+;PCODE: $0000002C VOL: 0
+;PCODE: $0000002D VOL: 0
+;PCODE: $0000002E VOL: 0
+;PCODE: $0000002F VOL: 0
+; 0000 0058 				}
+;PCODE: $00000030 VOL: 0
+; 0000 0059 				commutation_step = 1; // Следующий шаг
+;PCODE: $00000031 VOL: 0
+;PCODE: $00000032 VOL: 1
+; 0000 005A 				TCNT0 = 0; // Обнуляем счетчик T0
+;PCODE: $00000033 VOL: 0
+;PCODE: $00000034 VOL: 0
+; 0000 005B 			}
+; 0000 005C 			break;
+;PCODE: $00000035 VOL: 0
+;PCODE: $00000036 VOL: 0
+; 0000 005D 
+; 0000 005E 		case (1):
+;PCODE: $00000037 VOL: 0
+;PCODE: $00000038 VOL: 0
+;PCODE: $00000039 VOL: 0
+; 0000 005F 			if(SENSE_UVW || startup)
+;PCODE: $0000003A VOL: 0
+;PCODE: $0000003B VOL: 0
+;PCODE: $0000003C VOL: 0
+;PCODE: $0000003D VOL: 0
+;PCODE: $0000003E VOL: 0
+;PCODE: $0000003F VOL: 0
+;PCODE: $00000040 VOL: 0
+;PCODE: $00000041 VOL: 0
+; 0000 0060 			{
+; 0000 0061 				if(direction)
+;PCODE: $00000042 VOL: 0
+;PCODE: $00000043 VOL: 0
+; 0000 0062 				{
+; 0000 0063 				VL_OFF;	WL_ON; SENSE_V;
+;PCODE: $00000044 VOL: 0
+;PCODE: $00000045 VOL: 0
+;PCODE: $00000046 VOL: 0
+;PCODE: $00000047 VOL: 0
+;PCODE: $00000048 VOL: 0
+;PCODE: $00000049 VOL: 0
+; 0000 0064 				}
+; 0000 0065 				else
+;PCODE: $0000004A VOL: 0
+;PCODE: $0000004B VOL: 0
+; 0000 0066 				{
+; 0000 0067 				VL_OFF;	UL_ON; SENSE_V;
+;PCODE: $0000004C VOL: 0
+;PCODE: $0000004D VOL: 0
+;PCODE: $0000004E VOL: 0
+;PCODE: $0000004F VOL: 0
+;PCODE: $00000050 VOL: 0
+;PCODE: $00000051 VOL: 0
+; 0000 0068 				}
+;PCODE: $00000052 VOL: 0
+; 0000 0069 				commutation_step = 2;
+;PCODE: $00000053 VOL: 0
+;PCODE: $00000054 VOL: 1
+; 0000 006A 				TCNT0 = 0; // Обнуляем счетчик T0
+;PCODE: $00000055 VOL: 0
+;PCODE: $00000056 VOL: 0
+; 0000 006B 			}
+; 0000 006C 			break;
+;PCODE: $00000057 VOL: 0
+;PCODE: $00000058 VOL: 0
+; 0000 006D 
+; 0000 006E 		case (2):
+;PCODE: $00000059 VOL: 0
+;PCODE: $0000005A VOL: 0
+;PCODE: $0000005B VOL: 0
+; 0000 006F 			if(!SENSE_UVW || startup)
+;PCODE: $0000005C VOL: 0
+;PCODE: $0000005D VOL: 0
+;PCODE: $0000005E VOL: 0
+;PCODE: $0000005F VOL: 0
+;PCODE: $00000060 VOL: 0
+;PCODE: $00000061 VOL: 0
+;PCODE: $00000062 VOL: 0
+;PCODE: $00000063 VOL: 0
+; 0000 0070 			{
+; 0000 0071 				if(direction)
+;PCODE: $00000064 VOL: 0
+;PCODE: $00000065 VOL: 0
+; 0000 0072 				{
+; 0000 0073 				UH_OFF; VH_ON; SENSE_U;
+;PCODE: $00000066 VOL: 0
+;PCODE: $00000067 VOL: 0
+;PCODE: $00000068 VOL: 0
+;PCODE: $00000069 VOL: 0
+;PCODE: $0000006A VOL: 0
+;PCODE: $0000006B VOL: 0
+;PCODE: $0000006C VOL: 0
+;PCODE: $0000006D VOL: 0
+; 0000 0074 				}
+; 0000 0075 				else
+;PCODE: $0000006E VOL: 0
+;PCODE: $0000006F VOL: 0
+; 0000 0076 				{
+; 0000 0077 				VH_ON; WH_OFF; SENSE_W;
+;PCODE: $00000070 VOL: 0
+;PCODE: $00000071 VOL: 0
+;PCODE: $00000072 VOL: 0
+;PCODE: $00000073 VOL: 0
+;PCODE: $00000074 VOL: 0
+;PCODE: $00000075 VOL: 0
+;PCODE: $00000076 VOL: 0
+;PCODE: $00000077 VOL: 0
+; 0000 0078 				}
+;PCODE: $00000078 VOL: 0
+; 0000 0079 				commutation_step = 3;
+;PCODE: $00000079 VOL: 0
+;PCODE: $0000007A VOL: 1
+; 0000 007A 				TCNT0 = 0; // Обнуляем счетчик T0
+;PCODE: $0000007B VOL: 0
+;PCODE: $0000007C VOL: 0
+; 0000 007B 			}
+; 0000 007C 			break;
+;PCODE: $0000007D VOL: 0
+;PCODE: $0000007E VOL: 0
+; 0000 007D 
+; 0000 007E 		case (3):
+;PCODE: $0000007F VOL: 0
+;PCODE: $00000080 VOL: 0
+;PCODE: $00000081 VOL: 0
+; 0000 007F 			if(SENSE_UVW || startup)
+;PCODE: $00000082 VOL: 0
+;PCODE: $00000083 VOL: 0
+;PCODE: $00000084 VOL: 0
+;PCODE: $00000085 VOL: 0
+;PCODE: $00000086 VOL: 0
+;PCODE: $00000087 VOL: 0
+;PCODE: $00000088 VOL: 0
+;PCODE: $00000089 VOL: 0
+; 0000 0080 			{
+; 0000 0081 				if(direction)
+;PCODE: $0000008A VOL: 0
+;PCODE: $0000008B VOL: 0
+; 0000 0082 				{
+; 0000 0083 				UL_ON; WL_OFF; SENSE_W;
+;PCODE: $0000008C VOL: 0
+;PCODE: $0000008D VOL: 0
+;PCODE: $0000008E VOL: 0
+;PCODE: $0000008F VOL: 0
+;PCODE: $00000090 VOL: 0
+;PCODE: $00000091 VOL: 0
+; 0000 0084 				}
+; 0000 0085 				else
+;PCODE: $00000092 VOL: 0
+;PCODE: $00000093 VOL: 0
+; 0000 0086 				{
+; 0000 0087 				UL_OFF; WL_ON; SENSE_U;
+;PCODE: $00000094 VOL: 0
+;PCODE: $00000095 VOL: 0
+;PCODE: $00000096 VOL: 0
+;PCODE: $00000097 VOL: 0
+;PCODE: $00000098 VOL: 0
+;PCODE: $00000099 VOL: 0
+; 0000 0088 				}
+;PCODE: $0000009A VOL: 0
+; 0000 0089 				commutation_step = 4;
+;PCODE: $0000009B VOL: 0
+;PCODE: $0000009C VOL: 1
+; 0000 008A 				TCNT0 = 0; // Обнуляем счетчик T0
+;PCODE: $0000009D VOL: 0
+;PCODE: $0000009E VOL: 0
+; 0000 008B 			}
+; 0000 008C 			break;
+;PCODE: $0000009F VOL: 0
+;PCODE: $000000A0 VOL: 0
+; 0000 008D 
+; 0000 008E 		case (4):
+;PCODE: $000000A1 VOL: 0
+;PCODE: $000000A2 VOL: 0
+;PCODE: $000000A3 VOL: 0
+; 0000 008F 			if(!SENSE_UVW || startup)
+;PCODE: $000000A4 VOL: 0
+;PCODE: $000000A5 VOL: 0
+;PCODE: $000000A6 VOL: 0
+;PCODE: $000000A7 VOL: 0
+;PCODE: $000000A8 VOL: 0
+;PCODE: $000000A9 VOL: 0
+;PCODE: $000000AA VOL: 0
+;PCODE: $000000AB VOL: 0
+; 0000 0090 			{
+; 0000 0091 				if(direction)
+;PCODE: $000000AC VOL: 0
+;PCODE: $000000AD VOL: 0
+; 0000 0092 				{
+; 0000 0093 				VH_OFF; WH_ON; SENSE_V;
+;PCODE: $000000AE VOL: 0
+;PCODE: $000000AF VOL: 0
+;PCODE: $000000B0 VOL: 0
+;PCODE: $000000B1 VOL: 0
+;PCODE: $000000B2 VOL: 0
+;PCODE: $000000B3 VOL: 0
+;PCODE: $000000B4 VOL: 0
+;PCODE: $000000B5 VOL: 0
+; 0000 0094 				}
+; 0000 0095 				else
+;PCODE: $000000B6 VOL: 0
+;PCODE: $000000B7 VOL: 0
+; 0000 0096 				{
+; 0000 0097 				VH_OFF;	UH_ON; SENSE_V;
+;PCODE: $000000B8 VOL: 0
+;PCODE: $000000B9 VOL: 0
+;PCODE: $000000BA VOL: 0
+;PCODE: $000000BB VOL: 0
+;PCODE: $000000BC VOL: 0
+;PCODE: $000000BD VOL: 0
+;PCODE: $000000BE VOL: 0
+;PCODE: $000000BF VOL: 0
+; 0000 0098 				}
+;PCODE: $000000C0 VOL: 0
+; 0000 0099 				commutation_step = 5;
+;PCODE: $000000C1 VOL: 0
+;PCODE: $000000C2 VOL: 1
+; 0000 009A 				TCNT0 = 0; // Обнуляем счетчик T0
+;PCODE: $000000C3 VOL: 0
+;PCODE: $000000C4 VOL: 0
+; 0000 009B 			}
+; 0000 009C 			break;
+;PCODE: $000000C5 VOL: 0
+;PCODE: $000000C6 VOL: 0
+; 0000 009D 
+; 0000 009E 		case (5):
+;PCODE: $000000C7 VOL: 0
+;PCODE: $000000C8 VOL: 0
+;PCODE: $000000C9 VOL: 0
+; 0000 009F 			if(SENSE_UVW || startup)
+;PCODE: $000000CA VOL: 0
+;PCODE: $000000CB VOL: 0
+;PCODE: $000000CC VOL: 0
+;PCODE: $000000CD VOL: 0
+;PCODE: $000000CE VOL: 0
+;PCODE: $000000CF VOL: 0
+;PCODE: $000000D0 VOL: 0
+;PCODE: $000000D1 VOL: 0
+; 0000 00A0 			{
+; 0000 00A1 				if(direction)
+;PCODE: $000000D2 VOL: 0
+;PCODE: $000000D3 VOL: 0
+; 0000 00A2 				{
+; 0000 00A3 				UL_OFF;	VL_ON; SENSE_U;
+;PCODE: $000000D4 VOL: 0
+;PCODE: $000000D5 VOL: 0
+;PCODE: $000000D6 VOL: 0
+;PCODE: $000000D7 VOL: 0
+;PCODE: $000000D8 VOL: 0
+;PCODE: $000000D9 VOL: 0
+; 0000 00A4 				}
+; 0000 00A5 				else
+;PCODE: $000000DA VOL: 0
+;PCODE: $000000DB VOL: 0
+; 0000 00A6 				{
+; 0000 00A7 				VL_ON; WL_OFF; SENSE_W;
+;PCODE: $000000DC VOL: 0
+;PCODE: $000000DD VOL: 0
+;PCODE: $000000DE VOL: 0
+;PCODE: $000000DF VOL: 0
+;PCODE: $000000E0 VOL: 0
+;PCODE: $000000E1 VOL: 0
+; 0000 00A8 				}
+;PCODE: $000000E2 VOL: 0
+; 0000 00A9 				commutation_step = 0;
+;PCODE: $000000E3 VOL: 0
+;PCODE: $000000E4 VOL: 1
+; 0000 00AA 				TCNT0 = 0; // Обнуляем счетчик T0
+;PCODE: $000000E5 VOL: 0
+;PCODE: $000000E6 VOL: 0
+; 0000 00AB 			}
+; 0000 00AC 			break;
+;PCODE: $000000E7 VOL: 0
+;PCODE: $000000E8 VOL: 0
+; 0000 00AD 	}
+;PCODE: $000000E9 VOL: 0
+; 0000 00AE }
+;PCODE: $000000EA VOL: 0
+;PCODE: $000000EB VOL: 0
+;PCODE: $000000EC VOL: 0
+;
+;
+;// External Interrupt 0 service routine
+;interrupt [EXT_INT0] void ext_int0_isr(void)
+; 0000 00B3 {
+;PCODE: $000000ED VOL: 0
+;PCODE: $000000EE VOL: 0
+; 0000 00B4 // Place your code here
+; 0000 00B5     delay_us(100);
+;PCODE: $000000EF VOL: 0
+; 0000 00B6         if ((PIND & ( 1 << PIND2)) == 0){
+;PCODE: $000000F0 VOL: 0
+;PCODE: $000000F1 VOL: 0
+;PCODE: $000000F2 VOL: 0
+; 0000 00B7             delay_us(100);
+;PCODE: $000000F3 VOL: 0
+; 0000 00B8     // Крутим против часовой стрелки
+; 0000 00B9             if ((PIND & ( 1 << PIND1)) == 0)
+;PCODE: $000000F4 VOL: 0
+;PCODE: $000000F5 VOL: 0
+;PCODE: $000000F6 VOL: 0
+; 0000 00BA             {
+; 0000 00BB               if(motor_pwm != START_PWM) motor_pwm -= 5; // Уменьшаем ШИМ
+;PCODE: $000000F7 VOL: 1
+;PCODE: $000000F8 VOL: 0
+;PCODE: $000000F9 VOL: 0
+;PCODE: $000000FA VOL: 0
+;PCODE: $000000FB VOL: 1
+;PCODE: $000000FC VOL: 1
+; 0000 00BC             }
+;PCODE: $000000FD VOL: 0
+; 0000 00BD     // Крутим по часовой стрелке
+; 0000 00BE             else
+;PCODE: $000000FE VOL: 0
+;PCODE: $000000FF VOL: 0
+; 0000 00BF             {
+; 0000 00C0               if(motor_pwm != 255) motor_pwm += 5; // Увеличиваем ШИМ
+;PCODE: $00000100 VOL: 1
+;PCODE: $00000101 VOL: 0
+;PCODE: $00000102 VOL: 0
+;PCODE: $00000103 VOL: 1
+;PCODE: $00000104 VOL: 0
+;PCODE: $00000105 VOL: 1
+; 0000 00C1             }
+;PCODE: $00000106 VOL: 0
+;PCODE: $00000107 VOL: 0
+; 0000 00C2         }
+; 0000 00C3         GIFR = (1 << INTF0); // Сбрасываем флаг внешнего прерывания
+;PCODE: $00000108 VOL: 0
+;PCODE: $00000109 VOL: 0
+;PCODE: $0000010A VOL: 0
+; 0000 00C4         return;
+;PCODE: $0000010B VOL: 0
+;PCODE: $0000010C VOL: 0
+; 0000 00C5 
+; 0000 00C6 }
+;PCODE: $0000010D VOL: 0
+;
+;// Timer 0 overflow interrupt service routine
+;interrupt [TIM0_OVF] void timer0_ovf_isr(void)
+; 0000 00CA {
+;PCODE: $0000010E VOL: 0
+;PCODE: $0000010F VOL: 0
+; 0000 00CB // Place your code here
+; 0000 00CC     rotor_run = 0; // Сбрасываем счетчик импульсов
+;PCODE: $00000110 VOL: 0
+;PCODE: $00000111 VOL: 1
+; 0000 00CD     OCR1A = START_PWM; // ШИМ минимум
+;PCODE: $00000112 VOL: 0
+;PCODE: $00000113 VOL: 0
+; 0000 00CE     OCR1B = START_PWM;
+;PCODE: $00000114 VOL: 0
+;PCODE: $00000115 VOL: 0
+; 0000 00CF     OCR2 = START_PWM;
+;PCODE: $00000116 VOL: 0
+;PCODE: $00000117 VOL: 0
+; 0000 00D0     commutation(1); // Переключаем обмотки безусловно
+;PCODE: $00000118 VOL: 0
+;PCODE: $00000119 VOL: 0
+; 0000 00D1 
+; 0000 00D2 }
+;PCODE: $0000011A VOL: 0
+;PCODE: $0000011B VOL: 0
+;PCODE: $0000011C VOL: 0
+;
+;// Analog Comparator interrupt service routine
+;interrupt [ANA_COMP] void ana_comp_isr(void)
+; 0000 00D6 {
+;PCODE: $0000011D VOL: 0
+;PCODE: $0000011E VOL: 0
+; 0000 00D7 // Place your code here
+; 0000 00D8     rotor_run++; // инкрементируем импульсы
+;PCODE: $0000011F VOL: 1
+;PCODE: $00000120 VOL: 0
+;PCODE: $00000121 VOL: 1
+; 0000 00D9     if(rotor_run > 200) rotor_run = 200;
+;PCODE: $00000122 VOL: 1
+;PCODE: $00000123 VOL: 0
+;PCODE: $00000124 VOL: 0
+;PCODE: $00000125 VOL: 0
+;PCODE: $00000126 VOL: 1
+; 0000 00DA     if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, крутим наполную
+;PCODE: $00000127 VOL: 0
+;PCODE: $00000128 VOL: 1
+;PCODE: $00000129 VOL: 0
+;PCODE: $0000012A VOL: 0
+; 0000 00DB     commutation(0); // Переключаем обмотки по сигналу компаратора
+;PCODE: $0000012B VOL: 0
+;PCODE: $0000012C VOL: 0
+; 0000 00DC 
+; 0000 00DD }
+;PCODE: $0000012D VOL: 0
+;PCODE: $0000012E VOL: 0
+;PCODE: $0000012F VOL: 0
+;PCODE: $00000130 VOL: 0
+;
+;void main(void)
+; 0000 00E0 {
+;PCODE: $00000131 VOL: 0
+; 0000 00E1 // Declare your local variables here
+; 0000 00E2 
+; 0000 00E3 // Input/Output Ports initialization
+; 0000 00E4 // Port B initialization
+; 0000 00E5 // Function: Bit7=Out Bit6=Out Bit5=Out Bit4=Out Bit3=Out Bit2=Out Bit1=Out Bit0=Out
+; 0000 00E6 DDRB=(1<<DDB7) | (1<<DDB6) | (1<<DDB5) | (1<<DDB4) | (1<<DDB3) | (1<<DDB2) | (1<<DDB1) | (1<<DDB0);
+;PCODE: $00000132 VOL: 0
+;PCODE: $00000133 VOL: 0
+; 0000 00E7 // State: Bit7=0 Bit6=0 Bit5=0 Bit4=0 Bit3=0 Bit2=0 Bit1=0 Bit0=0
+; 0000 00E8 PORTB=(0<<PORTB7) | (0<<PORTB6) | (0<<PORTB5) | (0<<PORTB4) | (0<<PORTB3) | (0<<PORTB2) | (0<<PORTB1) | (0<<PORTB0);
+;PCODE: $00000134 VOL: 0
+;PCODE: $00000135 VOL: 0
+; 0000 00E9 
+; 0000 00EA // Port C initialization
+; 0000 00EB // Function: Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 00EC DDRC=(0<<DDC6) | (0<<DDC5) | (0<<DDC4) | (0<<DDC3) | (0<<DDC2) | (0<<DDC1) | (0<<DDC0);
+;PCODE: $00000136 VOL: 0
+;PCODE: $00000137 VOL: 0
+; 0000 00ED // State: Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 00EE PORTC=(0<<PORTC6) | (0<<PORTC5) | (0<<PORTC4) | (0<<PORTC3) | (0<<PORTC2) | (0<<PORTC1) | (0<<PORTC0);
+;PCODE: $00000138 VOL: 0
+;PCODE: $00000139 VOL: 0
+; 0000 00EF 
+; 0000 00F0 // Port D initialization
+; 0000 00F1 // Function: Bit7=Out Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 00F2 DDRD=(1<<DDD7) | (0<<DDD6) | (0<<DDD5) | (0<<DDD4) | (0<<DDD3) | (0<<DDD2) | (0<<DDD1) | (0<<DDD0);
+;PCODE: $0000013A VOL: 0
+;PCODE: $0000013B VOL: 0
+; 0000 00F3 // State: Bit7=0 Bit6=T Bit5=T Bit4=T Bit3=P Bit2=P Bit1=P Bit0=P
+; 0000 00F4 PORTD=(0<<PORTD7) | (0<<PORTD6) | (0<<PORTD5) | (0<<PORTD4) | (1<<PORTD3) | (1<<PORTD2) | (1<<PORTD1) | (1<<PORTD0);
+;PCODE: $0000013C VOL: 0
+;PCODE: $0000013D VOL: 0
+; 0000 00F5 
+; 0000 00F6 // Timer/Counter 0 initialization
+; 0000 00F7 // Clock source: System Clock
+; 0000 00F8 // Clock value: 15,625 kHz
+; 0000 00F9 TCCR0=(1<<CS02) | (0<<CS01) | (1<<CS00);
+;PCODE: $0000013E VOL: 0
+;PCODE: $0000013F VOL: 0
+; 0000 00FA TCNT0=0x00;
+;PCODE: $00000140 VOL: 0
+;PCODE: $00000141 VOL: 0
+; 0000 00FB 
+; 0000 00FC // Timer/Counter 1 initialization
+; 0000 00FD // Clock source: System Clock
+; 0000 00FE // Clock value: 16000,000 kHz
+; 0000 00FF // Mode: Fast PWM top=0x00FF
+; 0000 0100 // OC1A output: Disconnected
+; 0000 0101 // OC1B output: Disconnected
+; 0000 0102 // Noise Canceler: Off
+; 0000 0103 // Input Capture on Falling Edge
+; 0000 0104 // Timer Period: 0,016 ms
+; 0000 0105 // Timer1 Overflow Interrupt: Off
+; 0000 0106 // Input Capture Interrupt: Off
+; 0000 0107 // Compare A Match Interrupt: Off
+; 0000 0108 // Compare B Match Interrupt: Off
+; 0000 0109 TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (1<<WGM10);
+;PCODE: $00000142 VOL: 0
+;PCODE: $00000143 VOL: 0
+; 0000 010A TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (0<<CS12) | (0<<CS11) | (1<<CS10);
+;PCODE: $00000144 VOL: 0
+;PCODE: $00000145 VOL: 0
+; 0000 010B TCNT1H=0x00;
+;PCODE: $00000146 VOL: 0
+;PCODE: $00000147 VOL: 0
+; 0000 010C TCNT1L=0x00;
+;PCODE: $00000148 VOL: 0
+;PCODE: $00000149 VOL: 0
+; 0000 010D ICR1H=0x00;
+;PCODE: $0000014A VOL: 0
+;PCODE: $0000014B VOL: 0
+; 0000 010E ICR1L=0x00;
+;PCODE: $0000014C VOL: 0
+;PCODE: $0000014D VOL: 0
+; 0000 010F OCR1AH=0x00;
+;PCODE: $0000014E VOL: 0
+;PCODE: $0000014F VOL: 0
+; 0000 0110 OCR1AL=0x00;
+;PCODE: $00000150 VOL: 0
+;PCODE: $00000151 VOL: 0
+; 0000 0111 OCR1BH=0x00;
+;PCODE: $00000152 VOL: 0
+;PCODE: $00000153 VOL: 0
+; 0000 0112 OCR1BL=0x00;
+;PCODE: $00000154 VOL: 0
+;PCODE: $00000155 VOL: 0
+; 0000 0113 
+; 0000 0114 // Timer/Counter 2 initialization
+; 0000 0115 // Clock source: System Clock
+; 0000 0116 // Clock value: 16000,000 kHz
+; 0000 0117 // Mode: Fast PWM top=0xFF
+; 0000 0118 // OC2 output: Non-Inverted PWM
+; 0000 0119 // Timer Period: 0,016 ms
+; 0000 011A // Output Pulse(s):
+; 0000 011B // OC2 Period: 0,016 ms Width: 0 us
+; 0000 011C ASSR=0<<AS2;
+;PCODE: $00000156 VOL: 0
+;PCODE: $00000157 VOL: 0
+; 0000 011D TCCR2=(1<<PWM2) | (1<<COM21) | (0<<COM20) | (1<<CTC2) | (0<<CS22) | (0<<CS21) | (1<<CS20);
+;PCODE: $00000158 VOL: 0
+;PCODE: $00000159 VOL: 0
+; 0000 011E TCNT2=0x00;
+;PCODE: $0000015A VOL: 0
+;PCODE: $0000015B VOL: 0
+; 0000 011F OCR2=START_PWM;
+;PCODE: $0000015C VOL: 0
+;PCODE: $0000015D VOL: 0
+; 0000 0120 
+; 0000 0121 // Timer(s)/Counter(s) Interrupt(s) initialization
+; 0000 0122 TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
+;PCODE: $0000015E VOL: 0
+;PCODE: $0000015F VOL: 0
+; 0000 0123 
+; 0000 0124 // External Interrupt(s) initialization
+; 0000 0125 // INT0: On
+; 0000 0126 // INT0 Mode: Falling Edge
+; 0000 0127 // INT1: Off
+; 0000 0128 GICR|=(0<<INT1) | (1<<INT0);
+;PCODE: $00000160 VOL: 0
+;PCODE: $00000161 VOL: 0
+;PCODE: $00000162 VOL: 0
+; 0000 0129 MCUCR=(0<<ISC11) | (0<<ISC10) | (1<<ISC01) | (0<<ISC00);
+;PCODE: $00000163 VOL: 0
+;PCODE: $00000164 VOL: 0
+; 0000 012A GIFR=(0<<INTF1) | (1<<INTF0);
+;PCODE: $00000165 VOL: 0
+;PCODE: $00000166 VOL: 0
+; 0000 012B 
+; 0000 012C // USART initialization
+; 0000 012D // USART disabled
+; 0000 012E UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
+;PCODE: $00000167 VOL: 0
+;PCODE: $00000168 VOL: 0
+; 0000 012F 
+; 0000 0130 // Analog Comparator initialization
+; 0000 0131 // Analog Comparator: On
+; 0000 0132 // The Analog Comparator's positive input is
+; 0000 0133 // connected to the AIN0 pin
+; 0000 0134 // The Analog Comparator's negative input is
+; 0000 0135 // connected to the ADC multiplexer
+; 0000 0136 // Interrupt on Output Toggle
+; 0000 0137 // Analog Comparator Input Capture by Timer/Counter 1: Off
+; 0000 0138 ACSR=(0<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (1<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
+;PCODE: $00000169 VOL: 0
+;PCODE: $0000016A VOL: 0
+; 0000 0139 SFIOR=(1<<ACME);
+;PCODE: $0000016B VOL: 0
+;PCODE: $0000016C VOL: 0
+; 0000 013A 
+; 0000 013B // ADC initialization
+; 0000 013C // ADC disabled
+; 0000 013D ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
+;PCODE: $0000016D VOL: 0
+;PCODE: $0000016E VOL: 0
+; 0000 013E 
+; 0000 013F // SPI initialization
+; 0000 0140 // SPI disabled
+; 0000 0141 SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
+;PCODE: $0000016F VOL: 0
+;PCODE: $00000170 VOL: 0
+; 0000 0142 
+; 0000 0143 // TWI initialization
+; 0000 0144 // TWI disabled
+; 0000 0145 TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
+;PCODE: $00000171 VOL: 0
+;PCODE: $00000172 VOL: 0
+; 0000 0146 
+; 0000 0147 // Global enable interrupts
+; 0000 0148 #asm("sei")
+;PCODE: $00000173 VOL: 0
+	sei
+;PCODE: $00000174 VOL: 0
+; 0000 0149 
+; 0000 014A while (1)
+;PCODE: $00000175 VOL: 0
+; 0000 014B     {
+; 0000 014C       // Place your code here
+; 0000 014D       if((PIND&(1 << PIND0)) == 0) // Старт/Стоп
+;PCODE: $00000176 VOL: 0
+;PCODE: $00000177 VOL: 0
+;PCODE: $00000178 VOL: 0
+; 0000 014E         {
+; 0000 014F             delay_ms(20);
+;PCODE: $00000179 VOL: 0
+;PCODE: $0000017A VOL: 0
+;PCODE: $0000017B VOL: 0
+; 0000 0150             start_stop ^= 1; // Переключаем состояние
+;PCODE: $0000017C VOL: 0
+;PCODE: $0000017D VOL: 0
+;PCODE: $0000017E VOL: 0
+; 0000 0151             while((PIND&(1 << PIND0)) == 0){} // Ждем отпускания кнопки
+;PCODE: $0000017F VOL: 0
+;PCODE: $00000180 VOL: 0
+;PCODE: $00000181 VOL: 0
+;PCODE: $00000182 VOL: 0
+;PCODE: $00000183 VOL: 0
+;PCODE: $00000184 VOL: 0
+; 0000 0152            // while((PIND.0) == 0){}
+; 0000 0153         }
+; 0000 0154 
+; 0000 0155         if(start_stop)
+;PCODE: $00000185 VOL: 0
+;PCODE: $00000186 VOL: 0
+;PCODE: $00000187 VOL: 0
+; 0000 0156         {
+; 0000 0157             ACSR |= (1 << ACIE); // Разрешаем прерывание от компаратора
+;PCODE: $00000188 VOL: 0
+;PCODE: $00000189 VOL: 0
+; 0000 0158             TIMSK |= (1 << TOIE0); // Разрешаем прерывание по переполнению T0
+;PCODE: $0000018A VOL: 0
+;PCODE: $0000018B VOL: 0
+;PCODE: $0000018C VOL: 0
+; 0000 0159             GICR |= (1 << INT0); // Разрешаем внешние прерывания INT0
+;PCODE: $0000018D VOL: 0
+;PCODE: $0000018E VOL: 0
+;PCODE: $0000018F VOL: 0
+; 0000 015A             // Плавный старт
+; 0000 015B               if(rotor_run == 200 && start == 0) // Если импульсы обратной ЭДС присутствуют и двигатель не был запущен
+;PCODE: $00000190 VOL: 1
+;PCODE: $00000191 VOL: 0
+;PCODE: $00000192 VOL: 0
+;PCODE: $00000193 VOL: 0
+;PCODE: $00000194 VOL: 0
+;PCODE: $00000195 VOL: 0
+;PCODE: $00000196 VOL: 0
+;PCODE: $00000197 VOL: 0
+;PCODE: $00000198 VOL: 0
+; 0000 015C               {
+; 0000 015D                 for(start_pwm = START_PWM; start_pwm < motor_pwm; start_pwm++)
+;PCODE: $00000199 VOL: 0
+;PCODE: $0000019A VOL: 0
+;PCODE: $0000019B VOL: 0
+;PCODE: $0000019C VOL: 1
+;PCODE: $0000019D VOL: 0
+;PCODE: $0000019E VOL: 0
+;PCODE: $0000019F VOL: 0
+;PCODE: $000001A0 VOL: 0
+; 0000 015E                     {
+; 0000 015F                       delay_ms(10); // Задержка
+;PCODE: $000001A1 VOL: 0
+;PCODE: $000001A2 VOL: 0
+;PCODE: $000001A3 VOL: 0
+; 0000 0160                       OCR1A = start_pwm;
+;PCODE: $000001A4 VOL: 0
+;PCODE: $000001A5 VOL: 0
+;PCODE: $000001A6 VOL: 0
+; 0000 0161                       OCR1B = start_pwm;
+;PCODE: $000001A7 VOL: 0
+;PCODE: $000001A8 VOL: 0
+;PCODE: $000001A9 VOL: 0
+; 0000 0162                       OCR2 = start_pwm;
+;PCODE: $000001AA VOL: 0
+;PCODE: $000001AB VOL: 0
+; 0000 0163                     }
+;PCODE: $000001AC VOL: 0
+;PCODE: $000001AD VOL: 0
+;PCODE: $000001AE VOL: 0
+;PCODE: $000001AF VOL: 0
+; 0000 0164                   start = 1; // Запуск произошел
+;PCODE: $000001B0 VOL: 0
+;PCODE: $000001B1 VOL: 0
+; 0000 0165                   PORTD |= (1 << PORTD7); // Включаем светодиод
+;PCODE: $000001B2 VOL: 0
+;PCODE: $000001B3 VOL: 0
+; 0000 0166               }
+; 0000 0167 
+; 0000 0168               if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, можем менять ШИМ
+;PCODE: $000001B4 VOL: 0
+;PCODE: $000001B5 VOL: 1
+;PCODE: $000001B6 VOL: 0
+;PCODE: $000001B7 VOL: 0
+; 0000 0169               {
+; 0000 016A                   OCR1A = motor_pwm;
+;PCODE: $000001B8 VOL: 1
+;PCODE: $000001B9 VOL: 0
+;PCODE: $000001BA VOL: 0
+; 0000 016B                   OCR1B = motor_pwm;
+;PCODE: $000001BB VOL: 1
+;PCODE: $000001BC VOL: 0
+;PCODE: $000001BD VOL: 0
+; 0000 016C                   OCR2 = motor_pwm;
+;PCODE: $000001BE VOL: 1
+;PCODE: $000001BF VOL: 0
+; 0000 016D               }
+; 0000 016E         }
+;PCODE: $000001C0 VOL: 0
+; 0000 016F         else
+;PCODE: $000001C1 VOL: 0
+;PCODE: $000001C2 VOL: 0
+; 0000 0170         {
+; 0000 0171 
+; 0000 0172             if(PIND&(1 << PIND3)) direction = 1; // Выбор направления вращения вала
+;PCODE: $000001C3 VOL: 0
+;PCODE: $000001C4 VOL: 0
+;PCODE: $000001C5 VOL: 0
+;PCODE: $000001C6 VOL: 0
+;PCODE: $000001C7 VOL: 0
+; 0000 0173             else direction = 0;
+;PCODE: $000001C8 VOL: 0
+;PCODE: $000001C9 VOL: 0
+;PCODE: $000001CA VOL: 0
+; 0000 0174 
+; 0000 0175             start = 0; // Двигатель остановлен
+;PCODE: $000001CB VOL: 0
+;PCODE: $000001CC VOL: 0
+; 0000 0176             PORTD &= ~(1 << PORTD7); // Выключаем светодиод
+;PCODE: $000001CD VOL: 0
+;PCODE: $000001CE VOL: 0
+; 0000 0177             PHASE_ALL_OFF; // Все фазы выключены
+;PCODE: $000001CF VOL: 0
+;PCODE: $000001D0 VOL: 0
+;PCODE: $000001D1 VOL: 0
+;PCODE: $000001D2 VOL: 0
+;PCODE: $000001D3 VOL: 0
+;PCODE: $000001D4 VOL: 0
+;PCODE: $000001D5 VOL: 0
+;PCODE: $000001D6 VOL: 0
+;PCODE: $000001D7 VOL: 0
+;PCODE: $000001D8 VOL: 0
+;PCODE: $000001D9 VOL: 0
+;PCODE: $000001DA VOL: 0
+;PCODE: $000001DB VOL: 0
+;PCODE: $000001DC VOL: 0
+;PCODE: $000001DD VOL: 0
+; 0000 0178             ACSR &= ~(1 << ACIE); // Запрещаем прерывание от компаратора
+;PCODE: $000001DE VOL: 0
+;PCODE: $000001DF VOL: 0
+; 0000 0179             TIMSK &= ~(1 << TOIE0); // Запрещаем прерывание по переполнению T0
+;PCODE: $000001E0 VOL: 0
+;PCODE: $000001E1 VOL: 0
+;PCODE: $000001E2 VOL: 0
+; 0000 017A             GICR &= ~(1 << INT0); // Запрещаем внешние прерывания INT0
+;PCODE: $000001E3 VOL: 0
+;PCODE: $000001E4 VOL: 0
+;PCODE: $000001E5 VOL: 0
+; 0000 017B         }
+;PCODE: $000001E6 VOL: 0
+; 0000 017C 
+; 0000 017D 
+; 0000 017E       }
+;PCODE: $000001E7 VOL: 0
+;PCODE: $000001E8 VOL: 0
+; 0000 017F }
+;PCODE: $000001E9 VOL: 0
+;PCODE: $000001EA VOL: 0
+;PCODE: $000001EB VOL: 0

@@ -1,0 +1,26 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+motor_pwm                                                                         0x0160       1
+commutation_step                                                                  0x0161       1
+rotor_run                                                                         0x0162       1
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+start                                                                             R5           1
+start_stop                                                                        R4           1
+start_pwm                                                                         R7           1
+direction                                                                         R6           1
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+commutation                                                                       0x00049    134
+timer0_ovf_isr                                                                    0x000F5     14
+ana_comp_isr                                                                      0x00103     31
+main                                                                              0x00122    134
