@@ -1,10 +1,10 @@
 
-AVRASM ver. 2.1.30  C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm Sun Jul 28 21:01:56 2019
+AVRASM ver. 2.1.30  D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm Thu Nov 21 20:04:33 2019
 
-C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1086): warning: Register r5 already defined by the .DEF directive
-C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1087): warning: Register r4 already defined by the .DEF directive
-C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1088): warning: Register r7 already defined by the .DEF directive
-C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1089): warning: Register r6 already defined by the .DEF directive
+D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1086): warning: Register r5 already defined by the .DEF directive
+D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1087): warning: Register r4 already defined by the .DEF directive
+D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1088): warning: Register r7 already defined by the .DEF directive
+D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1089): warning: Register r6 already defined by the .DEF directive
                  
                  
                  ;CodeVisionAVR C Compiler V3.12 Advanced
@@ -1104,7 +1104,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1089): warning: Register 
                  
                  ;INTERRUPT VECTORS
 000000 c01c      	RJMP __RESET
-000001 c0cd      	RJMP _ext_int0_isr
+000001 c0fa      	RJMP _ext_int0_isr
 000002 cffd      	RJMP 0x00
 000003 cffc      	RJMP 0x00
 000004 cffb      	RJMP 0x00
@@ -1112,25 +1112,25 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1089): warning: Register 
 000006 cff9      	RJMP 0x00
 000007 cff8      	RJMP 0x00
 000008 cff7      	RJMP 0x00
-000009 c0eb      	RJMP _timer0_ovf_isr
+000009 c0d7      	RJMP _timer0_ovf_isr
 00000a cff5      	RJMP 0x00
 00000b cff4      	RJMP 0x00
 00000c cff3      	RJMP 0x00
 00000d cff2      	RJMP 0x00
 00000e cff1      	RJMP 0x00
 00000f cff0      	RJMP 0x00
-000010 c0f2      	RJMP _ana_comp_isr
+000010 c0be      	RJMP _ana_comp_isr
 000011 cfee      	RJMP 0x00
 000012 cfed      	RJMP 0x00
                  
                  ;GLOBAL REGISTER VARIABLES INITIALIZATION
                  __REG_VARS:
 000013 0000
-C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1120): warning: .cseg .db misalignment - padding zero byte
+D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1120): warning: .cseg .db misalignment - padding zero byte
 000014 0001      	.DB  0x0,0x0,0x1
                  
                  _0x3:
-C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db misalignment - padding zero byte
+D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db misalignment - padding zero byte
 000015 0064      	.DB  0x64
                  
                  __GLOBAL_INI_TBL:
@@ -1323,7 +1323,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 004F 			if(!SENSE_UVW || startup)
 00004f 9b45      	SBIS 0x8,5
 000050 c002      	RJMP _0x9
-000051 d156      	RCALL SUBOPT_0x0
+000051 d154      	RCALL SUBOPT_0x0
 000052 f079      	BREQ _0x8
                  _0x9:
                  ; 0000 0050 			{
@@ -1335,14 +1335,14 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
 000055 b5ef      	IN   R30,0x2F
 000056 68e0      	ORI  R30,0x80
 000057 bdef      	OUT  0x2F,R30
-000058 d152      	RCALL SUBOPT_0x1
+000058 d150      	RCALL SUBOPT_0x1
 000059 c005      	RJMP _0x45
                  ; 0000 0054 				}
                  ; 0000 0055 				else
                  _0xB:
                  ; 0000 0056 				{
                  ; 0000 0057 				UH_OFF; WH_ON; SENSE_U;
-00005a d155      	RCALL SUBOPT_0x2
+00005a d153      	RCALL SUBOPT_0x2
 00005b b5ef      	IN   R30,0x2F
 00005c 62e0      	ORI  R30,0x20
 00005d bdef      	OUT  0x2F,R30
@@ -1352,7 +1352,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 0058 				}
                  ; 0000 0059 				commutation_step = 1; // Следующий шаг
 000060 e0e1      	LDI  R30,LOW(1)
-000061 d152      	RCALL SUBOPT_0x3
+000061 d150      	RCALL SUBOPT_0x3
                  ; 0000 005A 				TCNT0 = 0; // Обнуляем счетчик T0
                  ; 0000 005B 			}
                  ; 0000 005C 			break;
@@ -1368,7 +1368,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 005F 			if(SENSE_UVW || startup)
 000067 9945      	SBIC 0x8,5
 000068 c002      	RJMP _0xF
-000069 d13e      	RCALL SUBOPT_0x0
+000069 d13c      	RCALL SUBOPT_0x0
 00006a f059      	BREQ _0xE
                  _0xF:
                  ; 0000 0060 			{
@@ -1393,7 +1393,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 0068 				}
                  ; 0000 0069 				commutation_step = 2;
 000074 e0e2      	LDI  R30,LOW(2)
-000075 d13e      	RCALL SUBOPT_0x3
+000075 d13c      	RCALL SUBOPT_0x3
                  ; 0000 006A 				TCNT0 = 0; // Обнуляем счетчик T0
                  ; 0000 006B 			}
                  ; 0000 006C 			break;
@@ -1409,7 +1409,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 006F 			if(!SENSE_UVW || startup)
 00007b 9b45      	SBIS 0x8,5
 00007c c002      	RJMP _0x15
-00007d d12a      	RCALL SUBOPT_0x0
+00007d d128      	RCALL SUBOPT_0x0
 00007e f079      	BREQ _0x14
                  _0x15:
                  ; 0000 0070 			{
@@ -1418,7 +1418,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
 000080 f031      	BREQ _0x17
                  ; 0000 0072 				{
                  ; 0000 0073 				UH_OFF; VH_ON; SENSE_U;
-000081 d12e      	RCALL SUBOPT_0x2
+000081 d12c      	RCALL SUBOPT_0x2
 000082 b5e5      	IN   R30,0x25
 000083 62e0      	ORI  R30,0x20
 000084 bde5      	OUT  0x25,R30
@@ -1432,13 +1432,13 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
 000087 b5e5      	IN   R30,0x25
 000088 62e0      	ORI  R30,0x20
 000089 bde5      	OUT  0x25,R30
-00008a d120      	RCALL SUBOPT_0x1
+00008a d11e      	RCALL SUBOPT_0x1
                  _0x47:
 00008b b9e7      	OUT  0x7,R30
                  ; 0000 0078 				}
                  ; 0000 0079 				commutation_step = 3;
 00008c e0e3      	LDI  R30,LOW(3)
-00008d d126      	RCALL SUBOPT_0x3
+00008d d124      	RCALL SUBOPT_0x3
                  ; 0000 007A 				TCNT0 = 0; // Обнуляем счетчик T0
                  ; 0000 007B 			}
                  ; 0000 007C 			break;
@@ -1454,7 +1454,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 007F 			if(SENSE_UVW || startup)
 000093 9945      	SBIC 0x8,5
 000094 c002      	RJMP _0x1B
-000095 d112      	RCALL SUBOPT_0x0
+000095 d110      	RCALL SUBOPT_0x0
 000096 f061      	BREQ _0x1A
                  _0x1B:
                  ; 0000 0080 			{
@@ -1480,7 +1480,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 0088 				}
                  ; 0000 0089 				commutation_step = 4;
 0000a1 e0e4      	LDI  R30,LOW(4)
-0000a2 d111      	RCALL SUBOPT_0x3
+0000a2 d10f      	RCALL SUBOPT_0x3
                  ; 0000 008A 				TCNT0 = 0; // Обнуляем счетчик T0
                  ; 0000 008B 			}
                  ; 0000 008C 			break;
@@ -1496,7 +1496,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 008F 			if(!SENSE_UVW || startup)
 0000a8 9b45      	SBIS 0x8,5
 0000a9 c002      	RJMP _0x21
-0000aa d0fd      	RCALL SUBOPT_0x0
+0000aa d0fb      	RCALL SUBOPT_0x0
 0000ab f061      	BREQ _0x20
                  _0x21:
                  ; 0000 0090 			{
@@ -1505,7 +1505,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
 0000ad f019      	BREQ _0x23
                  ; 0000 0092 				{
                  ; 0000 0093 				VH_OFF; WH_ON; SENSE_V;
-0000ae d10a      	RCALL SUBOPT_0x4
+0000ae d108      	RCALL SUBOPT_0x4
 0000af 62e0      	ORI  R30,0x20
 0000b0 c002      	RJMP _0x49
                  ; 0000 0094 				}
@@ -1513,7 +1513,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  _0x23:
                  ; 0000 0096 				{
                  ; 0000 0097 				VH_OFF;	UH_ON; SENSE_V;
-0000b1 d107      	RCALL SUBOPT_0x4
+0000b1 d105      	RCALL SUBOPT_0x4
 0000b2 68e0      	ORI  R30,0x80
                  _0x49:
 0000b3 bdef      	OUT  0x2F,R30
@@ -1522,7 +1522,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 0098 				}
                  ; 0000 0099 				commutation_step = 5;
 0000b6 e0e5      	LDI  R30,LOW(5)
-0000b7 d0fc      	RCALL SUBOPT_0x3
+0000b7 d0fa      	RCALL SUBOPT_0x3
                  ; 0000 009A 				TCNT0 = 0; // Обнуляем счетчик T0
                  ; 0000 009B 			}
                  ; 0000 009C 			break;
@@ -1538,7 +1538,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 009F 			if(SENSE_UVW || startup)
 0000bd 9945      	SBIC 0x8,5
 0000be c002      	RJMP _0x27
-0000bf d0e8      	RCALL SUBOPT_0x0
+0000bf d0e6      	RCALL SUBOPT_0x0
 0000c0 f061      	BREQ _0x26
                  _0x27:
                  ; 0000 00A0 			{
@@ -1564,7 +1564,7 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; 0000 00A8 				}
                  ; 0000 00A9 				commutation_step = 0;
 0000cb e0e0      	LDI  R30,LOW(0)
-0000cc d0e7      	RCALL SUBOPT_0x3
+0000cc d0e5      	RCALL SUBOPT_0x3
                  ; 0000 00AA 				TCNT0 = 0; // Обнуляем счетчик T0
                  ; 0000 00AB 			}
                  ; 0000 00AC 			break;
@@ -1577,455 +1577,466 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  ; .FEND
                  ;
                  ;
-                 ;// External Interrupt 0 service routine
-                 ;interrupt [EXT_INT0] void ext_int0_isr(void)
-                 ; 0000 00B3 {
-                 _ext_int0_isr:
-                 ; .FSTART _ext_int0_isr
-0000cf 938a      	ST   -Y,R24
-0000d0 939a      	ST   -Y,R25
-0000d1 93aa      	ST   -Y,R26
-0000d2 93ea      	ST   -Y,R30
-0000d3 b7ef      	IN   R30,SREG
-0000d4 93ea      	ST   -Y,R30
-                 ; 0000 00B4 // Place your code here
-                 ; 0000 00B5     delay_us(100);
-0000d5 d0e8      	RCALL SUBOPT_0x5
-                 ; 0000 00B6         if ((PIND & ( 1 << PIND2)) == 0){
-0000d6 9982      	SBIC 0x10,2
-0000d7 c014      	RJMP _0x2B
-                 ; 0000 00B7             delay_us(100);
-0000d8 d0e5      	RCALL SUBOPT_0x5
-                 ; 0000 00B8     // Крутим против часовой стрелки
-                 ; 0000 00B9             if ((PIND & ( 1 << PIND1)) == 0)
-0000d9 9981      	SBIC 0x10,1
-0000da c009      	RJMP _0x2C
-                 ; 0000 00BA             {
-                 ; 0000 00BB               if(motor_pwm != START_PWM) motor_pwm -= 5; // Уменьшаем ШИМ
-0000db 91a0 0160 	LDS  R26,_motor_pwm
-0000dd 30aa      	CPI  R26,LOW(0xA)
-0000de f021      	BREQ _0x2D
-0000df d0e3      	RCALL SUBOPT_0x6
-0000e0 50e5      	SUBI R30,LOW(5)
-0000e1 93e0 0160 	STS  _motor_pwm,R30
-                 ; 0000 00BC             }
-                 _0x2D:
-                 ; 0000 00BD     // Крутим по часовой стрелке
-                 ; 0000 00BE             else
-0000e3 c008      	RJMP _0x2E
-                 _0x2C:
-                 ; 0000 00BF             {
-                 ; 0000 00C0               if(motor_pwm != 255) motor_pwm += 5; // Увеличиваем ШИМ
-0000e4 91a0 0160 	LDS  R26,_motor_pwm
-0000e6 3faf      	CPI  R26,LOW(0xFF)
-0000e7 f021      	BREQ _0x2F
-0000e8 d0da      	RCALL SUBOPT_0x6
-0000e9 5feb      	SUBI R30,-LOW(5)
-0000ea 93e0 0160 	STS  _motor_pwm,R30
-                 ; 0000 00C1             }
-                 _0x2F:
-                 _0x2E:
-                 ; 0000 00C2         }
-                 ; 0000 00C3         GIFR = (1 << INTF0); // Сбрасываем флаг внешнего прерывания
+                 ;
+                 ;// Analog Comparator interrupt service routine
+                 ;// Обработчик прерывания по компаратору. Детектор обратной ЭДС
+                 ;interrupt [ANA_COMP] void ana_comp_isr(void)
+                 ; 0000 00B5 {
+                 _ana_comp_isr:
+                 ; .FSTART _ana_comp_isr
+0000cf d0ec      	RCALL SUBOPT_0x5
+                 ; 0000 00B6 // Place your code here
+                 ; 0000 00B7     rotor_run++; // инкрементируем импульсы
+0000d0 91e0 0162 	LDS  R30,_rotor_run
+0000d2 5fef      	SUBI R30,-LOW(1)
+0000d3 93e0 0162 	STS  _rotor_run,R30
+                 ; 0000 00B8     if(rotor_run > 200) rotor_run = 200;
+0000d5 d0f4      	RCALL SUBOPT_0x6
+0000d6 3ca9      	CPI  R26,LOW(0xC9)
+0000d7 f018      	BRLO _0x2B
+0000d8 ece8      	LDI  R30,LOW(200)
+0000d9 93e0 0162 	STS  _rotor_run,R30
+                 ; 0000 00B9     if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, крутим наполную
                  _0x2B:
-0000ec e4e0      	LDI  R30,LOW(64)
-0000ed bfea      	OUT  0x3A,R30
-                 ; 0000 00C4         return;
-0000ee 91e9      	LD   R30,Y+
-0000ef bfef      	OUT  SREG,R30
-0000f0 91e9      	LD   R30,Y+
-0000f1 91a9      	LD   R26,Y+
-0000f2 9199      	LD   R25,Y+
-0000f3 9189      	LD   R24,Y+
-0000f4 9518      	RETI
-                 ; 0000 00C5 
-                 ; 0000 00C6 }
+0000db d0ee      	RCALL SUBOPT_0x6
+0000dc 3ca8      	CPI  R26,LOW(0xC8)
+0000dd f411      	BRNE _0x2C
+                 ; 0000 00BA     commutation(0); // Переключаем обмотки по сигналу компаратора
+0000de e0a0      	LDI  R26,LOW(0)
+0000df df69      	RCALL _commutation
+                 ; 0000 00BB 
+                 ; 0000 00BC }
+                 _0x2C:
+0000e0 c00d      	RJMP _0x4B
                  ; .FEND
                  ;
                  ;// Timer 0 overflow interrupt service routine
+                 ;// Обработчик прерывания по переполнению Т0. Работа двигателя без сигналов обратной ЭДС
+                 ;// Если сработало прерывание, есть пропуски импульсов обратной ЭДС
                  ;interrupt [TIM0_OVF] void timer0_ovf_isr(void)
-                 ; 0000 00CA {
+                 ; 0000 00C2 {
                  _timer0_ovf_isr:
                  ; .FSTART _timer0_ovf_isr
-0000f5 d0d0      	RCALL SUBOPT_0x7
-                 ; 0000 00CB // Place your code here
-                 ; 0000 00CC     rotor_run = 0; // Сбрасываем счетчик импульсов
-0000f6 e0e0      	LDI  R30,LOW(0)
-0000f7 93e0 0162 	STS  _rotor_run,R30
-                 ; 0000 00CD     OCR1A = START_PWM; // ШИМ минимум
-0000f9 e0ea      	LDI  R30,LOW(10)
-0000fa e0f0      	LDI  R31,HIGH(10)
-0000fb bdfb      	OUT  0x2A+1,R31
-0000fc bdea      	OUT  0x2A,R30
-                 ; 0000 00CE     OCR1B = START_PWM;
-0000fd bdf9      	OUT  0x28+1,R31
-0000fe bde8      	OUT  0x28,R30
-                 ; 0000 00CF     OCR2 = START_PWM;
-0000ff bde3      	OUT  0x23,R30
-                 ; 0000 00D0     commutation(1); // Переключаем обмотки безусловно
-000100 e0a1      	LDI  R26,LOW(1)
-000101 df47      	RCALL _commutation
-                 ; 0000 00D1 
-                 ; 0000 00D2 }
-000102 c011      	RJMP _0x4B
+0000e1 d0da      	RCALL SUBOPT_0x5
+                 ; 0000 00C3 // Place your code here
+                 ; 0000 00C4     rotor_run = 0; // Сбрасываем счетчик импульсов
+0000e2 e0e0      	LDI  R30,LOW(0)
+0000e3 93e0 0162 	STS  _rotor_run,R30
+                 ; 0000 00C5     OCR1A = START_PWM; // ШИМ минимум
+0000e5 e0ea      	LDI  R30,LOW(10)
+0000e6 e0f0      	LDI  R31,HIGH(10)
+0000e7 bdfb      	OUT  0x2A+1,R31
+0000e8 bdea      	OUT  0x2A,R30
+                 ; 0000 00C6     OCR1B = START_PWM;
+0000e9 bdf9      	OUT  0x28+1,R31
+0000ea bde8      	OUT  0x28,R30
+                 ; 0000 00C7     OCR2 = START_PWM;
+0000eb bde3      	OUT  0x23,R30
+                 ; 0000 00C8     commutation(1); // Переключаем обмотки безусловно
+0000ec e0a1      	LDI  R26,LOW(1)
+0000ed df5b      	RCALL _commutation
+                 ; 0000 00C9 
+                 ; 0000 00CA }
+                 _0x4B:
+0000ee 91e9      	LD   R30,Y+
+0000ef bfef      	OUT  SREG,R30
+0000f0 91f9      	LD   R31,Y+
+0000f1 91e9      	LD   R30,Y+
+0000f2 91b9      	LD   R27,Y+
+0000f3 91a9      	LD   R26,Y+
+0000f4 9199      	LD   R25,Y+
+0000f5 9189      	LD   R24,Y+
+0000f6 9179      	LD   R23,Y+
+0000f7 9169      	LD   R22,Y+
+0000f8 90f9      	LD   R15,Y+
+0000f9 9019      	LD   R1,Y+
+0000fa 9009      	LD   R0,Y+
+0000fb 9518      	RETI
                  ; .FEND
                  ;
-                 ;// Analog Comparator interrupt service routine
-                 ;interrupt [ANA_COMP] void ana_comp_isr(void)
-                 ; 0000 00D6 {
-                 _ana_comp_isr:
-                 ; .FSTART _ana_comp_isr
-000103 d0c2      	RCALL SUBOPT_0x7
-                 ; 0000 00D7 // Place your code here
-                 ; 0000 00D8     rotor_run++; // инкрементируем импульсы
-000104 91e0 0162 	LDS  R30,_rotor_run
-000106 5fef      	SUBI R30,-LOW(1)
-000107 93e0 0162 	STS  _rotor_run,R30
-                 ; 0000 00D9     if(rotor_run > 200) rotor_run = 200;
-000109 d0ca      	RCALL SUBOPT_0x8
-00010a 3ca9      	CPI  R26,LOW(0xC9)
-00010b f018      	BRLO _0x30
-00010c ece8      	LDI  R30,LOW(200)
-00010d 93e0 0162 	STS  _rotor_run,R30
-                 ; 0000 00DA     if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, крутим наполную
-                 _0x30:
-00010f d0c4      	RCALL SUBOPT_0x8
-000110 3ca8      	CPI  R26,LOW(0xC8)
-000111 f411      	BRNE _0x31
-                 ; 0000 00DB     commutation(0); // Переключаем обмотки по сигналу компаратора
-000112 e0a0      	LDI  R26,LOW(0)
-000113 df35      	RCALL _commutation
-                 ; 0000 00DC 
-                 ; 0000 00DD }
+                 ;// External Interrupt 0 service routine
+                 ;// Обработчик внешнего прерывания INT0. Энкодер
+                 ;interrupt [EXT_INT0] void ext_int0_isr(void)
+                 ; 0000 00CF {
+                 _ext_int0_isr:
+                 ; .FSTART _ext_int0_isr
+0000fc 938a      	ST   -Y,R24
+0000fd 939a      	ST   -Y,R25
+0000fe 93aa      	ST   -Y,R26
+0000ff 93ea      	ST   -Y,R30
+000100 b7ef      	IN   R30,SREG
+000101 93ea      	ST   -Y,R30
+                 ; 0000 00D0 // Place your code here
+                 ; 0000 00D1     delay_us(100);
+000102 d0ca      	RCALL SUBOPT_0x7
+                 ; 0000 00D2         if ((PIND & ( 1 << PIND2)) == 0){
+000103 9982      	SBIC 0x10,2
+000104 c014      	RJMP _0x2D
+                 ; 0000 00D3             delay_us(100);
+000105 d0c7      	RCALL SUBOPT_0x7
+                 ; 0000 00D4     // Крутим против часовой стрелки
+                 ; 0000 00D5             if ((PIND & ( 1 << PIND1)) == 0)
+000106 9981      	SBIC 0x10,1
+000107 c009      	RJMP _0x2E
+                 ; 0000 00D6             {
+                 ; 0000 00D7               if(motor_pwm != START_PWM) motor_pwm -= 5; // Уменьшаем ШИМ
+000108 91a0 0160 	LDS  R26,_motor_pwm
+00010a 30aa      	CPI  R26,LOW(0xA)
+00010b f021      	BREQ _0x2F
+00010c d0c5      	RCALL SUBOPT_0x8
+00010d 50e5      	SUBI R30,LOW(5)
+00010e 93e0 0160 	STS  _motor_pwm,R30
+                 ; 0000 00D8             }
+                 _0x2F:
+                 ; 0000 00D9     // Крутим по часовой стрелке
+                 ; 0000 00DA             else
+000110 c008      	RJMP _0x30
+                 _0x2E:
+                 ; 0000 00DB             {
+                 ; 0000 00DC               if(motor_pwm != 255) motor_pwm += 5; // Увеличиваем ШИМ
+000111 91a0 0160 	LDS  R26,_motor_pwm
+000113 3faf      	CPI  R26,LOW(0xFF)
+000114 f021      	BREQ _0x31
+000115 d0bc      	RCALL SUBOPT_0x8
+000116 5feb      	SUBI R30,-LOW(5)
+000117 93e0 0160 	STS  _motor_pwm,R30
+                 ; 0000 00DD             }
                  _0x31:
-                 _0x4B:
-000114 91e9      	LD   R30,Y+
-000115 bfef      	OUT  SREG,R30
-000116 91f9      	LD   R31,Y+
-000117 91e9      	LD   R30,Y+
-000118 91b9      	LD   R27,Y+
-000119 91a9      	LD   R26,Y+
-00011a 9199      	LD   R25,Y+
-00011b 9189      	LD   R24,Y+
-00011c 9179      	LD   R23,Y+
-00011d 9169      	LD   R22,Y+
-00011e 90f9      	LD   R15,Y+
-00011f 9019      	LD   R1,Y+
-000120 9009      	LD   R0,Y+
+                 _0x30:
+                 ; 0000 00DE         }
+                 ; 0000 00DF         GIFR = (1 << INTF0); // Сбрасываем флаг внешнего прерывания
+                 _0x2D:
+000119 e4e0      	LDI  R30,LOW(64)
+00011a bfea      	OUT  0x3A,R30
+                 ; 0000 00E0         return;
+00011b 91e9      	LD   R30,Y+
+00011c bfef      	OUT  SREG,R30
+00011d 91e9      	LD   R30,Y+
+00011e 91a9      	LD   R26,Y+
+00011f 9199      	LD   R25,Y+
+000120 9189      	LD   R24,Y+
 000121 9518      	RETI
+                 ; 0000 00E1 
+                 ; 0000 00E2 }
                  ; .FEND
+                 ;
+                 ;
+                 ;
+                 ;
                  ;
                  ;void main(void)
-                 ; 0000 00E0 {
+                 ; 0000 00E9 {
                  _main:
                  ; .FSTART _main
-                 ; 0000 00E1 // Declare your local variables here
-                 ; 0000 00E2 
-                 ; 0000 00E3 // Input/Output Ports initialization
-                 ; 0000 00E4 // Port B initialization
-                 ; 0000 00E5 // Function: Bit7=Out Bit6=Out Bit5=Out Bit4=Out Bit3=Out Bit2=Out Bit1=Out Bit0=Out
-                 ; 0000 00E6 DDRB=(1<<DDB7) | (1<<DDB6) | (1<<DDB5) | (1<<DDB4) | (1<<DDB3) | (1<<DDB2) | (1<<DDB1) | (1<<DDB0);
+                 ; 0000 00EA // Declare your local variables here
+                 ; 0000 00EB 
+                 ; 0000 00EC // Input/Output Ports initialization
+                 ; 0000 00ED // Port B initialization
+                 ; 0000 00EE // Function: Bit7=Out Bit6=Out Bit5=Out Bit4=Out Bit3=Out Bit2=Out Bit1=Out Bit0=Out
+                 ; 0000 00EF DDRB=(1<<DDB7) | (1<<DDB6) | (1<<DDB5) | (1<<DDB4) | (1<<DDB3) | (1<<DDB2) | (1<<DDB1) | (1<<DDB0);
 000122 efef      	LDI  R30,LOW(255)
 000123 bbe7      	OUT  0x17,R30
-                 ; 0000 00E7 // State: Bit7=0 Bit6=0 Bit5=0 Bit4=0 Bit3=0 Bit2=0 Bit1=0 Bit0=0
-                 ; 0000 00E8 PORTB=(0<<PORTB7) | (0<<PORTB6) | (0<<PORTB5) | (0<<PORTB4) | (0<<PORTB3) | (0<<PORTB2) | (0<<PORTB1) | (0<<PORTB0);
+                 ; 0000 00F0 // State: Bit7=0 Bit6=0 Bit5=0 Bit4=0 Bit3=0 Bit2=0 Bit1=0 Bit0=0
+                 ; 0000 00F1 PORTB=(0<<PORTB7) | (0<<PORTB6) | (0<<PORTB5) | (0<<PORTB4) | (0<<PORTB3) | (0<<PORTB2) | (0<<PORTB1) | (0<<PORTB0);
 000124 e0e0      	LDI  R30,LOW(0)
 000125 bbe8      	OUT  0x18,R30
-                 ; 0000 00E9 
-                 ; 0000 00EA // Port C initialization
-                 ; 0000 00EB // Function: Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-                 ; 0000 00EC DDRC=(0<<DDC6) | (0<<DDC5) | (0<<DDC4) | (0<<DDC3) | (0<<DDC2) | (0<<DDC1) | (0<<DDC0);
+                 ; 0000 00F2 
+                 ; 0000 00F3 // Port C initialization
+                 ; 0000 00F4 // Function: Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+                 ; 0000 00F5 DDRC=(0<<DDC6) | (0<<DDC5) | (0<<DDC4) | (0<<DDC3) | (0<<DDC2) | (0<<DDC1) | (0<<DDC0);
 000126 bbe4      	OUT  0x14,R30
-                 ; 0000 00ED // State: Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-                 ; 0000 00EE PORTC=(0<<PORTC6) | (0<<PORTC5) | (0<<PORTC4) | (0<<PORTC3) | (0<<PORTC2) | (0<<PORTC1) | (0<<PORTC0);
+                 ; 0000 00F6 // State: Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+                 ; 0000 00F7 PORTC=(0<<PORTC6) | (0<<PORTC5) | (0<<PORTC4) | (0<<PORTC3) | (0<<PORTC2) | (0<<PORTC1) | (0<<PORTC0);
 000127 bbe5      	OUT  0x15,R30
-                 ; 0000 00EF 
-                 ; 0000 00F0 // Port D initialization
-                 ; 0000 00F1 // Function: Bit7=Out Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-                 ; 0000 00F2 DDRD=(1<<DDD7) | (0<<DDD6) | (0<<DDD5) | (0<<DDD4) | (0<<DDD3) | (0<<DDD2) | (0<<DDD1) | (0<<DDD0);
+                 ; 0000 00F8 
+                 ; 0000 00F9 // Port D initialization
+                 ; 0000 00FA // Function: Bit7=Out Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+                 ; 0000 00FB DDRD=(1<<DDD7) | (0<<DDD6) | (0<<DDD5) | (0<<DDD4) | (0<<DDD3) | (0<<DDD2) | (0<<DDD1) | (0<<DDD0);
 000128 e8e0      	LDI  R30,LOW(128)
 000129 bbe1      	OUT  0x11,R30
-                 ; 0000 00F3 // State: Bit7=0 Bit6=T Bit5=T Bit4=T Bit3=P Bit2=P Bit1=P Bit0=P
-                 ; 0000 00F4 PORTD=(0<<PORTD7) | (0<<PORTD6) | (0<<PORTD5) | (0<<PORTD4) | (1<<PORTD3) | (1<<PORTD2) | (1<<PORTD1) | (1<<PORTD0);
+                 ; 0000 00FC // State: Bit7=0 Bit6=T Bit5=T Bit4=T Bit3=P Bit2=P Bit1=P Bit0=P
+                 ; 0000 00FD PORTD=(0<<PORTD7) | (0<<PORTD6) | (0<<PORTD5) | (0<<PORTD4) | (1<<PORTD3) | (1<<PORTD2) | (1<<PORTD1) | (1<<PORTD0);
 00012a e0ef      	LDI  R30,LOW(15)
 00012b bbe2      	OUT  0x12,R30
-                 ; 0000 00F5 
-                 ; 0000 00F6 // Timer/Counter 0 initialization
-                 ; 0000 00F7 // Clock source: System Clock
-                 ; 0000 00F8 // Clock value: 15,625 kHz
-                 ; 0000 00F9 TCCR0=(1<<CS02) | (0<<CS01) | (1<<CS00);
+                 ; 0000 00FE 
+                 ; 0000 00FF // Timer/Counter 0 initialization
+                 ; 0000 0100 // Clock source: System Clock
+                 ; 0000 0101 // Clock value: 15,625 kHz
+                 ; 0000 0102 TCCR0=(1<<CS02) | (0<<CS01) | (1<<CS00);
 00012c e0e5      	LDI  R30,LOW(5)
 00012d bfe3      	OUT  0x33,R30
-                 ; 0000 00FA TCNT0=0x00;
+                 ; 0000 0103 TCNT0=0x00;
 00012e e0e0      	LDI  R30,LOW(0)
 00012f bfe2      	OUT  0x32,R30
-                 ; 0000 00FB 
-                 ; 0000 00FC // Timer/Counter 1 initialization
-                 ; 0000 00FD // Clock source: System Clock
-                 ; 0000 00FE // Clock value: 16000,000 kHz
-                 ; 0000 00FF // Mode: Fast PWM top=0x00FF
-                 ; 0000 0100 // OC1A output: Disconnected
-                 ; 0000 0101 // OC1B output: Disconnected
-                 ; 0000 0102 // Noise Canceler: Off
-                 ; 0000 0103 // Input Capture on Falling Edge
-                 ; 0000 0104 // Timer Period: 0,016 ms
-                 ; 0000 0105 // Timer1 Overflow Interrupt: Off
-                 ; 0000 0106 // Input Capture Interrupt: Off
-                 ; 0000 0107 // Compare A Match Interrupt: Off
-                 ; 0000 0108 // Compare B Match Interrupt: Off
-                 ; 0000 0109 TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (1<<WGM10);
-000130 e0e1      	LDI  R30,LOW(1)
+                 ; 0000 0104 
+                 ; 0000 0105 // Timer/Counter 1 initialization
+                 ; 0000 0106 // Clock source: System Clock
+                 ; 0000 0107 // Clock value: 16000,000 kHz
+                 ; 0000 0108 // Mode: Fast PWM top=0x00FF
+                 ; 0000 0109 // OC1A output: Disconnected
+                 ; 0000 010A // OC1B output: Disconnected
+                 ; 0000 010B // Noise Canceler: Off
+                 ; 0000 010C // Input Capture on Falling Edge
+                 ; 0000 010D // Timer Period: 0,016 ms
+                 ; 0000 010E // Timer1 Overflow Interrupt: Off
+                 ; 0000 010F // Input Capture Interrupt: Off
+                 ; 0000 0110 // Compare A Match Interrupt: Off
+                 ; 0000 0111 // Compare B Match Interrupt: Off
+                 ; 0000 0112 TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (1<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (1<<WGM10);
+000130 eae1      	LDI  R30,LOW(161)
 000131 bdef      	OUT  0x2F,R30
-                 ; 0000 010A TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (0<<CS12) | (0<<CS11) | (1<<CS10);
+                 ; 0000 0113 TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (0<<CS12) | (0<<CS11) | (1<<CS10);
 000132 e0e9      	LDI  R30,LOW(9)
 000133 bdee      	OUT  0x2E,R30
-                 ; 0000 010B TCNT1H=0x00;
+                 ; 0000 0114 TCNT1H=0x00;
 000134 e0e0      	LDI  R30,LOW(0)
 000135 bded      	OUT  0x2D,R30
-                 ; 0000 010C TCNT1L=0x00;
+                 ; 0000 0115 TCNT1L=0x00;
 000136 bdec      	OUT  0x2C,R30
-                 ; 0000 010D ICR1H=0x00;
+                 ; 0000 0116 ICR1H=0x00;
 000137 bde7      	OUT  0x27,R30
-                 ; 0000 010E ICR1L=0x00;
+                 ; 0000 0117 ICR1L=0x00;
 000138 bde6      	OUT  0x26,R30
-                 ; 0000 010F OCR1AH=0x00;
+                 ; 0000 0118 OCR1AH=(START_PWM)>>8;
 000139 bdeb      	OUT  0x2B,R30
-                 ; 0000 0110 OCR1AL=0x00;
-00013a bdea      	OUT  0x2A,R30
-                 ; 0000 0111 OCR1BH=0x00;
-00013b bde9      	OUT  0x29,R30
-                 ; 0000 0112 OCR1BL=0x00;
-00013c bde8      	OUT  0x28,R30
-                 ; 0000 0113 
-                 ; 0000 0114 // Timer/Counter 2 initialization
-                 ; 0000 0115 // Clock source: System Clock
-                 ; 0000 0116 // Clock value: 16000,000 kHz
-                 ; 0000 0117 // Mode: Fast PWM top=0xFF
-                 ; 0000 0118 // OC2 output: Non-Inverted PWM
-                 ; 0000 0119 // Timer Period: 0,016 ms
-                 ; 0000 011A // Output Pulse(s):
-                 ; 0000 011B // OC2 Period: 0,016 ms Width: 0 us
-                 ; 0000 011C ASSR=0<<AS2;
-00013d bde2      	OUT  0x22,R30
-                 ; 0000 011D TCCR2=(1<<PWM2) | (1<<COM21) | (0<<COM20) | (1<<CTC2) | (0<<CS22) | (0<<CS21) | (1<<CS20);
-00013e e6e9      	LDI  R30,LOW(105)
-00013f bde5      	OUT  0x25,R30
-                 ; 0000 011E TCNT2=0x00;
+                 ; 0000 0119 OCR1AL=(START_PWM) & 0xFF;
+00013a e0ea      	LDI  R30,LOW(10)
+00013b bdea      	OUT  0x2A,R30
+                 ; 0000 011A //OCR1A = START_PWM;
+                 ; 0000 011B OCR1BH=(START_PWM)>>8;
+00013c e0e0      	LDI  R30,LOW(0)
+00013d bde9      	OUT  0x29,R30
+                 ; 0000 011C OCR1BL=(START_PWM )& 0xFF;
+00013e e0ea      	LDI  R30,LOW(10)
+00013f bde8      	OUT  0x28,R30
+                 ; 0000 011D //OCR1B = START_PWM;
+                 ; 0000 011E 
+                 ; 0000 011F // Timer/Counter 2 initialization
+                 ; 0000 0120 // Clock source: System Clock
+                 ; 0000 0121 // Clock value: 16000,000 kHz
+                 ; 0000 0122 // Mode: Fast PWM top=0xFF
+                 ; 0000 0123 // OC2 output: Non-Inverted PWM
+                 ; 0000 0124 // Timer Period: 0,016 ms
+                 ; 0000 0125 // Output Pulse(s):
+                 ; 0000 0126 // OC2 Period: 0,016 ms Width: 0 us
+                 ; 0000 0127 ASSR=0<<AS2;
 000140 e0e0      	LDI  R30,LOW(0)
-000141 bde4      	OUT  0x24,R30
-                 ; 0000 011F OCR2=START_PWM;
-000142 e0ea      	LDI  R30,LOW(10)
-000143 bde3      	OUT  0x23,R30
-                 ; 0000 0120 
-                 ; 0000 0121 // Timer(s)/Counter(s) Interrupt(s) initialization
-                 ; 0000 0122 TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
-000144 e0e1      	LDI  R30,LOW(1)
-000145 d091      	RCALL SUBOPT_0x9
-                 ; 0000 0123 
-                 ; 0000 0124 // External Interrupt(s) initialization
-                 ; 0000 0125 // INT0: On
-                 ; 0000 0126 // INT0 Mode: Falling Edge
-                 ; 0000 0127 // INT1: Off
-                 ; 0000 0128 GICR|=(0<<INT1) | (1<<INT0);
-                 ; 0000 0129 MCUCR=(0<<ISC11) | (0<<ISC10) | (1<<ISC01) | (0<<ISC00);
-000146 e0e2      	LDI  R30,LOW(2)
-000147 bfe5      	OUT  0x35,R30
-                 ; 0000 012A GIFR=(0<<INTF1) | (1<<INTF0);
-000148 e4e0      	LDI  R30,LOW(64)
-000149 bfea      	OUT  0x3A,R30
+000141 bde2      	OUT  0x22,R30
+                 ; 0000 0128 TCCR2=(1<<PWM2) | (1<<COM21) | (0<<COM20) | (1<<CTC2) | (0<<CS22) | (0<<CS21) | (1<<CS20);
+000142 e6e9      	LDI  R30,LOW(105)
+000143 bde5      	OUT  0x25,R30
+                 ; 0000 0129 TCNT2=0x00;
+000144 e0e0      	LDI  R30,LOW(0)
+000145 bde4      	OUT  0x24,R30
+                 ; 0000 012A OCR2=START_PWM;
+000146 e0ea      	LDI  R30,LOW(10)
+000147 bde3      	OUT  0x23,R30
                  ; 0000 012B 
-                 ; 0000 012C // USART initialization
-                 ; 0000 012D // USART disabled
-                 ; 0000 012E UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
-00014a e0e0      	LDI  R30,LOW(0)
-00014b b9ea      	OUT  0xA,R30
-                 ; 0000 012F 
-                 ; 0000 0130 // Analog Comparator initialization
-                 ; 0000 0131 // Analog Comparator: On
-                 ; 0000 0132 // The Analog Comparator's positive input is
-                 ; 0000 0133 // connected to the AIN0 pin
-                 ; 0000 0134 // The Analog Comparator's negative input is
-                 ; 0000 0135 // connected to the ADC multiplexer
-                 ; 0000 0136 // Interrupt on Output Toggle
-                 ; 0000 0137 // Analog Comparator Input Capture by Timer/Counter 1: Off
-                 ; 0000 0138 ACSR=(0<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (1<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
-00014c e0e8      	LDI  R30,LOW(8)
-00014d b9e8      	OUT  0x8,R30
-                 ; 0000 0139 SFIOR=(1<<ACME);
-00014e bfe0      	OUT  0x30,R30
+                 ; 0000 012C // Timer(s)/Counter(s) Interrupt(s) initialization
+                 ; 0000 012D TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
+000148 e0e1      	LDI  R30,LOW(1)
+000149 d08b      	RCALL SUBOPT_0x9
+                 ; 0000 012E 
+                 ; 0000 012F // External Interrupt(s) initialization
+                 ; 0000 0130 // INT0: On
+                 ; 0000 0131 // INT0 Mode: Falling Edge
+                 ; 0000 0132 // INT1: Off
+                 ; 0000 0133 GICR|=(0<<INT1) | (1<<INT0);
+                 ; 0000 0134 MCUCR=(0<<ISC11) | (0<<ISC10) | (1<<ISC01) | (0<<ISC00);
+00014a e0e2      	LDI  R30,LOW(2)
+00014b bfe5      	OUT  0x35,R30
+                 ; 0000 0135 GIFR=(0<<INTF1) | (1<<INTF0);
+00014c e4e0      	LDI  R30,LOW(64)
+00014d bfea      	OUT  0x3A,R30
+                 ; 0000 0136 
+                 ; 0000 0137 // USART initialization
+                 ; 0000 0138 // USART disabled
+                 ; 0000 0139 UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
+00014e e0e0      	LDI  R30,LOW(0)
+00014f b9ea      	OUT  0xA,R30
                  ; 0000 013A 
-                 ; 0000 013B // ADC initialization
-                 ; 0000 013C // ADC disabled
-                 ; 0000 013D ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
-00014f e0e0      	LDI  R30,LOW(0)
-000150 b9e6      	OUT  0x6,R30
-                 ; 0000 013E 
-                 ; 0000 013F // SPI initialization
-                 ; 0000 0140 // SPI disabled
-                 ; 0000 0141 SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
-000151 b9ed      	OUT  0xD,R30
-                 ; 0000 0142 
-                 ; 0000 0143 // TWI initialization
-                 ; 0000 0144 // TWI disabled
-                 ; 0000 0145 TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
-000152 bfe6      	OUT  0x36,R30
-                 ; 0000 0146 
-                 ; 0000 0147 // Global enable interrupts
-                 ; 0000 0148 #asm("sei")
-000153 9478      	sei
+                 ; 0000 013B // Analog Comparator initialization
+                 ; 0000 013C // Analog Comparator: On
+                 ; 0000 013D // The Analog Comparator's positive input is
+                 ; 0000 013E // connected to the AIN0 pin
+                 ; 0000 013F // The Analog Comparator's negative input is
+                 ; 0000 0140 // connected to the ADC multiplexer
+                 ; 0000 0141 // Interrupt on Output Toggle
+                 ; 0000 0142 // Analog Comparator Input Capture by Timer/Counter 1: Off
+                 ; 0000 0143 ACSR=(0<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (1<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
+000150 e0e8      	LDI  R30,LOW(8)
+000151 b9e8      	OUT  0x8,R30
+                 ; 0000 0144 SFIOR=(1<<ACME);
+000152 bfe0      	OUT  0x30,R30
+                 ; 0000 0145 
+                 ; 0000 0146 // ADC initialization
+                 ; 0000 0147 // ADC disabled
+                 ; 0000 0148 ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
+000153 e0e0      	LDI  R30,LOW(0)
+000154 b9e6      	OUT  0x6,R30
                  ; 0000 0149 
-                 ; 0000 014A while (1)
+                 ; 0000 014A // SPI initialization
+                 ; 0000 014B // SPI disabled
+                 ; 0000 014C SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
+000155 b9ed      	OUT  0xD,R30
+                 ; 0000 014D 
+                 ; 0000 014E // TWI initialization
+                 ; 0000 014F // TWI disabled
+                 ; 0000 0150 TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
+000156 bfe6      	OUT  0x36,R30
+                 ; 0000 0151 
+                 ; 0000 0152 PHASE_ALL_OFF; // Выключаем все фазы
+000157 d056      	RCALL SUBOPT_0x2
+000158 d081      	RCALL SUBOPT_0xA
+                 ; 0000 0153 
+                 ; 0000 0154 // Global enable interrupts
+                 ; 0000 0155 #asm("sei")
+000159 9478      	sei
+                 ; 0000 0156 
+                 ; 0000 0157 while (1)
                  _0x32:
-                 ; 0000 014B     {
-                 ; 0000 014C       // Place your code here
-                 ; 0000 014D       if((PIND&(1 << PIND0)) == 0) // Старт/Стоп
-000154 9980      	SBIC 0x10,0
-000155 c007      	RJMP _0x35
-                 ; 0000 014E         {
-                 ; 0000 014F             delay_ms(20);
-000156 e1a4      	LDI  R26,LOW(20)
-000157 e0b0      	LDI  R27,0
-000158 d083      	RCALL _delay_ms
-                 ; 0000 0150             start_stop ^= 1; // Переключаем состояние
-000159 e0e1      	LDI  R30,LOW(1)
-00015a 264e      	EOR  R4,R30
-                 ; 0000 0151             while((PIND&(1 << PIND0)) == 0){} // Ждем отпускания кнопки
+                 ; 0000 0158     {
+                 ; 0000 0159       // Place your code here
+                 ; 0000 015A       if((PIND&(1 << PIND0)) == 0) // Старт/Стоп
+00015a 9980      	SBIC 0x10,0
+00015b c007      	RJMP _0x35
+                 ; 0000 015B         {
+                 ; 0000 015C             delay_ms(20);
+00015c e1a4      	LDI  R26,LOW(20)
+00015d e0b0      	LDI  R27,0
+00015e d085      	RCALL _delay_ms
+                 ; 0000 015D             start_stop ^= 1; // Переключаем состояние
+00015f e0e1      	LDI  R30,LOW(1)
+000160 264e      	EOR  R4,R30
+                 ; 0000 015E             while((PIND&(1 << PIND0)) == 0){} // Ждем отпускания кнопки
                  _0x36:
-00015b 9b80      	SBIS 0x10,0
-00015c cffe      	RJMP _0x36
-                 ; 0000 0152            // while((PIND.0) == 0){}
-                 ; 0000 0153         }
-                 ; 0000 0154 
-                 ; 0000 0155         if(start_stop)
+000161 9b80      	SBIS 0x10,0
+000162 cffe      	RJMP _0x36
+                 ; 0000 015F            // while((PIND.0) == 0){}
+                 ; 0000 0160         }
+                 ; 0000 0161 
+                 ; 0000 0162         if(start_stop)
                  _0x35:
-00015d 2044      	TST  R4
-00015e f171      	BREQ _0x39
-                 ; 0000 0156         {
-                 ; 0000 0157             ACSR |= (1 << ACIE); // Разрешаем прерывание от компаратора
-00015f 9a43      	SBI  0x8,3
-                 ; 0000 0158             TIMSK |= (1 << TOIE0); // Разрешаем прерывание по переполнению T0
-000160 b7e9      	IN   R30,0x39
-000161 60e1      	ORI  R30,1
-000162 d074      	RCALL SUBOPT_0x9
-                 ; 0000 0159             GICR |= (1 << INT0); // Разрешаем внешние прерывания INT0
-                 ; 0000 015A             // Плавный старт
-                 ; 0000 015B               if(rotor_run == 200 && start == 0) // Если импульсы обратной ЭДС присутствуют и двигатель не был запущен
-000163 d070      	RCALL SUBOPT_0x8
-000164 3ca8      	CPI  R26,LOW(0xC8)
-000165 f411      	BRNE _0x3B
-000166 2055      	TST  R5
-000167 f009      	BREQ _0x3C
+000163 2044      	TST  R4
+000164 f171      	BREQ _0x39
+                 ; 0000 0163         {
+                 ; 0000 0164             ACSR |= (1 << ACIE); // Разрешаем прерывание от компаратора
+000165 9a43      	SBI  0x8,3
+                 ; 0000 0165             TIMSK |= (1 << TOIE0); // Разрешаем прерывание по переполнению T0
+000166 b7e9      	IN   R30,0x39
+000167 60e1      	ORI  R30,1
+000168 d06c      	RCALL SUBOPT_0x9
+                 ; 0000 0166             GICR |= (1 << INT0); // Разрешаем внешние прерывания INT0
+                 ; 0000 0167             // Плавный старт
+                 ; 0000 0168               if(rotor_run == 200 && start == 0) // Если импульсы обратной ЭДС присутствуют и двигатель не был запущен
+000169 d060      	RCALL SUBOPT_0x6
+00016a 3ca8      	CPI  R26,LOW(0xC8)
+00016b f411      	BRNE _0x3B
+00016c 2055      	TST  R5
+00016d f009      	BREQ _0x3C
                  _0x3B:
-000168 c016      	RJMP _0x3A
+00016e c016      	RJMP _0x3A
                  _0x3C:
-                 ; 0000 015C               {
-                 ; 0000 015D                 for(start_pwm = START_PWM; start_pwm < motor_pwm; start_pwm++)
-000169 e0ea      	LDI  R30,LOW(10)
-00016a 2e7e      	MOV  R7,R30
-                 _0x3E:
-00016b d057      	RCALL SUBOPT_0x6
-00016c 167e      	CP   R7,R30
-00016d f470      	BRSH _0x3F
-                 ; 0000 015E                     {
-                 ; 0000 015F                       delay_ms(10); // Задержка
-00016e e0aa      	LDI  R26,LOW(10)
-00016f e0b0      	LDI  R27,0
-000170 d06b      	RCALL _delay_ms
-                 ; 0000 0160                       OCR1A = start_pwm;
-000171 2de7      	MOV  R30,R7
-000172 e0f0      	LDI  R31,0
-000173 bdfb      	OUT  0x2A+1,R31
-000174 bdea      	OUT  0x2A,R30
-                 ; 0000 0161                       OCR1B = start_pwm;
-000175 2de7      	MOV  R30,R7
-000176 e0f0      	LDI  R31,0
-000177 bdf9      	OUT  0x28+1,R31
-000178 bde8      	OUT  0x28,R30
-                 ; 0000 0162                       OCR2 = start_pwm;
-000179 bc73      	OUT  0x23,R7
-                 ; 0000 0163                     }
-00017a 9473      	INC  R7
-00017b cfef      	RJMP _0x3E
-                 _0x3F:
-                 ; 0000 0164                   start = 1; // Запуск произошел
-00017c e0e1      	LDI  R30,LOW(1)
-00017d 2e5e      	MOV  R5,R30
-                 ; 0000 0165                   PORTD |= (1 << PORTD7); // Включаем светодиод
-00017e 9a97      	SBI  0x12,7
-                 ; 0000 0166               }
-                 ; 0000 0167 
-                 ; 0000 0168               if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, можем менять ШИМ
-                 _0x3A:
-00017f d054      	RCALL SUBOPT_0x8
-000180 3ca8      	CPI  R26,LOW(0xC8)
-000181 f451      	BRNE _0x40
                  ; 0000 0169               {
-                 ; 0000 016A                   OCR1A = motor_pwm;
-000182 d040      	RCALL SUBOPT_0x6
-000183 e0f0      	LDI  R31,0
-000184 bdfb      	OUT  0x2A+1,R31
-000185 bdea      	OUT  0x2A,R30
-                 ; 0000 016B                   OCR1B = motor_pwm;
-000186 d03c      	RCALL SUBOPT_0x6
-000187 e0f0      	LDI  R31,0
-000188 bdf9      	OUT  0x28+1,R31
-000189 bde8      	OUT  0x28,R30
-                 ; 0000 016C                   OCR2 = motor_pwm;
-00018a d038      	RCALL SUBOPT_0x6
-00018b bde3      	OUT  0x23,R30
-                 ; 0000 016D               }
-                 ; 0000 016E         }
-                 _0x40:
-                 ; 0000 016F         else
-00018c c019      	RJMP _0x41
-                 _0x39:
-                 ; 0000 0170         {
-                 ; 0000 0171 
-                 ; 0000 0172             if(PIND&(1 << PIND3)) direction = 1; // Выбор направления вращения вала
-00018d 9b83      	SBIS 0x10,3
-00018e c003      	RJMP _0x42
-00018f e0e1      	LDI  R30,LOW(1)
-000190 2e6e      	MOV  R6,R30
-                 ; 0000 0173             else direction = 0;
-000191 c001      	RJMP _0x43
-                 _0x42:
-000192 2466      	CLR  R6
+                 ; 0000 016A                 for(start_pwm = START_PWM; start_pwm < motor_pwm; start_pwm++)
+00016f e0ea      	LDI  R30,LOW(10)
+000170 2e7e      	MOV  R7,R30
+                 _0x3E:
+000171 d060      	RCALL SUBOPT_0x8
+000172 167e      	CP   R7,R30
+000173 f470      	BRSH _0x3F
+                 ; 0000 016B                     {
+                 ; 0000 016C                       delay_ms(10); // Задержка
+000174 e0aa      	LDI  R26,LOW(10)
+000175 e0b0      	LDI  R27,0
+000176 d06d      	RCALL _delay_ms
+                 ; 0000 016D                       OCR1A = start_pwm;
+000177 2de7      	MOV  R30,R7
+000178 e0f0      	LDI  R31,0
+000179 bdfb      	OUT  0x2A+1,R31
+00017a bdea      	OUT  0x2A,R30
+                 ; 0000 016E                       OCR1B = start_pwm;
+00017b 2de7      	MOV  R30,R7
+00017c e0f0      	LDI  R31,0
+00017d bdf9      	OUT  0x28+1,R31
+00017e bde8      	OUT  0x28,R30
+                 ; 0000 016F                       OCR2 = start_pwm;
+00017f bc73      	OUT  0x23,R7
+                 ; 0000 0170                     }
+000180 9473      	INC  R7
+000181 cfef      	RJMP _0x3E
+                 _0x3F:
+                 ; 0000 0171                   start = 1; // Запуск произошел
+000182 e0e1      	LDI  R30,LOW(1)
+000183 2e5e      	MOV  R5,R30
+                 ; 0000 0172                   PORTD |= (1 << PORTD7); // Включаем светодиод
+000184 9a97      	SBI  0x12,7
+                 ; 0000 0173               }
                  ; 0000 0174 
-                 ; 0000 0175             start = 0; // Двигатель остановлен
-                 _0x43:
-000193 2455      	CLR  R5
-                 ; 0000 0176             PORTD &= ~(1 << PORTD7); // Выключаем светодиод
-000194 9897      	CBI  0x12,7
-                 ; 0000 0177             PHASE_ALL_OFF; // Все фазы выключены
-000195 d01a      	RCALL SUBOPT_0x2
-000196 98c5      	CBI  0x18,5
-000197 b5e5      	IN   R30,0x25
-000198 7def      	ANDI R30,0xDF
-000199 bde5      	OUT  0x25,R30
-00019a 98c0      	CBI  0x18,0
-00019b b5ef      	IN   R30,0x2F
-00019c 7def      	ANDI R30,0xDF
-00019d bdef      	OUT  0x2F,R30
-00019e 98c4      	CBI  0x18,4
-                 ; 0000 0178             ACSR &= ~(1 << ACIE); // Запрещаем прерывание от компаратора
-00019f 9843      	CBI  0x8,3
-                 ; 0000 0179             TIMSK &= ~(1 << TOIE0); // Запрещаем прерывание по переполнению T0
-0001a0 b7e9      	IN   R30,0x39
-0001a1 7fee      	ANDI R30,0xFE
-0001a2 bfe9      	OUT  0x39,R30
-                 ; 0000 017A             GICR &= ~(1 << INT0); // Запрещаем внешние прерывания INT0
-0001a3 b7eb      	IN   R30,0x3B
-0001a4 7bef      	ANDI R30,0xBF
-0001a5 bfeb      	OUT  0x3B,R30
+                 ; 0000 0175               if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, можем менять ШИМ
+                 _0x3A:
+000185 d044      	RCALL SUBOPT_0x6
+000186 3ca8      	CPI  R26,LOW(0xC8)
+000187 f451      	BRNE _0x40
+                 ; 0000 0176               {
+                 ; 0000 0177                   OCR1A = motor_pwm;
+000188 d049      	RCALL SUBOPT_0x8
+000189 e0f0      	LDI  R31,0
+00018a bdfb      	OUT  0x2A+1,R31
+00018b bdea      	OUT  0x2A,R30
+                 ; 0000 0178                   OCR1B = motor_pwm;
+00018c d045      	RCALL SUBOPT_0x8
+00018d e0f0      	LDI  R31,0
+00018e bdf9      	OUT  0x28+1,R31
+00018f bde8      	OUT  0x28,R30
+                 ; 0000 0179                   OCR2 = motor_pwm;
+000190 d041      	RCALL SUBOPT_0x8
+000191 bde3      	OUT  0x23,R30
+                 ; 0000 017A               }
                  ; 0000 017B         }
+                 _0x40:
+                 ; 0000 017C         else
+000192 c011      	RJMP _0x41
+                 _0x39:
+                 ; 0000 017D         {
+                 ; 0000 017E 
+                 ; 0000 017F             if(PIND&(1 << PIND3)) direction = 1; // Выбор направления вращения вала
+000193 9b83      	SBIS 0x10,3
+000194 c003      	RJMP _0x42
+000195 e0e1      	LDI  R30,LOW(1)
+000196 2e6e      	MOV  R6,R30
+                 ; 0000 0180             else direction = 0;
+000197 c001      	RJMP _0x43
+                 _0x42:
+000198 2466      	CLR  R6
+                 ; 0000 0181 
+                 ; 0000 0182             start = 0; // Двигатель остановлен
+                 _0x43:
+000199 2455      	CLR  R5
+                 ; 0000 0183             PORTD &= ~(1 << PORTD7); // Выключаем светодиод
+00019a 9897      	CBI  0x12,7
+                 ; 0000 0184             PHASE_ALL_OFF; // Все фазы выключены
+00019b d012      	RCALL SUBOPT_0x2
+00019c d03d      	RCALL SUBOPT_0xA
+                 ; 0000 0185             ACSR &= ~(1 << ACIE); // Запрещаем прерывание от компаратора
+00019d 9843      	CBI  0x8,3
+                 ; 0000 0186             TIMSK &= ~(1 << TOIE0); // Запрещаем прерывание по переполнению T0
+00019e b7e9      	IN   R30,0x39
+00019f 7fee      	ANDI R30,0xFE
+0001a0 bfe9      	OUT  0x39,R30
+                 ; 0000 0187             GICR &= ~(1 << INT0); // Запрещаем внешние прерывания INT0
+0001a1 b7eb      	IN   R30,0x3B
+0001a2 7bef      	ANDI R30,0xBF
+0001a3 bfeb      	OUT  0x3B,R30
+                 ; 0000 0188         }
                  _0x41:
-                 ; 0000 017C 
-                 ; 0000 017D 
-                 ; 0000 017E       }
-0001a6 cfad      	RJMP _0x32
-                 ; 0000 017F }
+                 ; 0000 0189 
+                 ; 0000 018A 
+                 ; 0000 018B       }
+0001a4 cfb5      	RJMP _0x32
+                 ; 0000 018C }
                  _0x44:
-0001a7 cfff      	RJMP _0x44
+0001a5 cfff      	RJMP _0x44
                  ; .FEND
                  
                  	.DSEG
@@ -2039,104 +2050,117 @@ C:\ProjectAVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .db
                  	.CSEG
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:3 WORDS
                  SUBOPT_0x0:
-0001a8 81e8      	LD   R30,Y
-0001a9 30e0      	CPI  R30,0
-0001aa 9508      	RET
+0001a6 81e8      	LD   R30,Y
+0001a7 30e0      	CPI  R30,0
+0001a8 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
                  SUBOPT_0x1:
-0001ab b5ef      	IN   R30,0x2F
-0001ac 7def      	ANDI R30,0xDF
-0001ad bdef      	OUT  0x2F,R30
-0001ae e0e2      	LDI  R30,LOW(2)
-0001af 9508      	RET
+0001a9 b5ef      	IN   R30,0x2F
+0001aa 7def      	ANDI R30,0xDF
+0001ab bdef      	OUT  0x2F,R30
+0001ac e0e2      	LDI  R30,LOW(2)
+0001ad 9508      	RET
                  
-                 ;OPTIMIZER ADDED SUBROUTINE, CALLED 3 TIMES, CODE SIZE REDUCTION:2 WORDS
+                 ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:4 WORDS
                  SUBOPT_0x2:
-0001b0 b5ef      	IN   R30,0x2F
-0001b1 77ef      	ANDI R30,0x7F
-0001b2 bdef      	OUT  0x2F,R30
-0001b3 9508      	RET
+0001ae b5ef      	IN   R30,0x2F
+0001af 77ef      	ANDI R30,0x7F
+0001b0 bdef      	OUT  0x2F,R30
+0001b1 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:13 WORDS
                  SUBOPT_0x3:
-0001b4 93e0 0161 	STS  _commutation_step,R30
-0001b6 e0e0      	LDI  R30,LOW(0)
-0001b7 bfe2      	OUT  0x32,R30
-0001b8 9508      	RET
+0001b2 93e0 0161 	STS  _commutation_step,R30
+0001b4 e0e0      	LDI  R30,LOW(0)
+0001b5 bfe2      	OUT  0x32,R30
+0001b6 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
                  SUBOPT_0x4:
-0001b9 b5e5      	IN   R30,0x25
-0001ba 7def      	ANDI R30,0xDF
-0001bb bde5      	OUT  0x25,R30
-0001bc b5ef      	IN   R30,0x2F
-0001bd 9508      	RET
-                 
-                 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
-                 SUBOPT_0x5:
-                +
-0001be e980     +LDI R24 , LOW ( 400 )
-0001bf e091     +LDI R25 , HIGH ( 400 )
-                +__DELAY_USW_LOOP :
-0001c0 9701     +SBIW R24 , 1
-0001c1 f7f1     +BRNE __DELAY_USW_LOOP
-                 	__DELAY_USW 400
-0001c2 9508      	RET
-                 
-                 ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:3 WORDS
-                 SUBOPT_0x6:
-0001c3 91e0 0160 	LDS  R30,_motor_pwm
-0001c5 9508      	RET
+0001b7 b5e5      	IN   R30,0x25
+0001b8 7def      	ANDI R30,0xDF
+0001b9 bde5      	OUT  0x25,R30
+0001ba b5ef      	IN   R30,0x2F
+0001bb 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:10 WORDS
-                 SUBOPT_0x7:
-0001c6 920a      	ST   -Y,R0
-0001c7 921a      	ST   -Y,R1
-0001c8 92fa      	ST   -Y,R15
-0001c9 936a      	ST   -Y,R22
-0001ca 937a      	ST   -Y,R23
-0001cb 938a      	ST   -Y,R24
-0001cc 939a      	ST   -Y,R25
-0001cd 93aa      	ST   -Y,R26
-0001ce 93ba      	ST   -Y,R27
-0001cf 93ea      	ST   -Y,R30
-0001d0 93fa      	ST   -Y,R31
-0001d1 b7ef      	IN   R30,SREG
-0001d2 93ea      	ST   -Y,R30
-0001d3 9508      	RET
+                 SUBOPT_0x5:
+0001bc 920a      	ST   -Y,R0
+0001bd 921a      	ST   -Y,R1
+0001be 92fa      	ST   -Y,R15
+0001bf 936a      	ST   -Y,R22
+0001c0 937a      	ST   -Y,R23
+0001c1 938a      	ST   -Y,R24
+0001c2 939a      	ST   -Y,R25
+0001c3 93aa      	ST   -Y,R26
+0001c4 93ba      	ST   -Y,R27
+0001c5 93ea      	ST   -Y,R30
+0001c6 93fa      	ST   -Y,R31
+0001c7 b7ef      	IN   R30,SREG
+0001c8 93ea      	ST   -Y,R30
+0001c9 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:1 WORDS
+                 SUBOPT_0x6:
+0001ca 91a0 0162 	LDS  R26,_rotor_run
+0001cc 9508      	RET
+                 
+                 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
+                 SUBOPT_0x7:
+                +
+0001cd e980     +LDI R24 , LOW ( 400 )
+0001ce e091     +LDI R25 , HIGH ( 400 )
+                +__DELAY_USW_LOOP :
+0001cf 9701     +SBIW R24 , 1
+0001d0 f7f1     +BRNE __DELAY_USW_LOOP
+                 	__DELAY_USW 400
+0001d1 9508      	RET
+                 
+                 ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:3 WORDS
                  SUBOPT_0x8:
-0001d4 91a0 0162 	LDS  R26,_rotor_run
-0001d6 9508      	RET
+0001d2 91e0 0160 	LDS  R30,_motor_pwm
+0001d4 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
                  SUBOPT_0x9:
-0001d7 bfe9      	OUT  0x39,R30
-0001d8 b7eb      	IN   R30,0x3B
-0001d9 64e0      	ORI  R30,0x40
-0001da bfeb      	OUT  0x3B,R30
-0001db 9508      	RET
+0001d5 bfe9      	OUT  0x39,R30
+0001d6 b7eb      	IN   R30,0x3B
+0001d7 64e0      	ORI  R30,0x40
+0001d8 bfeb      	OUT  0x3B,R30
+0001d9 9508      	RET
+                 
+                 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:6 WORDS
+                 SUBOPT_0xA:
+0001da 98c5      	CBI  0x18,5
+0001db b5e5      	IN   R30,0x25
+0001dc 7def      	ANDI R30,0xDF
+0001dd bde5      	OUT  0x25,R30
+0001de 98c0      	CBI  0x18,0
+0001df b5ef      	IN   R30,0x2F
+0001e0 7def      	ANDI R30,0xDF
+0001e1 bdef      	OUT  0x2F,R30
+0001e2 98c4      	CBI  0x18,4
+0001e3 9508      	RET
                  
                  
                  	.CSEG
                  _delay_ms:
-0001dc 9610      	adiw r26,0
-0001dd f039      	breq __delay_ms1
+0001e4 9610      	adiw r26,0
+0001e5 f039      	breq __delay_ms1
                  __delay_ms0:
                 +
-0001de ea80     +LDI R24 , LOW ( 0xFA0 )
-0001df e09f     +LDI R25 , HIGH ( 0xFA0 )
+0001e6 ea80     +LDI R24 , LOW ( 0xFA0 )
+0001e7 e09f     +LDI R25 , HIGH ( 0xFA0 )
                 +__DELAY_USW_LOOP :
-0001e0 9701     +SBIW R24 , 1
-0001e1 f7f1     +BRNE __DELAY_USW_LOOP
+0001e8 9701     +SBIW R24 , 1
+0001e9 f7f1     +BRNE __DELAY_USW_LOOP
                  	__DELAY_USW 0xFA0
-0001e2 95a8      	wdr
-0001e3 9711      	sbiw r26,1
-0001e4 f7c9      	brne __delay_ms0
+0001ea 95a8      	wdr
+0001eb 9711      	sbiw r26,1
+0001ec f7c9      	brne __delay_ms0
                  __delay_ms1:
-0001e5 9508      	ret
+0001ed 9508      	ret
                  
                  ;END OF CODE MARKER
                  __END_OF_CODE:
@@ -2160,7 +2184,7 @@ ATmega8A register use summary:
 r0 :   6 r1 :   3 r2 :   0 r3 :   0 r4 :   2 r5 :   3 r6 :   8 r7 :   6 
 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   2 
 r16:   0 r17:   0 r18:   0 r19:   0 r20:   0 r21:   0 r22:   4 r23:   2 
-r24:  15 r25:   8 r26:  33 r27:   6 r28:   2 r29:   1 r30: 184 r31:  22 
+r24:  15 r25:   8 r26:  33 r27:   6 r28:   2 r29:   1 r30: 188 r31:  22 
 x  :   3 y  :  36 z  :   7 
 Registers used: 20 out of 35 (57.1%)
 
@@ -2175,10 +2199,10 @@ cbr   :   0 clc   :   0 clh   :   0 cli   :   1 cln   :   0 clr   :   4
 cls   :   0 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   1 
 cpc   :   5 cpi   :  12 cpse  :   0 dec   :   1 des   :   0 eor   :   1 
 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 in    :  16 
-inc   :   1 ld    :  18 ldd   :   0 ldi   :  75 lds   :   6 lpm   :   7 
+inc   :   1 ld    :  18 ldd   :   0 ldi   :  79 lds   :   6 lpm   :   7 
 lsl   :   0 lsr   :   0 mov   :   5 movw  :   3 mul   :   0 muls  :   0 
 mulsu :   0 neg   :   0 nop   :   0 or    :   0 ori   :   8 out   :  75 
-pop   :   0 push  :   0 rcall :  39 ret   :  12 reti  :   2 rjmp  :  51 
+pop   :   0 push  :   0 rcall :  42 ret   :  13 reti  :   2 rjmp  :  51 
 rol   :   0 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   8 sbic  :   6 
 sbis  :   5 sbiw  :   7 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 
 seh   :   0 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 
@@ -2190,7 +2214,7 @@ Instructions used: 38 out of 114 (33.3%)
 ATmega8A memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0003cc    952     20    972    8192  11.9%
+[.cseg] 0x000000 0x0003dc    968     20    988    8192  12.1%
 [.dseg] 0x000060 0x000163      0      3      3    1024   0.3%
 [.eseg] 0x000000 0x000000      0      0      0     512   0.0%
 

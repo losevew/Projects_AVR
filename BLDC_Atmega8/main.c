@@ -174,7 +174,35 @@ void commutation(unsigned char startup)
 }
 
 
+
+// Analog Comparator interrupt service routine
+// Обработчик прерывания по компаратору. Детектор обратной ЭДС
+interrupt [ANA_COMP] void ana_comp_isr(void)
+{
+// Place your code here
+    rotor_run++; // инкрементируем импульсы
+    if(rotor_run > 200) rotor_run = 200;
+    if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, крутим наполную 
+    commutation(0); // Переключаем обмотки по сигналу компаратора
+
+}
+
+// Timer 0 overflow interrupt service routine
+// Обработчик прерывания по переполнению Т0. Работа двигателя без сигналов обратной ЭДС
+// Если сработало прерывание, есть пропуски импульсов обратной ЭДС
+interrupt [TIM0_OVF] void timer0_ovf_isr(void)
+{
+// Place your code here
+    rotor_run = 0; // Сбрасываем счетчик импульсов
+    OCR1A = START_PWM; // ШИМ минимум
+    OCR1B = START_PWM;
+    OCR2 = START_PWM;
+    commutation(1); // Переключаем обмотки безусловно
+
+}
+
 // External Interrupt 0 service routine
+// Обработчик внешнего прерывания INT0. Энкодер
 interrupt [EXT_INT0] void ext_int0_isr(void)
 {
 // Place your code here
@@ -197,28 +225,9 @@ interrupt [EXT_INT0] void ext_int0_isr(void)
 
 }
 
-// Timer 0 overflow interrupt service routine
-interrupt [TIM0_OVF] void timer0_ovf_isr(void)
-{
-// Place your code here
-    rotor_run = 0; // Сбрасываем счетчик импульсов
-    OCR1A = START_PWM; // ШИМ минимум
-    OCR1B = START_PWM;
-    OCR2 = START_PWM;
-    commutation(1); // Переключаем обмотки безусловно
 
-}
 
-// Analog Comparator interrupt service routine
-interrupt [ANA_COMP] void ana_comp_isr(void)
-{
-// Place your code here
-    rotor_run++; // инкрементируем импульсы
-    if(rotor_run > 200) rotor_run = 200;
-    if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, крутим наполную 
-    commutation(0); // Переключаем обмотки по сигналу компаратора
 
-}
 
 void main(void)
 {
@@ -262,16 +271,18 @@ TCNT0=0x00;
 // Input Capture Interrupt: Off
 // Compare A Match Interrupt: Off
 // Compare B Match Interrupt: Off
-TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (1<<WGM10);
+TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (1<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (1<<WGM10);
 TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (1<<WGM12) | (0<<CS12) | (0<<CS11) | (1<<CS10);
 TCNT1H=0x00;
 TCNT1L=0x00;
 ICR1H=0x00;
 ICR1L=0x00;
-OCR1AH=0x00;
-OCR1AL=0x00;
-OCR1BH=0x00;
-OCR1BL=0x00;
+OCR1AH=(START_PWM)>>8;
+OCR1AL=(START_PWM) & 0xFF;
+//OCR1A = START_PWM;
+OCR1BH=(START_PWM)>>8;
+OCR1BL=(START_PWM )& 0xFF;
+//OCR1B = START_PWM;
 
 // Timer/Counter 2 initialization
 // Clock source: System Clock
@@ -323,6 +334,8 @@ SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<
 // TWI initialization
 // TWI disabled
 TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
+
+PHASE_ALL_OFF; // Выключаем все фазы
 
 // Global enable interrupts
 #asm("sei")

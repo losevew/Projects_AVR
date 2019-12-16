@@ -21,6 +21,6 @@ FLASH Allocation [words]
 Function                                                                          Address   Size
 ------------------------------------------------------------------------------------------------
 commutation                                                                       0x00049    134
-timer0_ovf_isr                                                                    0x000F5     14
-ana_comp_isr                                                                      0x00103     31
-main                                                                              0x00122    134
+ana_comp_isr                                                                      0x000CF     18
+timer0_ovf_isr                                                                    0x000E1     27
+main                                                                              0x00122    132
