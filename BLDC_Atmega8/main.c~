@@ -15,7 +15,7 @@ Comments:
 
 Chip type               : ATmega8A
 Program type            : Application
-AVR Core Clock frequency: 16,000000 MHz
+AVR Core Clock frequency: 8,000000 MHz
 Memory model            : Small
 External RAM size       : 0
 Data Stack size         : 256
@@ -277,12 +277,13 @@ TCNT1H=0x00;
 TCNT1L=0x00;
 ICR1H=0x00;
 ICR1L=0x00;
-OCR1AH=(START_PWM)>>8;
-OCR1AL=(START_PWM)0xFF;
-//OCR1A = START_PWM;
-OCR1BH=(START_PWM)>>8;
-OCR1BL=(START_PWM)0xFF;
-//OCR1B = START_PWM;
+OCR1AH=0x00;
+OCR1AL=0x00;
+//OCR1AH=(START_PWM)>>8;
+//OCR1AL=(START_PWM) & 0xFF;
+OCR1BH=0x00;
+OCR1BL=0x00;
+
 
 // Timer/Counter 2 initialization
 // Clock source: System Clock
@@ -295,7 +296,7 @@ OCR1BL=(START_PWM)0xFF;
 ASSR=0<<AS2;
 TCCR2=(1<<PWM2) | (1<<COM21) | (0<<COM20) | (1<<CTC2) | (0<<CS22) | (0<<CS21) | (1<<CS20);
 TCNT2=0x00;
-OCR2=START_PWM;
+OCR2=0x00;;
 
 // Timer(s)/Counter(s) Interrupt(s) initialization
 TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);

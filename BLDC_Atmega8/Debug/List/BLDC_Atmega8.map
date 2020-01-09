@@ -23,4 +23,4 @@ Function                                                                        
 commutation                                                                       0x00049    134
 ana_comp_isr                                                                      0x000CF     18
 timer0_ovf_isr                                                                    0x000E1     27
-main                                                                              0x00122    132
+main                                                                              0x00122    127

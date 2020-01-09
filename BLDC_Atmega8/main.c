@@ -15,7 +15,7 @@ Comments:
 
 Chip type               : ATmega8A
 Program type            : Application
-AVR Core Clock frequency: 16,000000 MHz
+AVR Core Clock frequency: 8,000000 MHz
 Memory model            : Small
 External RAM size       : 0
 Data Stack size         : 256
@@ -277,12 +277,13 @@ TCNT1H=0x00;
 TCNT1L=0x00;
 ICR1H=0x00;
 ICR1L=0x00;
-OCR1AH=(START_PWM)>>8;
-OCR1AL=(START_PWM) & 0xFF;
-//OCR1A = START_PWM;
-OCR1BH=(START_PWM)>>8;
-OCR1BL=(START_PWM )& 0xFF;
-//OCR1B = START_PWM;
+OCR1AH=0x00;
+OCR1AL=0x00;
+//OCR1AH=(START_PWM)>>8;
+//OCR1AL=(START_PWM) & 0xFF;
+OCR1BH=0x00;
+OCR1BL=0x00;
+
 
 // Timer/Counter 2 initialization
 // Clock source: System Clock
@@ -293,9 +294,9 @@ OCR1BL=(START_PWM )& 0xFF;
 // Output Pulse(s):
 // OC2 Period: 0,016 ms Width: 0 us
 ASSR=0<<AS2;
-TCCR2=(1<<PWM2) | (1<<COM21) | (0<<COM20) | (1<<CTC2) | (0<<CS22) | (0<<CS21) | (1<<CS20);
+TCCR2= (1<<COM21) | (0<<COM20) | (1<<WGM21) | (1<<WGM20) | (0<<CS22) | (0<<CS21) | (1<<CS20);
 TCNT2=0x00;
-OCR2=START_PWM;
+OCR2=0x00;;
 
 // Timer(s)/Counter(s) Interrupt(s) initialization
 TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
@@ -312,6 +313,10 @@ GIFR=(0<<INTF1) | (1<<INTF0);
 // USART disabled
 UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
 
+// ADC initialization
+// ADC disabled
+ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
+
 // Analog Comparator initialization
 // Analog Comparator: On
 // The Analog Comparator's positive input is
@@ -323,9 +328,6 @@ UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) 
 ACSR=(0<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (1<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
 SFIOR=(1<<ACME);
 
-// ADC initialization
-// ADC disabled
-ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
 
 // SPI initialization
 // SPI disabled

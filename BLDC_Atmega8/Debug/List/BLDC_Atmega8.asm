@@ -6,7 +6,7 @@
 ;Build configuration    : Debug
 ;Chip type              : ATmega8A
 ;Program type           : Application
-;Clock frequency        : 16,000000 MHz
+;Clock frequency        : 8,000000 MHz
 ;Memory model           : Small
 ;Optimize for           : Size
 ;(s)printf features     : int, width
@@ -1225,7 +1225,7 @@ __GLOBAL_INI_END:
 ;
 ;Chip type               : ATmega8A
 ;Program type            : Application
-;AVR Core Clock frequency: 16,000000 MHz
+;AVR Core Clock frequency: 8,000000 MHz
 ;Memory model            : Small
 ;External RAM size       : 0
 ;Data Stack size         : 256
@@ -1786,138 +1786,135 @@ _main:
 	OUT  0x27,R30
 ; 0000 0117 ICR1L=0x00;
 	OUT  0x26,R30
-; 0000 0118 OCR1AH=(START_PWM)>>8;
+; 0000 0118 OCR1AH=0x00;
 	OUT  0x2B,R30
-; 0000 0119 OCR1AL=(START_PWM) & 0xFF;
-	LDI  R30,LOW(10)
+; 0000 0119 OCR1AL=0x00;
 	OUT  0x2A,R30
-; 0000 011A //OCR1A = START_PWM;
-; 0000 011B OCR1BH=(START_PWM)>>8;
-	LDI  R30,LOW(0)
+; 0000 011A //OCR1AH=(START_PWM)>>8;
+; 0000 011B //OCR1AL=(START_PWM) & 0xFF;
+; 0000 011C OCR1BH=0x00;
 	OUT  0x29,R30
-; 0000 011C OCR1BL=(START_PWM )& 0xFF;
-	LDI  R30,LOW(10)
+; 0000 011D OCR1BL=0x00;
 	OUT  0x28,R30
-; 0000 011D //OCR1B = START_PWM;
 ; 0000 011E 
-; 0000 011F // Timer/Counter 2 initialization
-; 0000 0120 // Clock source: System Clock
-; 0000 0121 // Clock value: 16000,000 kHz
-; 0000 0122 // Mode: Fast PWM top=0xFF
-; 0000 0123 // OC2 output: Non-Inverted PWM
-; 0000 0124 // Timer Period: 0,016 ms
-; 0000 0125 // Output Pulse(s):
-; 0000 0126 // OC2 Period: 0,016 ms Width: 0 us
-; 0000 0127 ASSR=0<<AS2;
-	LDI  R30,LOW(0)
+; 0000 011F 
+; 0000 0120 // Timer/Counter 2 initialization
+; 0000 0121 // Clock source: System Clock
+; 0000 0122 // Clock value: 16000,000 kHz
+; 0000 0123 // Mode: Fast PWM top=0xFF
+; 0000 0124 // OC2 output: Non-Inverted PWM
+; 0000 0125 // Timer Period: 0,016 ms
+; 0000 0126 // Output Pulse(s):
+; 0000 0127 // OC2 Period: 0,016 ms Width: 0 us
+; 0000 0128 ASSR=0<<AS2;
 	OUT  0x22,R30
-; 0000 0128 TCCR2=(1<<PWM2) | (1<<COM21) | (0<<COM20) | (1<<CTC2) | (0<<CS22) | (0<<CS21) | (1<<CS20);
+; 0000 0129 TCCR2= (1<<COM21) | (0<<COM20) | (1<<WGM21) | (1<<WGM20) | (0<<CS22) | (0<<CS21) | (1<<CS20);
 	LDI  R30,LOW(105)
 	OUT  0x25,R30
-; 0000 0129 TCNT2=0x00;
+; 0000 012A TCNT2=0x00;
 	LDI  R30,LOW(0)
 	OUT  0x24,R30
-; 0000 012A OCR2=START_PWM;
-	LDI  R30,LOW(10)
+; 0000 012B OCR2=0x00;;
 	OUT  0x23,R30
-; 0000 012B 
-; 0000 012C // Timer(s)/Counter(s) Interrupt(s) initialization
-; 0000 012D TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
+; 0000 012C 
+; 0000 012D // Timer(s)/Counter(s) Interrupt(s) initialization
+; 0000 012E TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
 	LDI  R30,LOW(1)
 	RCALL SUBOPT_0x9
-; 0000 012E 
-; 0000 012F // External Interrupt(s) initialization
-; 0000 0130 // INT0: On
-; 0000 0131 // INT0 Mode: Falling Edge
-; 0000 0132 // INT1: Off
-; 0000 0133 GICR|=(0<<INT1) | (1<<INT0);
-; 0000 0134 MCUCR=(0<<ISC11) | (0<<ISC10) | (1<<ISC01) | (0<<ISC00);
+; 0000 012F 
+; 0000 0130 // External Interrupt(s) initialization
+; 0000 0131 // INT0: On
+; 0000 0132 // INT0 Mode: Falling Edge
+; 0000 0133 // INT1: Off
+; 0000 0134 GICR|=(0<<INT1) | (1<<INT0);
+; 0000 0135 MCUCR=(0<<ISC11) | (0<<ISC10) | (1<<ISC01) | (0<<ISC00);
 	LDI  R30,LOW(2)
 	OUT  0x35,R30
-; 0000 0135 GIFR=(0<<INTF1) | (1<<INTF0);
+; 0000 0136 GIFR=(0<<INTF1) | (1<<INTF0);
 	LDI  R30,LOW(64)
 	OUT  0x3A,R30
-; 0000 0136 
-; 0000 0137 // USART initialization
-; 0000 0138 // USART disabled
-; 0000 0139 UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
+; 0000 0137 
+; 0000 0138 // USART initialization
+; 0000 0139 // USART disabled
+; 0000 013A UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
 	LDI  R30,LOW(0)
 	OUT  0xA,R30
-; 0000 013A 
-; 0000 013B // Analog Comparator initialization
-; 0000 013C // Analog Comparator: On
-; 0000 013D // The Analog Comparator's positive input is
-; 0000 013E // connected to the AIN0 pin
-; 0000 013F // The Analog Comparator's negative input is
-; 0000 0140 // connected to the ADC multiplexer
-; 0000 0141 // Interrupt on Output Toggle
-; 0000 0142 // Analog Comparator Input Capture by Timer/Counter 1: Off
-; 0000 0143 ACSR=(0<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (1<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
+; 0000 013B 
+; 0000 013C // ADC initialization
+; 0000 013D // ADC disabled
+; 0000 013E ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
+	OUT  0x6,R30
+; 0000 013F 
+; 0000 0140 // Analog Comparator initialization
+; 0000 0141 // Analog Comparator: On
+; 0000 0142 // The Analog Comparator's positive input is
+; 0000 0143 // connected to the AIN0 pin
+; 0000 0144 // The Analog Comparator's negative input is
+; 0000 0145 // connected to the ADC multiplexer
+; 0000 0146 // Interrupt on Output Toggle
+; 0000 0147 // Analog Comparator Input Capture by Timer/Counter 1: Off
+; 0000 0148 ACSR=(0<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (1<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
 	LDI  R30,LOW(8)
 	OUT  0x8,R30
-; 0000 0144 SFIOR=(1<<ACME);
+; 0000 0149 SFIOR=(1<<ACME);
 	OUT  0x30,R30
-; 0000 0145 
-; 0000 0146 // ADC initialization
-; 0000 0147 // ADC disabled
-; 0000 0148 ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
+; 0000 014A 
+; 0000 014B 
+; 0000 014C // SPI initialization
+; 0000 014D // SPI disabled
+; 0000 014E SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
 	LDI  R30,LOW(0)
-	OUT  0x6,R30
-; 0000 0149 
-; 0000 014A // SPI initialization
-; 0000 014B // SPI disabled
-; 0000 014C SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
 	OUT  0xD,R30
-; 0000 014D 
-; 0000 014E // TWI initialization
-; 0000 014F // TWI disabled
-; 0000 0150 TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
+; 0000 014F 
+; 0000 0150 // TWI initialization
+; 0000 0151 // TWI disabled
+; 0000 0152 TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
 	OUT  0x36,R30
-; 0000 0151 
-; 0000 0152 PHASE_ALL_OFF; // Выключаем все фазы
+; 0000 0153 
+; 0000 0154 PHASE_ALL_OFF; // Выключаем все фазы
 	RCALL SUBOPT_0x2
 	RCALL SUBOPT_0xA
-; 0000 0153 
-; 0000 0154 // Global enable interrupts
-; 0000 0155 #asm("sei")
+; 0000 0155 
+; 0000 0156 // Global enable interrupts
+; 0000 0157 #asm("sei")
 	sei
-; 0000 0156 
-; 0000 0157 while (1)
+; 0000 0158 
+; 0000 0159 while (1)
 _0x32:
-; 0000 0158     {
-; 0000 0159       // Place your code here
-; 0000 015A       if((PIND&(1 << PIND0)) == 0) // Старт/Стоп
+; 0000 015A     {
+; 0000 015B       // Place your code here
+; 0000 015C       if((PIND&(1 << PIND0)) == 0) // Старт/Стоп
 	SBIC 0x10,0
 	RJMP _0x35
-; 0000 015B         {
-; 0000 015C             delay_ms(20);
+; 0000 015D         {
+; 0000 015E             delay_ms(20);
 	LDI  R26,LOW(20)
 	LDI  R27,0
 	RCALL _delay_ms
-; 0000 015D             start_stop ^= 1; // Переключаем состояние
+; 0000 015F             start_stop ^= 1; // Переключаем состояние
 	LDI  R30,LOW(1)
 	EOR  R4,R30
-; 0000 015E             while((PIND&(1 << PIND0)) == 0){} // Ждем отпускания кнопки
+; 0000 0160             while((PIND&(1 << PIND0)) == 0){} // Ждем отпускания кнопки
 _0x36:
 	SBIS 0x10,0
 	RJMP _0x36
-; 0000 015F            // while((PIND.0) == 0){}
-; 0000 0160         }
-; 0000 0161 
-; 0000 0162         if(start_stop)
+; 0000 0161            // while((PIND.0) == 0){}
+; 0000 0162         }
+; 0000 0163 
+; 0000 0164         if(start_stop)
 _0x35:
 	TST  R4
 	BREQ _0x39
-; 0000 0163         {
-; 0000 0164             ACSR |= (1 << ACIE); // Разрешаем прерывание от компаратора
+; 0000 0165         {
+; 0000 0166             ACSR |= (1 << ACIE); // Разрешаем прерывание от компаратора
 	SBI  0x8,3
-; 0000 0165             TIMSK |= (1 << TOIE0); // Разрешаем прерывание по переполнению T0
+; 0000 0167             TIMSK |= (1 << TOIE0); // Разрешаем прерывание по переполнению T0
 	IN   R30,0x39
 	ORI  R30,1
 	RCALL SUBOPT_0x9
-; 0000 0166             GICR |= (1 << INT0); // Разрешаем внешние прерывания INT0
-; 0000 0167             // Плавный старт
-; 0000 0168               if(rotor_run == 200 && start == 0) // Если импульсы обратной ЭДС присутствуют и двигатель не был запущен
+; 0000 0168             GICR |= (1 << INT0); // Разрешаем внешние прерывания INT0
+; 0000 0169             // Плавный старт
+; 0000 016A               if(rotor_run == 200 && start == 0) // Если импульсы обратной ЭДС присутствуют и двигатель не был запущен
 	RCALL SUBOPT_0x6
 	CPI  R26,LOW(0xC8)
 	BRNE _0x3B
@@ -1926,104 +1923,104 @@ _0x35:
 _0x3B:
 	RJMP _0x3A
 _0x3C:
-; 0000 0169               {
-; 0000 016A                 for(start_pwm = START_PWM; start_pwm < motor_pwm; start_pwm++)
+; 0000 016B               {
+; 0000 016C                 for(start_pwm = START_PWM; start_pwm < motor_pwm; start_pwm++)
 	LDI  R30,LOW(10)
 	MOV  R7,R30
 _0x3E:
 	RCALL SUBOPT_0x8
 	CP   R7,R30
 	BRSH _0x3F
-; 0000 016B                     {
-; 0000 016C                       delay_ms(10); // Задержка
+; 0000 016D                     {
+; 0000 016E                       delay_ms(10); // Задержка
 	LDI  R26,LOW(10)
 	LDI  R27,0
 	RCALL _delay_ms
-; 0000 016D                       OCR1A = start_pwm;
+; 0000 016F                       OCR1A = start_pwm;
 	MOV  R30,R7
 	LDI  R31,0
 	OUT  0x2A+1,R31
 	OUT  0x2A,R30
-; 0000 016E                       OCR1B = start_pwm;
+; 0000 0170                       OCR1B = start_pwm;
 	MOV  R30,R7
 	LDI  R31,0
 	OUT  0x28+1,R31
 	OUT  0x28,R30
-; 0000 016F                       OCR2 = start_pwm;
+; 0000 0171                       OCR2 = start_pwm;
 	OUT  0x23,R7
-; 0000 0170                     }
+; 0000 0172                     }
 	INC  R7
 	RJMP _0x3E
 _0x3F:
-; 0000 0171                   start = 1; // Запуск произошел
+; 0000 0173                   start = 1; // Запуск произошел
 	LDI  R30,LOW(1)
 	MOV  R5,R30
-; 0000 0172                   PORTD |= (1 << PORTD7); // Включаем светодиод
+; 0000 0174                   PORTD |= (1 << PORTD7); // Включаем светодиод
 	SBI  0x12,7
-; 0000 0173               }
-; 0000 0174 
-; 0000 0175               if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, можем менять ШИМ
+; 0000 0175               }
+; 0000 0176 
+; 0000 0177               if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, можем менять ШИМ
 _0x3A:
 	RCALL SUBOPT_0x6
 	CPI  R26,LOW(0xC8)
 	BRNE _0x40
-; 0000 0176               {
-; 0000 0177                   OCR1A = motor_pwm;
+; 0000 0178               {
+; 0000 0179                   OCR1A = motor_pwm;
 	RCALL SUBOPT_0x8
 	LDI  R31,0
 	OUT  0x2A+1,R31
 	OUT  0x2A,R30
-; 0000 0178                   OCR1B = motor_pwm;
+; 0000 017A                   OCR1B = motor_pwm;
 	RCALL SUBOPT_0x8
 	LDI  R31,0
 	OUT  0x28+1,R31
 	OUT  0x28,R30
-; 0000 0179                   OCR2 = motor_pwm;
+; 0000 017B                   OCR2 = motor_pwm;
 	RCALL SUBOPT_0x8
 	OUT  0x23,R30
-; 0000 017A               }
-; 0000 017B         }
+; 0000 017C               }
+; 0000 017D         }
 _0x40:
-; 0000 017C         else
+; 0000 017E         else
 	RJMP _0x41
 _0x39:
-; 0000 017D         {
-; 0000 017E 
-; 0000 017F             if(PIND&(1 << PIND3)) direction = 1; // Выбор направления вращения вала
+; 0000 017F         {
+; 0000 0180 
+; 0000 0181             if(PIND&(1 << PIND3)) direction = 1; // Выбор направления вращения вала
 	SBIS 0x10,3
 	RJMP _0x42
 	LDI  R30,LOW(1)
 	MOV  R6,R30
-; 0000 0180             else direction = 0;
+; 0000 0182             else direction = 0;
 	RJMP _0x43
 _0x42:
 	CLR  R6
-; 0000 0181 
-; 0000 0182             start = 0; // Двигатель остановлен
+; 0000 0183 
+; 0000 0184             start = 0; // Двигатель остановлен
 _0x43:
 	CLR  R5
-; 0000 0183             PORTD &= ~(1 << PORTD7); // Выключаем светодиод
+; 0000 0185             PORTD &= ~(1 << PORTD7); // Выключаем светодиод
 	CBI  0x12,7
-; 0000 0184             PHASE_ALL_OFF; // Все фазы выключены
+; 0000 0186             PHASE_ALL_OFF; // Все фазы выключены
 	RCALL SUBOPT_0x2
 	RCALL SUBOPT_0xA
-; 0000 0185             ACSR &= ~(1 << ACIE); // Запрещаем прерывание от компаратора
+; 0000 0187             ACSR &= ~(1 << ACIE); // Запрещаем прерывание от компаратора
 	CBI  0x8,3
-; 0000 0186             TIMSK &= ~(1 << TOIE0); // Запрещаем прерывание по переполнению T0
+; 0000 0188             TIMSK &= ~(1 << TOIE0); // Запрещаем прерывание по переполнению T0
 	IN   R30,0x39
 	ANDI R30,0xFE
 	OUT  0x39,R30
-; 0000 0187             GICR &= ~(1 << INT0); // Запрещаем внешние прерывания INT0
+; 0000 0189             GICR &= ~(1 << INT0); // Запрещаем внешние прерывания INT0
 	IN   R30,0x3B
 	ANDI R30,0xBF
 	OUT  0x3B,R30
-; 0000 0188         }
+; 0000 018A         }
 _0x41:
-; 0000 0189 
-; 0000 018A 
-; 0000 018B       }
+; 0000 018B 
+; 0000 018C 
+; 0000 018D       }
 	RJMP _0x32
-; 0000 018C }
+; 0000 018E }
 _0x44:
 	RJMP _0x44
 ; .FEND
@@ -2097,7 +2094,7 @@ SUBOPT_0x6:
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
 SUBOPT_0x7:
-	__DELAY_USW 400
+	__DELAY_USW 200
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:3 WORDS
@@ -2132,7 +2129,7 @@ _delay_ms:
 	adiw r26,0
 	breq __delay_ms1
 __delay_ms0:
-	__DELAY_USW 0xFA0
+	__DELAY_USW 0x7D0
 	wdr
 	sbiw r26,1
 	brne __delay_ms0

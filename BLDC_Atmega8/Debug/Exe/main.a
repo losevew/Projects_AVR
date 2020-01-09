@@ -15,7 +15,7 @@
 ;
 ;Chip type               : ATmega8A
 ;Program type            : Application
-;AVR Core Clock frequency: 16,000000 MHz
+;AVR Core Clock frequency: 8,000000 MHz
 ;Memory model            : Small
 ;External RAM size       : 0
 ;Data Stack size         : 256
@@ -627,102 +627,104 @@
 ; 0000 0117 ICR1L=0x00;
 ;PCODE: $0000014C VOL: 0
 ;PCODE: $0000014D VOL: 0
-; 0000 0118 OCR1AH=(START_PWM)>>8;
+; 0000 0118 OCR1AH=0x00;
 ;PCODE: $0000014E VOL: 0
 ;PCODE: $0000014F VOL: 0
-; 0000 0119 OCR1AL=(START_PWM) & 0xFF;
+; 0000 0119 OCR1AL=0x00;
 ;PCODE: $00000150 VOL: 0
 ;PCODE: $00000151 VOL: 0
-; 0000 011A //OCR1A = START_PWM;
-; 0000 011B OCR1BH=(START_PWM)>>8;
+; 0000 011A //OCR1AH=(START_PWM)>>8;
+; 0000 011B //OCR1AL=(START_PWM) & 0xFF;
+; 0000 011C OCR1BH=0x00;
 ;PCODE: $00000152 VOL: 0
 ;PCODE: $00000153 VOL: 0
-; 0000 011C OCR1BL=(START_PWM )& 0xFF;
+; 0000 011D OCR1BL=0x00;
 ;PCODE: $00000154 VOL: 0
 ;PCODE: $00000155 VOL: 0
-; 0000 011D //OCR1B = START_PWM;
 ; 0000 011E 
-; 0000 011F // Timer/Counter 2 initialization
-; 0000 0120 // Clock source: System Clock
-; 0000 0121 // Clock value: 16000,000 kHz
-; 0000 0122 // Mode: Fast PWM top=0xFF
-; 0000 0123 // OC2 output: Non-Inverted PWM
-; 0000 0124 // Timer Period: 0,016 ms
-; 0000 0125 // Output Pulse(s):
-; 0000 0126 // OC2 Period: 0,016 ms Width: 0 us
-; 0000 0127 ASSR=0<<AS2;
+; 0000 011F 
+; 0000 0120 // Timer/Counter 2 initialization
+; 0000 0121 // Clock source: System Clock
+; 0000 0122 // Clock value: 16000,000 kHz
+; 0000 0123 // Mode: Fast PWM top=0xFF
+; 0000 0124 // OC2 output: Non-Inverted PWM
+; 0000 0125 // Timer Period: 0,016 ms
+; 0000 0126 // Output Pulse(s):
+; 0000 0127 // OC2 Period: 0,016 ms Width: 0 us
+; 0000 0128 ASSR=0<<AS2;
 ;PCODE: $00000156 VOL: 0
 ;PCODE: $00000157 VOL: 0
-; 0000 0128 TCCR2=(1<<PWM2) | (1<<COM21) | (0<<COM20) | (1<<CTC2) | (0<<CS22) | (0<<CS21) | (1<<CS20);
+; 0000 0129 TCCR2= (1<<COM21) | (0<<COM20) | (1<<WGM21) | (1<<WGM20) | (0<<CS22) | (0<<CS21) | (1<<CS20);
 ;PCODE: $00000158 VOL: 0
 ;PCODE: $00000159 VOL: 0
-; 0000 0129 TCNT2=0x00;
+; 0000 012A TCNT2=0x00;
 ;PCODE: $0000015A VOL: 0
 ;PCODE: $0000015B VOL: 0
-; 0000 012A OCR2=START_PWM;
+; 0000 012B OCR2=0x00;;
 ;PCODE: $0000015C VOL: 0
 ;PCODE: $0000015D VOL: 0
-; 0000 012B 
-; 0000 012C // Timer(s)/Counter(s) Interrupt(s) initialization
-; 0000 012D TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
+; 0000 012C 
+; 0000 012D // Timer(s)/Counter(s) Interrupt(s) initialization
+; 0000 012E TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
 ;PCODE: $0000015E VOL: 0
 ;PCODE: $0000015F VOL: 0
-; 0000 012E 
-; 0000 012F // External Interrupt(s) initialization
-; 0000 0130 // INT0: On
-; 0000 0131 // INT0 Mode: Falling Edge
-; 0000 0132 // INT1: Off
-; 0000 0133 GICR|=(0<<INT1) | (1<<INT0);
+; 0000 012F 
+; 0000 0130 // External Interrupt(s) initialization
+; 0000 0131 // INT0: On
+; 0000 0132 // INT0 Mode: Falling Edge
+; 0000 0133 // INT1: Off
+; 0000 0134 GICR|=(0<<INT1) | (1<<INT0);
 ;PCODE: $00000160 VOL: 0
 ;PCODE: $00000161 VOL: 0
 ;PCODE: $00000162 VOL: 0
-; 0000 0134 MCUCR=(0<<ISC11) | (0<<ISC10) | (1<<ISC01) | (0<<ISC00);
+; 0000 0135 MCUCR=(0<<ISC11) | (0<<ISC10) | (1<<ISC01) | (0<<ISC00);
 ;PCODE: $00000163 VOL: 0
 ;PCODE: $00000164 VOL: 0
-; 0000 0135 GIFR=(0<<INTF1) | (1<<INTF0);
+; 0000 0136 GIFR=(0<<INTF1) | (1<<INTF0);
 ;PCODE: $00000165 VOL: 0
 ;PCODE: $00000166 VOL: 0
-; 0000 0136 
-; 0000 0137 // USART initialization
-; 0000 0138 // USART disabled
-; 0000 0139 UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
+; 0000 0137 
+; 0000 0138 // USART initialization
+; 0000 0139 // USART disabled
+; 0000 013A UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
 ;PCODE: $00000167 VOL: 0
 ;PCODE: $00000168 VOL: 0
-; 0000 013A 
-; 0000 013B // Analog Comparator initialization
-; 0000 013C // Analog Comparator: On
-; 0000 013D // The Analog Comparator's positive input is
-; 0000 013E // connected to the AIN0 pin
-; 0000 013F // The Analog Comparator's negative input is
-; 0000 0140 // connected to the ADC multiplexer
-; 0000 0141 // Interrupt on Output Toggle
-; 0000 0142 // Analog Comparator Input Capture by Timer/Counter 1: Off
-; 0000 0143 ACSR=(0<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (1<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
+; 0000 013B 
+; 0000 013C // ADC initialization
+; 0000 013D // ADC disabled
+; 0000 013E ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
 ;PCODE: $00000169 VOL: 0
 ;PCODE: $0000016A VOL: 0
-; 0000 0144 SFIOR=(1<<ACME);
+; 0000 013F 
+; 0000 0140 // Analog Comparator initialization
+; 0000 0141 // Analog Comparator: On
+; 0000 0142 // The Analog Comparator's positive input is
+; 0000 0143 // connected to the AIN0 pin
+; 0000 0144 // The Analog Comparator's negative input is
+; 0000 0145 // connected to the ADC multiplexer
+; 0000 0146 // Interrupt on Output Toggle
+; 0000 0147 // Analog Comparator Input Capture by Timer/Counter 1: Off
+; 0000 0148 ACSR=(0<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (1<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
 ;PCODE: $0000016B VOL: 0
 ;PCODE: $0000016C VOL: 0
-; 0000 0145 
-; 0000 0146 // ADC initialization
-; 0000 0147 // ADC disabled
-; 0000 0148 ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
+; 0000 0149 SFIOR=(1<<ACME);
 ;PCODE: $0000016D VOL: 0
 ;PCODE: $0000016E VOL: 0
-; 0000 0149 
-; 0000 014A // SPI initialization
-; 0000 014B // SPI disabled
-; 0000 014C SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
+; 0000 014A 
+; 0000 014B 
+; 0000 014C // SPI initialization
+; 0000 014D // SPI disabled
+; 0000 014E SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
 ;PCODE: $0000016F VOL: 0
 ;PCODE: $00000170 VOL: 0
-; 0000 014D 
-; 0000 014E // TWI initialization
-; 0000 014F // TWI disabled
-; 0000 0150 TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
+; 0000 014F 
+; 0000 0150 // TWI initialization
+; 0000 0151 // TWI disabled
+; 0000 0152 TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
 ;PCODE: $00000171 VOL: 0
 ;PCODE: $00000172 VOL: 0
-; 0000 0151 
-; 0000 0152 PHASE_ALL_OFF; // Выключаем все фазы
+; 0000 0153 
+; 0000 0154 PHASE_ALL_OFF; // Выключаем все фазы
 ;PCODE: $00000173 VOL: 0
 ;PCODE: $00000174 VOL: 0
 ;PCODE: $00000175 VOL: 0
@@ -738,58 +740,58 @@
 ;PCODE: $0000017F VOL: 0
 ;PCODE: $00000180 VOL: 0
 ;PCODE: $00000181 VOL: 0
-; 0000 0153 
-; 0000 0154 // Global enable interrupts
-; 0000 0155 #asm("sei")
+; 0000 0155 
+; 0000 0156 // Global enable interrupts
+; 0000 0157 #asm("sei")
 ;PCODE: $00000182 VOL: 0
 	sei
 ;PCODE: $00000183 VOL: 0
-; 0000 0156 
-; 0000 0157 while (1)
+; 0000 0158 
+; 0000 0159 while (1)
 ;PCODE: $00000184 VOL: 0
-; 0000 0158     {
-; 0000 0159       // Place your code here
-; 0000 015A       if((PIND&(1 << PIND0)) == 0) // Старт/Стоп
+; 0000 015A     {
+; 0000 015B       // Place your code here
+; 0000 015C       if((PIND&(1 << PIND0)) == 0) // Старт/Стоп
 ;PCODE: $00000185 VOL: 0
 ;PCODE: $00000186 VOL: 0
 ;PCODE: $00000187 VOL: 0
-; 0000 015B         {
-; 0000 015C             delay_ms(20);
+; 0000 015D         {
+; 0000 015E             delay_ms(20);
 ;PCODE: $00000188 VOL: 0
 ;PCODE: $00000189 VOL: 0
 ;PCODE: $0000018A VOL: 0
-; 0000 015D             start_stop ^= 1; // Переключаем состояние
+; 0000 015F             start_stop ^= 1; // Переключаем состояние
 ;PCODE: $0000018B VOL: 0
 ;PCODE: $0000018C VOL: 0
 ;PCODE: $0000018D VOL: 0
-; 0000 015E             while((PIND&(1 << PIND0)) == 0){} // Ждем отпускания кнопки
+; 0000 0160             while((PIND&(1 << PIND0)) == 0){} // Ждем отпускания кнопки
 ;PCODE: $0000018E VOL: 0
 ;PCODE: $0000018F VOL: 0
 ;PCODE: $00000190 VOL: 0
 ;PCODE: $00000191 VOL: 0
 ;PCODE: $00000192 VOL: 0
 ;PCODE: $00000193 VOL: 0
-; 0000 015F            // while((PIND.0) == 0){}
-; 0000 0160         }
-; 0000 0161 
-; 0000 0162         if(start_stop)
+; 0000 0161            // while((PIND.0) == 0){}
+; 0000 0162         }
+; 0000 0163 
+; 0000 0164         if(start_stop)
 ;PCODE: $00000194 VOL: 0
 ;PCODE: $00000195 VOL: 0
 ;PCODE: $00000196 VOL: 0
-; 0000 0163         {
-; 0000 0164             ACSR |= (1 << ACIE); // Разрешаем прерывание от компаратора
+; 0000 0165         {
+; 0000 0166             ACSR |= (1 << ACIE); // Разрешаем прерывание от компаратора
 ;PCODE: $00000197 VOL: 0
 ;PCODE: $00000198 VOL: 0
-; 0000 0165             TIMSK |= (1 << TOIE0); // Разрешаем прерывание по переполнению T0
+; 0000 0167             TIMSK |= (1 << TOIE0); // Разрешаем прерывание по переполнению T0
 ;PCODE: $00000199 VOL: 0
 ;PCODE: $0000019A VOL: 0
 ;PCODE: $0000019B VOL: 0
-; 0000 0166             GICR |= (1 << INT0); // Разрешаем внешние прерывания INT0
+; 0000 0168             GICR |= (1 << INT0); // Разрешаем внешние прерывания INT0
 ;PCODE: $0000019C VOL: 0
 ;PCODE: $0000019D VOL: 0
 ;PCODE: $0000019E VOL: 0
-; 0000 0167             // Плавный старт
-; 0000 0168               if(rotor_run == 200 && start == 0) // Если импульсы обратной ЭДС присутствуют и двигатель не был запущен
+; 0000 0169             // Плавный старт
+; 0000 016A               if(rotor_run == 200 && start == 0) // Если импульсы обратной ЭДС присутствуют и двигатель не был запущен
 ;PCODE: $0000019F VOL: 1
 ;PCODE: $000001A0 VOL: 0
 ;PCODE: $000001A1 VOL: 0
@@ -799,8 +801,8 @@
 ;PCODE: $000001A5 VOL: 0
 ;PCODE: $000001A6 VOL: 0
 ;PCODE: $000001A7 VOL: 0
-; 0000 0169               {
-; 0000 016A                 for(start_pwm = START_PWM; start_pwm < motor_pwm; start_pwm++)
+; 0000 016B               {
+; 0000 016C                 for(start_pwm = START_PWM; start_pwm < motor_pwm; start_pwm++)
 ;PCODE: $000001A8 VOL: 0
 ;PCODE: $000001A9 VOL: 0
 ;PCODE: $000001AA VOL: 0
@@ -809,78 +811,78 @@
 ;PCODE: $000001AD VOL: 0
 ;PCODE: $000001AE VOL: 0
 ;PCODE: $000001AF VOL: 0
-; 0000 016B                     {
-; 0000 016C                       delay_ms(10); // Задержка
+; 0000 016D                     {
+; 0000 016E                       delay_ms(10); // Задержка
 ;PCODE: $000001B0 VOL: 0
 ;PCODE: $000001B1 VOL: 0
 ;PCODE: $000001B2 VOL: 0
-; 0000 016D                       OCR1A = start_pwm;
+; 0000 016F                       OCR1A = start_pwm;
 ;PCODE: $000001B3 VOL: 0
 ;PCODE: $000001B4 VOL: 0
 ;PCODE: $000001B5 VOL: 0
-; 0000 016E                       OCR1B = start_pwm;
+; 0000 0170                       OCR1B = start_pwm;
 ;PCODE: $000001B6 VOL: 0
 ;PCODE: $000001B7 VOL: 0
 ;PCODE: $000001B8 VOL: 0
-; 0000 016F                       OCR2 = start_pwm;
+; 0000 0171                       OCR2 = start_pwm;
 ;PCODE: $000001B9 VOL: 0
 ;PCODE: $000001BA VOL: 0
-; 0000 0170                     }
+; 0000 0172                     }
 ;PCODE: $000001BB VOL: 0
 ;PCODE: $000001BC VOL: 0
 ;PCODE: $000001BD VOL: 0
 ;PCODE: $000001BE VOL: 0
-; 0000 0171                   start = 1; // Запуск произошел
+; 0000 0173                   start = 1; // Запуск произошел
 ;PCODE: $000001BF VOL: 0
 ;PCODE: $000001C0 VOL: 0
-; 0000 0172                   PORTD |= (1 << PORTD7); // Включаем светодиод
+; 0000 0174                   PORTD |= (1 << PORTD7); // Включаем светодиод
 ;PCODE: $000001C1 VOL: 0
 ;PCODE: $000001C2 VOL: 0
-; 0000 0173               }
-; 0000 0174 
-; 0000 0175               if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, можем менять ШИМ
+; 0000 0175               }
+; 0000 0176 
+; 0000 0177               if(rotor_run == 200) // Если импульсы обратной ЭДС присутствуют, можем менять ШИМ
 ;PCODE: $000001C3 VOL: 0
 ;PCODE: $000001C4 VOL: 1
 ;PCODE: $000001C5 VOL: 0
 ;PCODE: $000001C6 VOL: 0
-; 0000 0176               {
-; 0000 0177                   OCR1A = motor_pwm;
+; 0000 0178               {
+; 0000 0179                   OCR1A = motor_pwm;
 ;PCODE: $000001C7 VOL: 1
 ;PCODE: $000001C8 VOL: 0
 ;PCODE: $000001C9 VOL: 0
-; 0000 0178                   OCR1B = motor_pwm;
+; 0000 017A                   OCR1B = motor_pwm;
 ;PCODE: $000001CA VOL: 1
 ;PCODE: $000001CB VOL: 0
 ;PCODE: $000001CC VOL: 0
-; 0000 0179                   OCR2 = motor_pwm;
+; 0000 017B                   OCR2 = motor_pwm;
 ;PCODE: $000001CD VOL: 1
 ;PCODE: $000001CE VOL: 0
-; 0000 017A               }
-; 0000 017B         }
+; 0000 017C               }
+; 0000 017D         }
 ;PCODE: $000001CF VOL: 0
-; 0000 017C         else
+; 0000 017E         else
 ;PCODE: $000001D0 VOL: 0
 ;PCODE: $000001D1 VOL: 0
-; 0000 017D         {
-; 0000 017E 
-; 0000 017F             if(PIND&(1 << PIND3)) direction = 1; // Выбор направления вращения вала
+; 0000 017F         {
+; 0000 0180 
+; 0000 0181             if(PIND&(1 << PIND3)) direction = 1; // Выбор направления вращения вала
 ;PCODE: $000001D2 VOL: 0
 ;PCODE: $000001D3 VOL: 0
 ;PCODE: $000001D4 VOL: 0
 ;PCODE: $000001D5 VOL: 0
 ;PCODE: $000001D6 VOL: 0
-; 0000 0180             else direction = 0;
+; 0000 0182             else direction = 0;
 ;PCODE: $000001D7 VOL: 0
 ;PCODE: $000001D8 VOL: 0
 ;PCODE: $000001D9 VOL: 0
-; 0000 0181 
-; 0000 0182             start = 0; // Двигатель остановлен
+; 0000 0183 
+; 0000 0184             start = 0; // Двигатель остановлен
 ;PCODE: $000001DA VOL: 0
 ;PCODE: $000001DB VOL: 0
-; 0000 0183             PORTD &= ~(1 << PORTD7); // Выключаем светодиод
+; 0000 0185             PORTD &= ~(1 << PORTD7); // Выключаем светодиод
 ;PCODE: $000001DC VOL: 0
 ;PCODE: $000001DD VOL: 0
-; 0000 0184             PHASE_ALL_OFF; // Все фазы выключены
+; 0000 0186             PHASE_ALL_OFF; // Все фазы выключены
 ;PCODE: $000001DE VOL: 0
 ;PCODE: $000001DF VOL: 0
 ;PCODE: $000001E0 VOL: 0
@@ -896,25 +898,25 @@
 ;PCODE: $000001EA VOL: 0
 ;PCODE: $000001EB VOL: 0
 ;PCODE: $000001EC VOL: 0
-; 0000 0185             ACSR &= ~(1 << ACIE); // Запрещаем прерывание от компаратора
+; 0000 0187             ACSR &= ~(1 << ACIE); // Запрещаем прерывание от компаратора
 ;PCODE: $000001ED VOL: 0
 ;PCODE: $000001EE VOL: 0
-; 0000 0186             TIMSK &= ~(1 << TOIE0); // Запрещаем прерывание по переполнению T0
+; 0000 0188             TIMSK &= ~(1 << TOIE0); // Запрещаем прерывание по переполнению T0
 ;PCODE: $000001EF VOL: 0
 ;PCODE: $000001F0 VOL: 0
 ;PCODE: $000001F1 VOL: 0
-; 0000 0187             GICR &= ~(1 << INT0); // Запрещаем внешние прерывания INT0
+; 0000 0189             GICR &= ~(1 << INT0); // Запрещаем внешние прерывания INT0
 ;PCODE: $000001F2 VOL: 0
 ;PCODE: $000001F3 VOL: 0
 ;PCODE: $000001F4 VOL: 0
-; 0000 0188         }
+; 0000 018A         }
 ;PCODE: $000001F5 VOL: 0
-; 0000 0189 
-; 0000 018A 
-; 0000 018B       }
+; 0000 018B 
+; 0000 018C 
+; 0000 018D       }
 ;PCODE: $000001F6 VOL: 0
 ;PCODE: $000001F7 VOL: 0
-; 0000 018C }
+; 0000 018E }
 ;PCODE: $000001F8 VOL: 0
 ;PCODE: $000001F9 VOL: 0
 ;PCODE: $000001FA VOL: 0
