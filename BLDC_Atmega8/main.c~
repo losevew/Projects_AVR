@@ -294,7 +294,7 @@ OCR1BL=0x00;
 // Output Pulse(s):
 // OC2 Period: 0,016 ms Width: 0 us
 ASSR=0<<AS2;
-TCCR2=(1<<PWM2) | (1<<COM21) | (0<<COM20) | (1<<CTC2) | (0<<CS22) | (0<<CS21) | (1<<CS20);
+TCCR2= (1<<COM21) | (0<<COM20) | (1<<WGM21) | (1<<WGM20) | (0<<CS22) | (0<<CS21) | (1<<CS20);
 TCNT2=0x00;
 OCR2=0x00;;
 
@@ -313,6 +313,10 @@ GIFR=(0<<INTF1) | (1<<INTF0);
 // USART disabled
 UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
 
+// ADC initialization
+// ADC disabled
+ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
+
 // Analog Comparator initialization
 // Analog Comparator: On
 // The Analog Comparator's positive input is
@@ -324,9 +328,6 @@ UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) 
 ACSR=(0<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (1<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
 SFIOR=(1<<ACME);
 
-// ADC initialization
-// ADC disabled
-ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
 
 // SPI initialization
 // SPI disabled

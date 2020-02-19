@@ -6,7 +6,7 @@
 ;Build configuration    : Debug
 ;Chip type              : ATmega8A
 ;Program type           : Application
-;Clock frequency        : 8,000000 MHz
+;Clock frequency        : 16,000000 MHz
 ;Memory model           : Small
 ;Optimize for           : Size
 ;(s)printf features     : int, width
@@ -1225,7 +1225,7 @@ __GLOBAL_INI_END:
 ;
 ;Chip type               : ATmega8A
 ;Program type            : Application
-;AVR Core Clock frequency: 8,000000 MHz
+;AVR Core Clock frequency: 16,000000 MHz
 ;Memory model            : Small
 ;External RAM size       : 0
 ;Data Stack size         : 256
@@ -2094,7 +2094,7 @@ SUBOPT_0x6:
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
 SUBOPT_0x7:
-	__DELAY_USW 200
+	__DELAY_USW 400
 	RET
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:3 WORDS
@@ -2129,7 +2129,7 @@ _delay_ms:
 	adiw r26,0
 	breq __delay_ms1
 __delay_ms0:
-	__DELAY_USW 0x7D0
+	__DELAY_USW 0xFA0
 	wdr
 	sbiw r26,1
 	brne __delay_ms0

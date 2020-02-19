@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm Wed Jan 08 22:32:26 2020
+AVRASM ver. 2.1.30  D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm Tue Jan 14 15:53:26 2020
 
 D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1086): warning: Register r5 already defined by the .DEF directive
 D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1087): warning: Register r4 already defined by the .DEF directive
@@ -14,7 +14,7 @@ D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1089): warning: Registe
                  ;Build configuration    : Debug
                  ;Chip type              : ATmega8A
                  ;Program type           : Application
-                 ;Clock frequency        : 8,000000 MHz
+                 ;Clock frequency        : 16,000000 MHz
                  ;Memory model           : Small
                  ;Optimize for           : Size
                  ;(s)printf features     : int, width
@@ -1236,7 +1236,7 @@ D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .
                  ;
                  ;Chip type               : ATmega8A
                  ;Program type            : Application
-                 ;AVR Core Clock frequency: 8,000000 MHz
+                 ;AVR Core Clock frequency: 16,000000 MHz
                  ;Memory model            : Small
                  ;External RAM size       : 0
                  ;Data Stack size         : 256
@@ -2106,12 +2106,12 @@ D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
                  SUBOPT_0x7:
                 +
-0001c8 ec88     +LDI R24 , LOW ( 200 )
-0001c9 e090     +LDI R25 , HIGH ( 200 )
+0001c8 e980     +LDI R24 , LOW ( 400 )
+0001c9 e091     +LDI R25 , HIGH ( 400 )
                 +__DELAY_USW_LOOP :
 0001ca 9701     +SBIW R24 , 1
 0001cb f7f1     +BRNE __DELAY_USW_LOOP
-                 	__DELAY_USW 200
+                 	__DELAY_USW 400
 0001cc 9508      	RET
                  
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 6 TIMES, CODE SIZE REDUCTION:3 WORDS
@@ -2147,12 +2147,12 @@ D:\Projects AVR\BLDC_Atmega8\Debug\List\BLDC_Atmega8.asm(1123): warning: .cseg .
 0001e0 f039      	breq __delay_ms1
                  __delay_ms0:
                 +
-0001e1 ed80     +LDI R24 , LOW ( 0x7D0 )
-0001e2 e097     +LDI R25 , HIGH ( 0x7D0 )
+0001e1 ea80     +LDI R24 , LOW ( 0xFA0 )
+0001e2 e09f     +LDI R25 , HIGH ( 0xFA0 )
                 +__DELAY_USW_LOOP :
 0001e3 9701     +SBIW R24 , 1
 0001e4 f7f1     +BRNE __DELAY_USW_LOOP
-                 	__DELAY_USW 0x7D0
+                 	__DELAY_USW 0xFA0
 0001e5 95a8      	wdr
 0001e6 9711      	sbiw r26,1
 0001e7 f7c9      	brne __delay_ms0

@@ -26,7 +26,7 @@ Active0=0
 EditorPanel0=0
 PageIndex0=0
 EditorPanel1=0
-TimeStamp1=1344844608
+TimeStamp1=1345224365
 PageIndex1=1
 OF2=D:\cvavr\inc\mega8_bits.h
 Active2=0
@@ -36,7 +36,7 @@ PageIndex2=2
 F1=main.c
 [CompilerDebug]
 Chip=ATmega8A
-CPUClock=8000000
+CPUClock=16000000
 MemoryModel=1
 OptimizeSize=1
 OptimizationLevel=2
@@ -132,13 +132,13 @@ WatchAVR8LAutoVariables=0
 UseEEPROMLocation0=1
 RebuildAll=0
 LinkageInformationPresent=1
-COFFileTimeStamp=1344844814
-Build=23
+COFFileTimeStamp=1345224366
+Build=25
 [DefinedSymbolsDebug]
 Count=0
 [Compiler]
 Chip=ATmega8A
-CPUClock=8000000
+CPUClock=16000000
 MemoryModel=1
 OptimizeSize=1
 OptimizationLevel=2
@@ -235,7 +235,7 @@ UseEEPROMLocation0=1
 RebuildAll=1
 LinkageInformationPresent=0
 COFFileTimeStamp=-1
-Build=23
+Build=25
 IncludePath0=
 IncludePath1=
 IncludePath2=
@@ -453,7 +453,7 @@ UserProgWorkDir=
 [BuildInfoCompiler]
 L1=Build configuration: Debug
 L2=Chip: ATmega8A
-L3=Clock frequency: 8,000000 MHz
+L3=Clock frequency: 16,000000 MHz
 L4=Program type: Application
 L5=Memory model: Small
 L6=Optimize for: Size
@@ -467,7 +467,7 @@ L13=Enhanced function parameters passing: Yes
 L14=Automatic register allocation: Yes
 L15=Smart register allocation: Yes
 L16=
-L17=Build: 22
+L17=Build: 24
 L18=1037 line(s) compiled
 L19=No errors
 L20=No warnings
@@ -554,13 +554,13 @@ Row=0
 Column=0
 ScrollPosX=0
 ScrollPosY=0
-TimeStamp=1344905712
+TimeStamp=1346739860
 [Bookmarks3]
-TimeStamp=1344844608
-Row=41
-Column=8
+TimeStamp=1345224365
+Row=17
+Column=28
 ScrollPosX=0
-ScrollPosY=41
+ScrollPosY=8
 BK0=-1
 BK1=-1
 BK2=-1
@@ -575,14 +575,6 @@ BK9=-1
 Blocks=0
 [FoldedCode2]
 Blocks=0
-[HeadersList]
-Files=1
-F1=D:\Projects AVR\BLDC_Atmega8\main.c
-[Header1]
-Files=3
-F1=D:\cvavr\inc\mega8.h
-F2=D:\cvavr\inc\mega8_bits.h
-F3=D:\cvavr\inc\delay.h
 [Bookmarks4]
 TimeStamp=982086058
 Row=150
@@ -599,6 +591,14 @@ BK6=-1
 BK7=-1
 BK8=-1
 BK9=-1
+[HeadersList]
+Files=1
+F1=D:\Projects AVR\BLDC_Atmega8\main.c
+[Header1]
+Files=3
+F1=D:\cvavr\inc\mega8.h
+F2=D:\cvavr\inc\mega8_bits.h
+F3=D:\cvavr\inc\delay.h
 [FoldedCode3]
 Blocks=0
 [FoldedCode4]

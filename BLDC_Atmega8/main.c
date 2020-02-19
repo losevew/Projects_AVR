@@ -15,7 +15,7 @@ Comments:
 
 Chip type               : ATmega8A
 Program type            : Application
-AVR Core Clock frequency: 8,000000 MHz
+AVR Core Clock frequency: 16,000000 MHz
 Memory model            : Small
 External RAM size       : 0
 Data Stack size         : 256

@@ -38,161 +38,92 @@ Data Stack size         : 256
 #define PARITY_ERROR (1<<UPE)
 #define DATA_OVERRUN (1<<DOR)
 
-
+unsigned char FRT = 0;                //флаг повтора передачи
+unsigned char FOD = 0;                //флаг отображения информации
 
 // USART Receiver buffer
-#define RX_BUFFER_SIZE 90
-unsigned char gga_data[RX_BUFFER_SIZE];
-unsigned char gga_count=0;
+#define RX_BUFFER_SIZE 8
+unsigned char rx_data[RX_BUFFER_SIZE];
+unsigned char rx_count=0;
 //unsigned char rx_wr_index=0,rx_rd_index=0;
-
-// This flag is set on USART Receiver buffer overflow
-bit rx_buffer_overflow;
-
-unsigned char search_gga_field (unsigned char x)//Search x-th field in GGA packet
-{ 
-    unsigned char i, c;
-    c=0;
-    for (i=0;i<gga_count;i++)
-    {
-    if (gga_data[i]==',') c++;
-    if (c==x) return i+1;
-    }
-    return 0;
-}
-
-void write_gps_data (unsigned char crc_valid)    //Write GPS data on LCD
-{ 
-    unsigned char i,temp;
-    if (crc_valid==0) {
-        //If CRC not confirm
-        glcd_clear();
-        glcd_outtextf("Ошибка данных");
-        return;
-    }                                        
-     
-    if (gga_data[search_gga_field(6)]=='0') 
-    {//If no GPS signal 
-        glcd_clear();
-        glcd_outtextf("Нет сигнала");
-         
-        pcd8544_wrbyte(gga_data[search_gga_field(7)+1]); 
-        glcd_outtextxyf(15,8," Спутников ");
-        glcd_outtextxyf(10,15,"обнаружено");
-        return;
-    }                                                       
-    //Write Latitude and Longitude
-    glcd_clear(); 
-    glcd_outtextf("Широта:");
-    glcd_moveto(0,8);
-    temp=search_gga_field(2);
-    for (i=temp;i<temp+9;i++)//Write Latitude
-    {
-         if ((i-temp)==2) glcd_putchar (0xB0);
-         glcd_putchar (gga_data[i]);
-    }
-    glcd_putchar (gga_data[search_gga_field(3)]);
-     
-    glcd_outtextxyf(0,15,"Долгота:");
-    glcd_moveto(0,23);
-    temp=search_gga_field(4);
-    for (i=temp;i<temp+10;i++)    //Write Longitude
-    {
-         if ((i-temp)==3) glcd_putchar (0xB0);
-         glcd_putchar (gga_data[i]);
-    }
-    glcd_putchar (gga_data[search_gga_field(5)]); 
-        
-    glcd_outtextxyf(0,32,"H:");
-    temp=search_gga_field(9);
-    while (gga_data[temp]!=',')	//Write altitude
-    {
-         glcd_putchar(gga_data[temp]);
-         temp++;
-    }
-    glcd_putchar('м'); 
-    
-    glcd_outtextf(" Sat:");
-    temp=search_gga_field(7);
-    glcd_putchar (gga_data[temp]);	//Write satellites
-    if (gga_data[temp+1]!=',') glcd_putchar (gga_data[temp+1]); 
-        
-    glcd_outtextxyf(0,41,"UTC:"); 
-    temp=search_gga_field(1);
-    for (i=temp;i<temp+6;i++)	//Write UTC
-    {
-         if (((i-temp)==2)||((i-temp)==4) ) glcd_putchar (':');
-         glcd_putchar (gga_data[i]);
-    } 
-        
-   
-     
-    return; 
-}
-
-unsigned char check_crc (void)		//Check CRC16
-{ /*unsigned char i,gga_crc,vtg_crc;
- 
-     gga_crc=0x00;
-     
-     i=1;
-     while ((gga_data[i]!='*')&&(i<90))
-      {
-       gga_crc^=gga_data[i];
-       i++;
-      }
-     i++;
-     if (gga_data[i]!=(0x30+(gga_crc>>4))) return 0;
-     i++;
-     if (gga_data[i]!=(0x30+(gga_crc&0x0f))) return 0;
-     
-     vtg_crc=0x00;
-     
-     i=1;
-     while ((vtg_data[i]!='*')&&(i<90))
-      {
-       vtg_crc^=vtg_data[i];
-       i++;
-      }
-     i++;
-     if (vtg_data[i]!=(0x30+(vtg_crc>>4))) return 0;
-     i++;
-     if (vtg_data[i]!=(0x30+(vtg_crc&0x0f))) return 0; */
-     
-     return 1;
-}
-
-// USART Receiver interrupt service routine
-interrupt [USART_RXC] void usart_rx_isr(void)
-{
-char status;
-status=UCSRA;
-if ((status & (FRAMING_ERROR | PARITY_ERROR | DATA_OVERRUN))==0)
-   {  
-        gga_count=0;
-        gga_data[gga_count]=UDR;//Get first byte to GGA packet
-        gga_count++;
-        do {			//Receive GGA packet 
- 
-            while ( !(UCSRA & (1<<RXC)) );
-            gga_data[gga_count]=UDR;
-	        gga_count++;
- 
-        } while ((gga_data[gga_count-1]!=0x0a)&&(gga_count<90));
-   
-   if (gga_count == RX_BUFFER_SIZE) gga_count=0;
-   } 
-   write_gps_data(check_crc());	//Write data and check CRC16 
-   return;
-}
-
-
 
 // USART Transmitter buffer
 #define TX_BUFFER_SIZE 8
 char tx_buffer[TX_BUFFER_SIZE];
 unsigned char tx_rd_index=0;
 unsigned char tx_counter=0;
+unsigned char tx_wr_index=0;
+
+// This flag is set on USART Receiver buffer overflow
+//bit rx_buffer_overflow;
+
+
+void LCD_Out (void)
+{
+     unsigned char i;
+     glcd_clear();
+     glcd_outtextf("Проверка USART");
+     glcd_outtextf("Принято: ");
+     //glcd_outtext(str);
+     for (i = 0; i < RX_BUFFER_SIZE; i++)
+            {
+                glcd_putchar (rx_data[i]);
+            }
+     FOD = 0; 
+}
+
+
+
+void USART_Transmit(char c)
+{
+while (tx_counter == TX_BUFFER_SIZE);
+#asm("cli")
+if (tx_counter || ((UCSRA & DATA_REGISTER_EMPTY)==0))
+   {
+   tx_buffer[tx_wr_index++]=c;
+#if TX_BUFFER_SIZE != 256
+   if (tx_wr_index == TX_BUFFER_SIZE) tx_wr_index=0;
+#endif
+   ++tx_counter;
+   }
+else
+   UDR=c;
+#asm("sei")
+}
+
+void UART_send_st (const unsigned char *st)
+{
+   while(*st)
+      USART_Transmit(*st++);  
+}
+
+
+
+// USART Receiver interrupt service routine
+interrupt [USART_RXC] void usart_rx_isr(void)
+{
+
+if ((UCSRA & (FRAMING_ERROR | PARITY_ERROR | DATA_OVERRUN))==0)
+   {  
+        rx_count=0;
+//        rx_data[rx_count]=UDR;//Get first byte 
+//        rx_count++;
+        do {			//Receive  packet 
+ 
+            while ( !(UCSRA & RX_COMPLETE) );
+            rx_data[rx_count]=UDR;
+	        rx_count++;
+ 
+        } while (rx_count<RX_BUFFER_SIZE);
+   
+   if (rx_count == RX_BUFFER_SIZE) rx_count=0;
+   } 
+
+   FOD=1;
+   return;
+}
+
+
 
 // USART Transmitter interrupt service routine
 interrupt [USART_TXC] void usart_tx_isr(void)
@@ -344,12 +275,39 @@ glcd_init_data.vlcd=PCD8544_DEFAULT_VLCD;
 
 glcd_init(&glcd_init_data);
 
+glcd_clear();
+glcd_outtextf("Проверка USART");
+
 // Global enable interrupts
 #asm("sei")
 
 while (1)
       {
       // Place your code here
+      if(PINB.0!=1)
+        {
+            if (FRT == 0)
+            {
+                USART_Transmit('U');
+                USART_Transmit('S');
+                USART_Transmit('A');
+                USART_Transmit('R');
+                USART_Transmit('T');
+                USART_Transmit(13);
+                UART_send_st("Hello, World!\n");
+                USART_Transmit(13); 
+                FRT = 1;
+            }
+        }
+        else
+        {
+            FRT = 0;
+        }
+        if (FOD==1)
+        {
+            LCD_Out();
+        }
+         
 
       }
 }

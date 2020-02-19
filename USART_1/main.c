@@ -41,15 +41,11 @@ Data Stack size         : 256
 
 
 // USART Receiver buffer
-#define RX_BUFFER_SIZE 90
+#define RX_BUFFER_SIZE 4
 unsigned char rx_data[RX_BUFFER_SIZE];
 unsigned char rx_count=0;
+unsigned char FRT = 0;                //флаг повтора передачи
 
-// USART Transmitter buffer
-#define TX_BUFFER_SIZE 8
-char tx_buffer[TX_BUFFER_SIZE];
-unsigned char tx_rd_index=0;
-unsigned char tx_counter=0;
 
 // Standard Input/Output functions
 #include <stdio.h>
@@ -57,27 +53,64 @@ unsigned char tx_counter=0;
 //передача данных по USART
 void USART_Transmit( unsigned char data)
     {
+      //char status;
       // ждать очистки флага передатчика
-      while (!(UCSRA & DATA_REGISTER_EMPTY))
-        {
-           // загрузить байт данных в буфер и начать передачу
-           UDR = data;
-        }  
+      //status = UCSRA;
+      while (!(UCSRA & DATA_REGISTER_EMPTY));
+      // загрузить байт данных в буфер и начать передачу
+      UDR = data; 
     } 
     
     
 //прием данных USART 
-unsigned char USART_Recive(void)
+void USART_Recive(void)
     {
-       unsigned char status, resh;
-       
-       status = UCSRA;
-       resh = UDR;  // прочитать байт данных
-       // при наличие ошибок вернуть -1
-       if ( status & (FRAMING_ERROR | DATA_OVERRUN | PARITY_ERROR)) return -1;
-       return resh;
+
+          
+       if ( (UCSRA & (FRAMING_ERROR | DATA_OVERRUN | PARITY_ERROR)) == 0)
+       {
+            rx_count=0;
+//            rx_data[rx_count]=UDR; //Get first byte to packet
+//            rx_count++;
+            do {			//Receive  packet 
+
+                while ( !(UCSRA & RX_COMPLETE) );
+                rx_data[rx_count]=UDR;
+	            rx_count++;
+            } while (rx_count<RX_BUFFER_SIZE);
+            if (rx_count == RX_BUFFER_SIZE) rx_count=0;  
+         }
+         else
+         {
+              glcd_clear();
+              glcd_outtextf("Ошибка приема");    // при наличие ошибок вывести сообщение  
+              
+         }
+         return;
          
-    }   
+    }  
+     
+
+
+void UART_send_st (const unsigned char *st)
+{
+   while(*st)
+      USART_Transmit(*st++); 
+}
+
+    
+
+void LCD_Out (void)
+{
+     unsigned char i;
+     glcd_clear();
+     glcd_outtextf("Проверка USART");
+     glcd_outtextf("Принято: ");
+     for (i = 0; i < RX_BUFFER_SIZE; i++)
+            {
+                glcd_putchar (rx_data[i]);
+            }  
+}
 
 void main(void)
 {
@@ -85,6 +118,8 @@ void main(void)
 // Variable used to store graphic display
 // controller initialization data
 GLCDINIT_t glcd_init_data;
+
+
 
 // Input/Output Ports initialization
 // Port B initialization
@@ -214,12 +249,31 @@ glcd_init(&glcd_init_data);
 glcd_clear();
 glcd_outtextf("Проверка USART");
 
-//glcd_moveto(0,8);
-//glcd_putchar (0xB0)
+
 
 while (1)
       {
-      // Place your code here
-
+      // Place your code here 
+      if(PINB.0!=1)
+        {
+            if (FRT == 0)
+            {  
+               UART_send_st("Hello, World!\n");
+               USART_Transmit(13); 
+               FRT = 1;
+            }
+        }
+        else
+        {
+            FRT = 0;
+        } 
+        
+        if(UCSRA & RX_COMPLETE)
+          { 
+            
+            USART_Recive();
+            LCD_Out();
+      
+          }
       }
 }
