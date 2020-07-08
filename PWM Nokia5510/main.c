@@ -99,7 +99,7 @@ void LcdOut (unsigned char pwVol )
      char Duty[]; 
      int bar;
      bar=pwVol*83/255;
-     glcd_outtextxyf(12,5,"Скважность"); 
+     glcd_outtextxyf(12,5,"‘кважность"); 
      itoa(pwVol*100/255,Duty);
      glcd_outtextxy(35,15,Duty);
      glcd_outtextf("%");

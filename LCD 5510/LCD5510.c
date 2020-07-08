@@ -162,9 +162,9 @@ glcd_init_data.vlcd=PCD8544_DEFAULT_VLCD;
 glcd_init(&glcd_init_data); 
 
 
-glcd_outtextf("Ўирота:");
+glcd_outtextf("Широта:");
 glcd_outtextxyf(25,8,"48∞45Т57Ф");
-glcd_outtextxyf(0,15,"ƒолгота:");
+glcd_outtextxyf(0,15,"Долгота:");
 glcd_outtextxyf(25,23,"44∞30Т89Ф");
 glcd_state.fill.color=1;
 glcd_bar(0,32,42,39);
