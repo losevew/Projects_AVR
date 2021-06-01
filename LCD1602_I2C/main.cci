@@ -1,0 +1,11 @@
+VERSION:3 SOURCE_TIMESTAMP:52BF94EE
+NODE:I LEVEL:0 LINE:24 "D:\cvavr\inc\mega8.h"
+NODE:I LEVEL:0 LINE:25 "D:\cvavr\inc\delay.h"
+NODE:I LEVEL:0 LINE:26 "D:\Projects AVR\LCD1602_I2C\hd44780.h"
+NODE:V LEVEL:0 LINE:30 "btn_flag -> R5"
+NODE:V LEVEL:0 LINE:31 "click_flag -> R4"
+NODE:V LEVEL:0 LINE:32 "count -> R7"
+NODE:F LEVEL:0 LINE:35 "timer0_ovf_isr(void)"
+NODE:I LEVEL:0 LINE:60 "D:\cvavr\inc\spi.h"
+NODE:I LEVEL:0 LINE:63 "D:\cvavr\inc\twi.h"
+NODE:F LEVEL:0 LINE:65 "main(void)"

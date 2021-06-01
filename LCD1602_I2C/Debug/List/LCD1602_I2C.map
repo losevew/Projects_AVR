@@ -1,0 +1,50 @@
+RAM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+twi_tx_index                                                                      0x0179       1
+twi_rx_index                                                                      0x017A       1
+twi_result                                                                        0x017B       1
+current_bar_pixel                                                                 0x017C       1
+current_cell_load                                                                 0x017D       1
+slave_address                                                                     0x017E       1
+twi_tx_buffer                                                                     0x017F       2
+bytes_to_tx                                                                       0x0181       1
+twi_rx_buffer                                                                     0x0182       2
+bytes_to_rx                                                                       0x0184       1
+twi_rx_buffer_size                                                                0x0185       1
+twi_slave_rx_handler                                                              0x0186       2
+twi_slave_tx_handler                                                              0x0188       2
+
+EEPROM Allocation [bytes]
+Variable                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                                          Register  Size
+------------------------------------------------------------------------------------------------
+btn_flag                                                                          R5           1
+click_flag                                                                        R4           1
+count                                                                             R7           1
+twi_flag                                                                          R2.0      1bit
+twi_ready                                                                         R2.1      1bit
+
+FLASH Allocation [words]
+Function                                                                          Address   Size
+------------------------------------------------------------------------------------------------
+timer0_ovf_isr                                                                    0x00063     22
+main                                                                              0x00079     79
+lcd_10us_delay_G001                                                               0x000C8     15
+lcd_write_G001                                                                    0x000D7     22
+lcd_config_G001                                                                   0x000ED     22
+lcd_return                                                                        0x00105      9
+cursor_shift                                                                      0x0010E     17
+lcd_goto                                                                          0x0011F     43
+lcd_setmode                                                                       0x0014A      4
+lcd_putc                                                                          0x0014E     12
+lcd_puts                                                                          0x0015A     47
+lcd_initbar_G001                                                                  0x00189     39
+lcd_clrbar                                                                        0x001B0     28
+lcd_init                                                                          0x001CC     10
+twi_master_init                                                                   0x001D6     40
+twi_master_trans                                                                  0x001FE     98
+twi_int_handler                                                                   0x00260    355
